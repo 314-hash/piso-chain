@@ -102,8 +102,32 @@ function setupEventListeners() {
                 .catch(err => alert("Connection Error: " + err.message));
         } else {
             alert("MetaMask is not installed. Please install MetaMask to connect your wallet.");
+    // Helper to Import Custom ERC-20 Tokens into MetaMask via wallet_watchAsset
+    window.addTokenToMetaMask = async function(tokenAddress, tokenSymbol = "PISO", tokenDecimals = 18) {
+        if (window.ethereum) {
+            try {
+                const wasAdded = await window.ethereum.request({
+                    method: 'wallet_watchAsset',
+                    params: {
+                        type: 'ERC20',
+                        options: {
+                            address: tokenAddress,
+                            symbol: tokenSymbol,
+                            decimals: tokenDecimals,
+                        },
+                    },
+                });
+                if (wasAdded) {
+                    alert(`✓ Token ${tokenSymbol} (${tokenAddress}) successfully imported to MetaMask!`);
+                }
+            } catch (error) {
+                alert("MetaMask Token Import Error: " + error.message);
+            }
+        } else {
+            alert("MetaMask is not installed in your browser!");
         }
-    });
+    };
+
 
 
     // Mobile Hamburger Navigation Drawer & Responsive Nav Item Clicks
