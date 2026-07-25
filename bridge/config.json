@@ -1,0 +1,24 @@
+{
+  "chains": [
+    {
+      "name": "piso",
+      "type": "ethereum",
+      "id": "2026001",
+      "endpoint": "http://validator1:8545",
+      "opts": {
+        "bridge": "0x0000000000000000000000000000000000000000",
+        "erc20Handler": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "ethereum-mainnet",
+      "type": "ethereum",
+      "id": "1",
+      "endpoint": "https://mainnet.infura.io/v3/YOUR_INFURA_KEY",
+      "opts": {
+        "bridge": "0x0000000000000000000000000000000000000000",
+        "erc20Handler": "0x0000000000000000000000000000000000000000"
+      }
+    }
+  ]
+}

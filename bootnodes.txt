@@ -1,0 +1,3 @@
+# List of enode URLs for PISO Chain bootnodes
+# Format: enode://PUBKEY@IP:PORT
+# Example: enode://a23b45...@127.0.0.1:30301

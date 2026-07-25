@@ -1,0 +1,35 @@
+# Cloudflare Tunnel Configuration for PISO Chain
+# Usage:
+# 1. Install cloudflared CLI: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/install-and-setup/
+# 2. Login: cloudflared tunnel login
+# 3. Create tunnel: cloudflared tunnel create piso-chain
+# 4. Route DNS subdomains to tunnel:
+#    cloudflared tunnel route dns piso-chain rpc.yourdomain.com
+#    cloudflared tunnel route dns piso-chain ws.yourdomain.com
+#    cloudflared tunnel route dns piso-chain explorer.yourdomain.com
+# 5. Run tunnel: cloudflared tunnel --config ./rpc/cloudflared-config.yml run piso-chain
+
+tunnel: piso-chain
+credentials-file: /root/.cloudflared/piso-chain.json
+
+ingress:
+  # HTTP RPC Subdomain
+  - hostname: rpc.yourdomain.com
+    service: http://localhost:8545
+    originRequest:
+      connectTimeout: 30s
+      noTLSVerify: true
+
+  # WebSocket RPC Subdomain
+  - hostname: ws.yourdomain.com
+    service: http://localhost:8546
+    originRequest:
+      connectTimeout: 30s
+      noTLSVerify: true
+
+  # Block Explorer Subdomain
+  - hostname: explorer.yourdomain.com
+    service: http://localhost:8080
+
+  # Fallback catch-all rule
+  - service: http_status:404

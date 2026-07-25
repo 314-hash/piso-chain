@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Blockscout PostgreSQL Database
+  blockscout-db:
+    image: postgres:15-alpine
+    container_name: piso-blockscout-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: blockscout
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: piso_password_123
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+
+  # Blockscout Redis Caching Layer
+  blockscout-redis:
+    image: redis:7-alpine
+    container_name: piso-blockscout-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+
+  # Blockscout Explorer Full Stack Engine
+  blockscout:
+    image: blockscout/blockscout:latest
+    container_name: piso-blockscout-main
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      - ETHEREUM_JSONRPC_VARIANT=geth
+      - ETHEREUM_JSONRPC_HTTP_URL=http://validator1:8545
+      - ETHEREUM_JSONRPC_WS_URL=ws://validator1:8546
+      - DATABASE_URL=postgresql://postgres:piso_password_123@blockscout-db:5432/blockscout
+      - REDIS_URL=redis://blockscout-redis:6379/0
+      - NETWORK=PISO Chain Devnet
+      - SUBNETWORK=PISO
+      - CHAIN_ID=2026001
+      - COIN=PISO
+      - SHOW_PRICE_CHART=false
+    depends_on:
+      - blockscout-db
+      - blockscout-redis

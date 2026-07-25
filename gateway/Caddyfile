@@ -1,0 +1,52 @@
+# Caddy Reverse Proxy & Security Gateway for PISO Chain Mainnet
+
+{
+    # Global options
+    admin off
+    email admin@yourdomain.com
+}
+
+# -------------------------------------------------------------
+# 1. HTTP RPC Subdomain (rpc.yourdomain.com -> 8545)
+# -------------------------------------------------------------
+rpc.yourdomain.com {
+    encode gzip zstd
+
+    # CORS Headers for Web3 Frontends
+    header Access-Control-Allow-Origin "*"
+    header Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    header Access-Control-Allow-Headers "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+
+    # Reverse Proxy to Geth HTTP RPC
+    reverse_proxy validator1:8545 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+    }
+}
+
+# -------------------------------------------------------------
+# 2. WebSocket RPC Subdomain (ws.yourdomain.com -> 8546)
+# -------------------------------------------------------------
+ws.yourdomain.com {
+    encode gzip zstd
+
+    # Reverse Proxy to Geth WebSocket RPC with Keep-Alive
+    reverse_proxy validator1:8546 {
+        header_up Host {host}
+        header_up Upgrade {http.request.header.Upgrade}
+        header_up Connection {http.request.header.Connection}
+    }
+}
+
+# -------------------------------------------------------------
+# 3. Block Explorer Subdomain (explorer.yourdomain.com -> 4000)
+# -------------------------------------------------------------
+explorer.yourdomain.com {
+    encode gzip zstd
+
+    # Reverse Proxy to Blockscout Explorer
+    reverse_proxy blockscout:4000 {
+        header_up Host {host}
+    }
+}

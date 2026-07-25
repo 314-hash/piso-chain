@@ -1,0 +1,27 @@
+# BSC Geth Configuration for PISO Chain Mainnet
+
+[Eth]
+NetworkId = 2026001
+SyncMode = "full"
+NoPruning = true
+
+[Eth.TxPool]
+NoLocals = false
+PriceLimit = 1000000000
+PriceBump = 10
+
+[Node]
+DataDir = "/root/.ethereum"
+HTTPHost = "0.0.0.0"
+HTTPPort = 8545
+HTTPVirtualHosts = ["*"]
+HTTPCors = ["*"]
+HTTPModules = ["eth", "net", "web3", "personal", "parlia", "miner", "txpool"]
+WSHost = "0.0.0.0"
+WSPort = 8546
+WSOrigins = ["*"]
+WSModules = ["eth", "net", "web3", "parlia"]
+
+[Node.P2P]
+MaxPeers = 50
+ListenAddr = ":30303"

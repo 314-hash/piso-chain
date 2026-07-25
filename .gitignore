@@ -1,0 +1,54 @@
+# Security, Secrets & Keys (NEVER COMMIT SENSITIVE FILES)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.keystore
+genesis/key.txt
+genesis/password.txt
+genesis/jwt.hex
+keystore/
+docker/keystore/
+secrets/
+
+# Python & Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+
+# Node.js & Hardhat Smart Contract Build Artifacts
+node_modules/
+artifacts/
+cache/
+typechain/
+typechain-types/
+coverage/
+coverage.json
+.next/
+dist/
+out/
+
+# Database & Chain Node Data
+geth-data/
+postgres_data/
+redis_data/
+explorer/data/
+docker/data/
+data/
+*.ldb
+
+# Logs & Temporary / OS Files
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+

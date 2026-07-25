@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PISO Chain - L1 Mainnet & Validator Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module">
+        import { createPublicClient, http, formatEther, parseEther } from 'https://esm.sh/viem@2.7.0';
+        window.viem = { createPublicClient, http, formatEther, parseEther };
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation (Desktop + Mobile Drawer) -->
+        <aside class="sidebar" id="sidebar-drawer">
+            <div class="logo-area">
+                <div class="logo-icon">⚡</div>
+                <div class="logo-text">PISO <span>CHAIN</span></div>
+                <button class="close-drawer-btn" id="close-drawer">✕</button>
+            </div>
+            <nav class="nav-menu">
+                <a href="#overview" class="nav-item active" id="nav-overview">
+                    <span class="nav-icon">📊</span> Overview
+                </a>
+                <a href="#viem" class="nav-item" id="nav-viem">
+                    <span class="nav-icon">⚡</span> Viem Web3 SDK
+                </a>
+                <a href="#validators" class="nav-item" id="nav-validators">
+                    <span class="nav-icon">🛡️</span> Validators
+                </a>
+                <a href="#explorer" class="nav-item" id="nav-explorer">
+                    <span class="nav-icon">🔍</span> Explorer & RPC
+                </a>
+                <a href="#bridge" class="nav-item" id="nav-bridge">
+                    <span class="nav-icon">🌉</span> Bridge
+                </a>
+                <a href="#recovery" class="nav-item" id="nav-recovery">
+                    <span class="nav-icon">🔑</span> Wallet Recovery
+                </a>
+            </nav>
+            <div class="network-status-badge">
+                <span class="pulse-dot green"></span>
+                <div class="badge-info">
+                    <span class="network-name">Mainnet Parlia</span>
+                    <span class="chain-id">Chain ID: 2026001</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Sidebar Mobile Overlay -->
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+
+        <!-- Main Content Body -->
+        <main class="main-content">
+            <!-- Header Bar with Mobile Hamburger -->
+            <header class="top-header">
+                <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                <div class="search-bar-container">
+                    <input type="text" id="global-search" placeholder="Search Block #, Tx Hash, or Account Address..." />
+                    <button id="search-btn" class="btn-primary">Search</button>
+                </div>
+                <div class="header-actions">
+                    <div class="rpc-status" id="rpc-indicator">
+                        <span class="dot green"></span> RPC Online (8545)
+                    </div>
+                    <button class="btn-connect-wallet" id="btn-connect">Connect Wallet</button>
+                </div>
+            </header>
+
+            <!-- Metrics Cards Grid -->
+            <section class="kpi-grid" id="section-overview">
+                <div class="kpi-card" id="card-block">
+                    <div class="kpi-title">Current Block Height</div>
+                    <div class="kpi-value" id="val-block-number">#1,248</div>
+                    <div class="kpi-subtext">Avg Block Time: <span class="highlight">3.0s</span></div>
+                </div>
+
+                <div class="kpi-card" id="card-tps">
+                    <div class="kpi-title">Transactions / sec (TPS)</div>
+                    <div class="kpi-value" id="val-tps">48.5</div>
+                    <div class="kpi-subtext">Max Peak: <span class="highlight">2,500 TPS</span></div>
+                </div>
+
+                <div class="kpi-card" id="card-validators">
+                    <div class="kpi-title">Active Validators</div>
+                    <div class="kpi-value" id="val-validators">1 / 21</div>
+                    <div class="kpi-subtext">Parlia Consensus</div>
+                </div>
+
+                <div class="kpi-card" id="card-supply">
+                    <div class="kpi-title">Total PISO Supply</div>
+                    <div class="kpi-value" id="val-supply">10.0B PISO</div>
+                    <div class="kpi-subtext">Native Layer 1 Coin</div>
+                </div>
+            </section>
+
+            <!-- Viem Web3 Examples & Client Section -->
+            <section class="viem-section" id="section-viem">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>⚡ Viem Web3 Integration & Playground</h3>
+                        <span class="badge-tag">Powered by Viem v2.7</span>
+                    </div>
+                    <p class="tab-desc">High-performance EVM interactions powered by Viem `createPublicClient` and `createWalletClient` abstractions.</p>
+
+                    <div class="viem-grid">
+                        <div class="viem-box">
+                            <h4>1. Viem Public Client</h4>
+                            <button id="btn-viem-block" class="btn-sm">Get Latest Block via Viem</button>
+                            <button id="btn-viem-gas" class="btn-sm">Get Gas Price via Viem</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4>2. Viem Contract Reader</h4>
+                            <button id="btn-viem-staking" class="btn-sm font-mono">Read PISOStaking Total Stake</button>
+                        </div>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="viem-output-result">
+                        <pre>Viem Client initialized. Ready for calls...</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Transaction Throughput (24h)</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="txChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Gas Usage vs Gas Limit</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="gasChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Active Validators Table -->
+            <section class="data-grid-row" id="section-validators">
+                <div class="panel-card full-width">
+                    <div class="panel-header">
+                        <h3>Active Validator Nodes</h3>
+                        <span class="badge-tag">Parlia PoSA</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="validators-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Validator Address</th>
+                                    <th>Total Stake</th>
+                                    <th>Blocks Produced</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="validator-rows">
+                                <tr>
+                                    <td>#1</td>
+                                    <td class="mono font-bold">0xE3aFaeC0677A6C34CC190B1f8f68f1d712D45614</td>
+                                    <td>10,000,000,000 PISO</td>
+                                    <td>1,248</td>
+                                    <td><span class="badge-status active">Active Signer</span></td>
+                                    <td><button class="btn-sm" id="btn-delegate">Delegate</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RPC Query Inspector -->
+            <section class="rpc-inspector-section" id="section-explorer">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>JSON-RPC Live Query Console</h3>
+                        <span class="mono-text">Endpoint: https://piso-rpc.loca.lt</span>
+                    </div>
+                    <div class="rpc-form">
+                        <div class="form-group">
+                            <label>Account Address to Query:</label>
+                            <input type="text" id="rpc-addr-input" value="0xE3aFaeC0677A6C34CC190B1f8f68f1d712D45614" class="mono-input" />
+                        </div>
+                        <button id="btn-check-balance" class="btn-primary">Query Balance & Block</button>
+                    </div>
+                    <div class="rpc-output-box" id="rpc-output-result">
+                        <pre>Ready for JSON-RPC query execution...</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Wallet Recovery & Security Center -->
+            <section class="wallet-recovery-section" id="section-recovery">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>🔒 Wallet Recovery & Account Security Center</h3>
+                        <span class="badge-tag green">BIP-39 / UTC Keystore / Social Recovery</span>
+                    </div>
+
+                    <div class="recovery-tabs">
+                        <button class="tab-btn active" id="tab-seed">BIP-39 Mnemonic Seed</button>
+                        <button class="tab-btn" id="tab-keystore">JSON Keystore Upload</button>
+                        <button class="tab-btn" id="tab-social">Guardian Social Recovery</button>
+                    </div>
+
+                    <!-- Tab 1: Seed Phrase Recovery -->
+                    <div class="tab-content" id="content-seed">
+                        <p class="tab-desc">Enter your 12 or 24-word BIP-39 recovery seed phrase to restore your PISO Chain account access locally.</p>
+                        <div class="form-group">
+                            <label>Secret Recovery Phrase (12/24 words):</label>
+                            <textarea id="mnemonic-input" placeholder="e.g. apple banana cherry dog elephant fox grape horse tiger zebra ..." rows="3" class="mono-input"></textarea>
+                        </div>
+                        <button id="btn-recover-seed" class="btn-primary">Restore Account from Seed</button>
+                    </div>
+
+                    <!-- Tab 2: Keystore Upload -->
+                    <div class="tab-content hidden" id="content-keystore">
+                        <p class="tab-desc">Upload an encrypted Web3/Geth UTC Keystore JSON file and enter your password to recover private keys.</p>
+                        <div class="form-group">
+                            <label>Keystore File (.json):</label>
+                            <input type="file" id="keystore-file-input" accept=".json" class="file-input" />
+                        </div>
+                        <div class="form-group">
+                            <label>Keystore Password:</label>
+                            <input type="password" id="keystore-pass-input" placeholder="Enter password..." class="mono-input" />
+                        </div>
+                        <button id="btn-recover-keystore" class="btn-primary">Decrypt & Restore Keystore</button>
+                    </div>
+
+                    <!-- Tab 3: Social Recovery -->
+                    <div class="tab-content hidden" id="content-social">
+                        <p class="tab-desc">ERC-4337 Smart Contract Guardian Recovery. Initiates key rotation when 2 out of 3 assigned guardians approve.</p>
+                        <div class="form-group">
+                            <label>Target Wallet Address to Recover:</label>
+                            <input type="text" id="social-target-addr" placeholder="0x..." class="mono-input" />
+                        </div>
+                        <div class="form-group">
+                            <label>Proposed New Owner Address:</label>
+                            <input type="text" id="social-new-owner" placeholder="0x..." class="mono-input" />
+                        </div>
+                        <button id="btn-initiate-social-recovery" class="btn-primary">Submit Guardian Approval Vote</button>
+                    </div>
+
+                    <!-- Recovery Output Box -->
+                    <div class="rpc-output-box margin-top" id="recovery-output-result">
+                        <pre>Wallet recovery status ready...</pre>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
