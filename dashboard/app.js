@@ -75,7 +75,7 @@ function setupEventListeners() {
         }
     });
 
-    // Mobile Hamburger Navigation Drawer
+    // Mobile Hamburger Navigation Drawer & Responsive Nav Item Clicks
     const sidebar = document.getElementById("sidebar-drawer");
     const overlay = document.getElementById("drawer-overlay");
     const burger = document.getElementById("hamburger-btn");
@@ -94,6 +94,28 @@ function setupEventListeners() {
     burger?.addEventListener("click", () => toggleDrawer(true));
     closeBtn?.addEventListener("click", () => toggleDrawer(false));
     overlay?.addEventListener("click", () => toggleDrawer(false));
+
+    // Handle smooth scrolling & auto-closing drawer when ANY feature link is clicked
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach(item => {
+        item.addEventListener("click", (e) => {
+            navItems.forEach(nav => nav.classList.remove("active"));
+            item.classList.add("active");
+            
+            // Auto close drawer on mobile screen click
+            toggleDrawer(false);
+
+            const targetId = item.getAttribute("href");
+            if (targetId && targetId.startsWith("#")) {
+                const targetSec = document.querySelector(targetId) || document.getElementById("section-" + targetId.replace("#", ""));
+                if (targetSec) {
+                    e.preventDefault();
+                    targetSec.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
+        });
+    });
+
 
     // Recovery Tab Switcher
     const tabs = ["seed", "keystore", "social"];
