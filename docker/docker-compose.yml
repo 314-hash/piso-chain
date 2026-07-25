@@ -32,17 +32,38 @@ services:
       - --miner.gaslimit=30000000
       - --allow-insecure-unlock
 
-  # Blockscout / Lite Block Explorer
+  # Blockscout PostgreSQL Database
+  blockscout-db:
+    image: postgres:15-alpine
+    container_name: piso-blockscout-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: blockscout
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: piso_password_123
+    ports:
+      - "5433:5432"
+
+  # Blockscout Full-Featured L1 Block Explorer
   explorer:
-    image: alethio/ethereum-lite-explorer:latest
+    image: blockscout/blockscout:latest
     container_name: piso-explorer
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "8080:4000"
     environment:
-      - APP_NODE_URL=http://localhost:8545
+      - ETHEREUM_JSONRPC_VARIANT=geth
+      - ETHEREUM_JSONRPC_HTTP_URL=http://validator1:8545
+      - ETHEREUM_JSONRPC_WS_URL=ws://validator1:8546
+      - DATABASE_URL=postgresql://postgres:piso_password_123@blockscout-db:5432/blockscout
+      - NETWORK=PISO Chain Devnet
+      - SUBNETWORK=PISO
+      - CHAIN_ID=2026001
+      - COIN=PISO
     depends_on:
       - validator1
+      - blockscout-db
+
 
   # Nginx Reverse Proxy for Public Subdomains (RPC, WS, Explorer)
   nginx-proxy:
