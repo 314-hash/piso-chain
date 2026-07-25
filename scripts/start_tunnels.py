@@ -20,7 +20,8 @@ def check_npx():
 def launch_tunnel(port, subdomain, service_name):
     cmd = ["npx", "localtunnel", "--port", str(port), "--subdomain", subdomain]
     print(f"[*] Starting tunnel for {service_name} (Port {port}) on subdomain: {subdomain}.loca.lt ...")
-    return subprocess.Popen(cmd)
+    return subprocess.Popen(cmd, shell=True)
+
 
 if __name__ == "__main__":
     check_npx()
