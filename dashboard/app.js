@@ -76,7 +76,8 @@ function setupEventListeners() {
                             symbol: "PISO",
                             decimals: 18
                         },
-                        rpcUrls: ["https://piso-rpc.loca.lt", "http://localhost:8545"],
+                        rpcUrls: ["http://127.0.0.1:8545", "http://localhost:8545", "https://piso-rpc.loca.lt"],
+
                         blockExplorerUrls: ["https://piso-explorer.loca.lt", "https://piso-blockchain.vercel.app/"]
                     }]
                 });
