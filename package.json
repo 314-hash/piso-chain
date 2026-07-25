@@ -1,0 +1,23 @@
+{
+  "name": "piso-chain",
+  "version": "1.0.0",
+  "description": "PISO Chain - Layer 1 Blockchain Smart Contracts and Tooling",
+  "main": "hardhat.config.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test"
+  },
+  "keywords": [
+    "piso",
+    "blockchain",
+    "evm",
+    "hardhat",
+    "smart-contracts"
+  ],
+  "author": "314-hash",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.0"
+  }
+}
