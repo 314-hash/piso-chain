@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "piso-blockchain",
+  "cleanUrls": true,
+  "outputDirectory": "dashboard",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

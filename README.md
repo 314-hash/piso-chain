@@ -9,6 +9,7 @@
 | Parameter | Specification |
 | :--- | :--- |
 | **Chain Name** | PISO Chain |
+| **Web Dashboard** | [`https://piso-blockchain.vercel.app/`](https://piso-blockchain.vercel.app/) |
 | **Native Coin** | PISO |
 | **Symbol** | PISO |
 | **Decimals** | 18 |
@@ -18,6 +19,7 @@
 | **HTTP RPC Port** | `8545` |
 | **WebSocket Port** | `8546` |
 | **P2P Port** | `30303` |
+
 
 ---
 

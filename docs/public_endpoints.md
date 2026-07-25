@@ -13,9 +13,11 @@ Your **PISO Chain Layer 1 network** is now live and accessible publicly on the i
 | **Symbol** | PISO |
 | **Decimals** | 18 |
 | **Chain ID** | `2026001` (`0x1EE349`) |
+| **Web Dashboard (Vercel)** | [`https://piso-blockchain.vercel.app/`](https://piso-blockchain.vercel.app/) |
 | **HTTP RPC URL** | `https://piso-rpc.loca.lt` |
 | **WebSocket RPC URL** | `wss://piso-ws.loca.lt` |
 | **Block Explorer** | `https://piso-explorer.loca.lt` |
+
 
 ---
 
