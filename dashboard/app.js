@@ -209,8 +209,13 @@ function setupEventListeners() {
 
                 box.innerHTML = `<pre class="green-text">✓ [Native PISO Transfer Confirmed!]\nTx Hash: ${txHash}\nRecipient: ${toAddr}\nAmount Transferred: ${amountPiso} PISO\nStatus: 100% Success (Layer 1 Transfer)</pre>`;
             } catch (err) {
-                box.innerHTML = `<pre style="color:#ef4444;">Transfer Error: ${err.message}</pre>`;
+                if (err.message.includes("returned too many errors") || err.message.includes("eth_getBlockByNumber")) {
+                    box.innerHTML = `<pre style="color:#f59e0b;">⚠️ Localtunnel Rate-Limit Detected!\nMetaMask background polling was rate-limited by loca.lt.\n\n👉 Solution: Change your MetaMask RPC URL to: http://127.0.0.1:8545 (Zero rate limits & 0ms latency!)</pre>`;
+                } else {
+                    box.innerHTML = `<pre style="color:#ef4444;">Transfer Error: ${err.message}</pre>`;
+                }
             }
+
         } else {
             promptMobileWalletRedirect();
         }
