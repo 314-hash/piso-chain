@@ -62,6 +62,33 @@ function setupEventListeners() {
     });
 
 
+    // 1-Click Add PISO Chain to MetaMask
+    document.getElementById("btn-add-metamask")?.addEventListener("click", async () => {
+        if (window.ethereum) {
+            try {
+                await window.ethereum.request({
+                    method: "wallet_addEthereumChain",
+                    params: [{
+                        chainId: "0x1EE349", // 2026001 in hexadecimal
+                        chainName: "PISO Chain Devnet",
+                        nativeCurrency: {
+                            name: "PISO",
+                            symbol: "PISO",
+                            decimals: 18
+                        },
+                        rpcUrls: ["https://piso-rpc.loca.lt", "http://localhost:8545"],
+                        blockExplorerUrls: ["https://piso-explorer.loca.lt", "https://piso-blockchain.vercel.app/"]
+                    }]
+                });
+                alert("✓ PISO Chain successfully added to MetaMask!");
+            } catch (err) {
+                alert("MetaMask Add Network Error: " + err.message);
+            }
+        } else {
+            alert("MetaMask is not installed in your browser!");
+        }
+    });
+
     document.getElementById("btn-connect").addEventListener("click", () => {
         if (window.ethereum) {
             window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -74,6 +101,7 @@ function setupEventListeners() {
             alert("MetaMask is not installed. Please install MetaMask to connect your wallet.");
         }
     });
+
 
     // Mobile Hamburger Navigation Drawer & Responsive Nav Item Clicks
     const sidebar = document.getElementById("sidebar-drawer");
