@@ -219,7 +219,58 @@
                         <pre>PISOAIOracle active. Last state sync: Just now.</pre>
                     </div>
                 </div>
+            <!-- 💸 Native PISO & ERC-20 Token Transfer Section -->
+            <section class="transfer-section" id="section-transfer">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>💸 Transfer PISO Coins & ERC-20 Tokens</h3>
+                        <span class="badge-tag green">Layer 1 Direct Transfer</span>
+                    </div>
+                    <p class="tab-desc">Send Native PISO Coins (no contract address required) or Custom ERC-20 Tokens directly from your Web3 wallet.</p>
+
+                    <div class="recovery-tabs">
+                        <button class="tab-btn active" id="tab-send-native">1. Send Native PISO (No Contract Address)</button>
+                        <button class="tab-btn" id="tab-send-erc20">2. Send Custom ERC-20 Token (With Contract Address)</button>
+                    </div>
+
+                    <!-- Mode 1: Send Native PISO Coin -->
+                    <div class="tab-content" id="content-send-native">
+                        <p class="tab-desc font-sm">Native PISO coins are transferred directly from wallet to wallet on the Layer 1 protocol.</p>
+                        <div class="form-group">
+                            <label>Recipient Wallet Address (0x...):</label>
+                            <input type="text" id="native-send-to" placeholder="0x1821F246a27287a2187E1D634B8883030fA14731" class="mono-input" />
+                        </div>
+                        <div class="form-group">
+                            <label>Amount in PISO Coins:</label>
+                            <input type="number" id="native-send-amount" placeholder="e.g. 5.0 PISO" class="mono-input" />
+                        </div>
+                        <button id="btn-send-native-piso" class="btn-primary">Send Native PISO Coin</button>
+                    </div>
+
+                    <!-- Mode 2: Send Custom ERC-20 Token -->
+                    <div class="tab-content hidden" id="content-send-erc20">
+                        <p class="tab-desc font-sm">Custom ERC-20 tokens require the deployed Smart Contract Address to execute `transfer(to, amount)`.</p>
+                        <div class="form-group">
+                            <label>ERC-20 Token Contract Address (0x...):</label>
+                            <input type="text" id="erc20-contract-addr" placeholder="0xDeployedTokenContractAddress..." class="mono-input" />
+                        </div>
+                        <div class="form-group">
+                            <label>Recipient Wallet Address (0x...):</label>
+                            <input type="text" id="erc20-send-to" placeholder="0xRecipientWalletAddress..." class="mono-input" />
+                        </div>
+                        <div class="form-group">
+                            <label>Token Amount:</label>
+                            <input type="number" id="erc20-send-amount" placeholder="e.g. 100 Tokens" class="mono-input" />
+                        </div>
+                        <button id="btn-send-erc20-token" class="btn-primary">Send Custom ERC-20 Token</button>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="transfer-output-result">
+                        <pre>Ready for PISO transfer execution...</pre>
+                    </div>
+                </div>
             </section>
+
 
 
             <!-- Viem Web3 Examples & Client Section -->
