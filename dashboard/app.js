@@ -147,18 +147,24 @@ function setupEventListeners() {
     });
 
     /**
-     * Mobile Deep Link Helper for Users on Mobile Web Browsers
+     * Mobile Deep Link Helper: Opens directly inside installed MetaMask App
+     * Uses metamask://dapp/ native URI scheme to prevent Play Store redirects
      */
     function promptMobileWalletRedirect() {
-        const currentUrl = encodeURIComponent(window.location.href);
-        const userChoice = confirm(
-            "Web3 Provider not detected in this browser!\n\n" +
-            "Would you like to open PISO Chain in MetaMask Mobile App?"
-        );
-        if (userChoice) {
-            window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
-        }
+        const targetHost = window.location.host || "piso-blockchain.vercel.app";
+        const nativeAppUri = "metamask://dapp/" + targetHost;
+
+        // Try direct native app scheme first
+        window.location.href = nativeAppUri;
+
+        // Fallback after 1.5 seconds if native scheme fails
+        setTimeout(() => {
+            if (!document.hidden) {
+                window.location.href = "https://metamask.app.link/dapp/" + targetHost;
+            }
+        }, 1500);
     }
+
 
     // Helper to Import Custom ERC-20 Tokens into MetaMask via wallet_watchAsset
     window.addTokenToMetaMask = async function(tokenAddress, tokenSymbol = "PISO", tokenDecimals = 18) {
