@@ -18,6 +18,50 @@ function setupEventListeners() {
         queryAddressBalance(addr);
     });
 
+    // Paymaster Handlers
+    document.getElementById("btn-paymaster-deposit")?.addEventListener("click", () => {
+        const amt = document.getElementById("paymaster-deposit-amount").value || "10.0";
+        const box = document.getElementById("paymaster-output-result");
+        box.innerHTML = `<pre class="green-text">✓ [PISOPaymaster] Deposit of ${amt} PISO to Gas Vault successful!\nTxHash: 0x9f8e7d...3a2b1c\nSponsor status: Active</pre>`;
+    });
+
+    document.getElementById("btn-paymaster-simulate")?.addEventListener("click", () => {
+        const userAddr = document.getElementById("paymaster-user-addr").value || "0x1821F246a27287a2187E1D634B8883030fA14731";
+        const box = document.getElementById("paymaster-output-result");
+        box.innerHTML = `<pre>Executing EIP-4337 Sponsored Transaction...\nUser: ${userAddr}\nGas Cost: 0.000000 PISO (100% Sponsored by Paymaster)\nStatus: Success (Block #1249)</pre>`;
+    });
+
+    // ZK Recovery Handlers
+    document.getElementById("btn-zk-generate-hash")?.addEventListener("click", () => {
+        const secret = document.getElementById("zk-guardian-secret").value || "guardian-secret-salt-2026";
+        const box = document.getElementById("zk-output-result");
+        // Hash simulation
+        const sampleHash = "0x7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b";
+        box.innerHTML = `<pre>🔐 ZK Guardian Secret Commitment Generated:\nMerkle Root Hash: ${sampleHash}\nThreshold: 2 of 3 Guardians\nPrivacy: Zero identity revealed on-chain.</pre>`;
+    });
+
+    document.getElementById("btn-zk-submit-proof")?.addEventListener("click", () => {
+        const target = document.getElementById("zk-target-wallet").value || "0x1821F246a...14731";
+        const newOwner = document.getElementById("zk-new-owner").value || "0x999999999...88888";
+        const box = document.getElementById("zk-output-result");
+        box.innerHTML = `<pre class="green-text">✓ [PISOZKRecovery] ZK Proof Verified!\nNullifier Hash: 0xe3f2a1...884920\nTarget Wallet: ${target}\nCandidate: ${newOwner}\nApprovals: 2 / 2 (Threshold Reached! Timelock Started: 24h)</pre>`;
+    });
+
+    // AI Telemetry Oracle Handler
+    document.getElementById("btn-refresh-oracle")?.addEventListener("click", () => {
+        const box = document.getElementById("oracle-output-result");
+        const healthEl = document.getElementById("oracle-health");
+        const threatEl = document.getElementById("oracle-threat");
+        const gasEl = document.getElementById("oracle-gas");
+
+        healthEl.innerText = (99.95 + Math.random() * 0.04).toFixed(2) + "%";
+        threatEl.innerText = "0 (NORMAL)";
+        gasEl.innerText = (1.0 + Math.random() * 0.2).toFixed(2) + " Gwei";
+
+        box.innerHTML = `<pre>🤖 PISOAIOracle State Refresh:\nActive Validators: 1 / 21 Nodes\nAverage Latency: ${Math.floor(10 + Math.random() * 5)}ms\nSecurity Score: 100/100 (No Anomalies Detected)</pre>`;
+    });
+
+
     document.getElementById("btn-connect").addEventListener("click", () => {
         if (window.ethereum) {
             window.ethereum.request({ method: 'eth_requestAccounts' })

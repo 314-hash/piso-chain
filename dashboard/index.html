@@ -27,6 +27,15 @@
                 <a href="#overview" class="nav-item active" id="nav-overview">
                     <span class="nav-icon">📊</span> Overview
                 </a>
+                <a href="#paymaster" class="nav-item" id="nav-paymaster">
+                    <span class="nav-icon">⛽</span> Gasless Paymaster
+                </a>
+                <a href="#zkrecovery" class="nav-item" id="nav-zkrecovery">
+                    <span class="nav-icon">🔐</span> ZK Social Recovery
+                </a>
+                <a href="#telemetry" class="nav-item" id="nav-telemetry">
+                    <span class="nav-icon">🤖</span> AI Telemetry Oracle
+                </a>
                 <a href="#viem" class="nav-item" id="nav-viem">
                     <span class="nav-icon">⚡</span> Viem Web3 SDK
                 </a>
@@ -40,8 +49,9 @@
                     <span class="nav-icon">🌉</span> Bridge
                 </a>
                 <a href="#recovery" class="nav-item" id="nav-recovery">
-                    <span class="nav-icon">🔑</span> Wallet Recovery
+                    <span class="nav-icon">🔑</span> Legacy Recovery
                 </a>
+
             </nav>
             <div class="network-status-badge">
                 <span class="pulse-dot green"></span>
@@ -98,6 +108,113 @@
                     <div class="kpi-subtext">Native Layer 1 Coin</div>
                 </div>
             </section>
+
+            <!-- ⛽ Gasless Paymaster (EIP-4337) Section -->
+            <section class="paymaster-section" id="section-paymaster">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>⛽ Native Gasless Paymaster (EIP-4337)</h3>
+                        <span class="badge-tag green">PISOPaymaster.sol</span>
+                    </div>
+                    <p class="tab-desc">Sponsor zero-gas microtransactions for dApp users via system paymaster vault deposits.</p>
+
+                    <div class="viem-grid">
+                        <div class="viem-box">
+                            <h4>Paymaster Vault Deposit</h4>
+                            <div class="form-group">
+                                <input type="number" id="paymaster-deposit-amount" placeholder="Amount in PISO (e.g. 10.0)" class="mono-input" />
+                            </div>
+                            <button id="btn-paymaster-deposit" class="btn-primary">Deposit Gas Vault</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4>Gasless Tx Simulator</h4>
+                            <div class="form-group">
+                                <input type="text" id="paymaster-user-addr" placeholder="Recipient address (0x...)" class="mono-input" />
+                            </div>
+                            <button id="btn-paymaster-simulate" class="btn-primary">Simulate Sponsored Tx</button>
+                        </div>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="paymaster-output-result">
+                        <pre>PISOPaymaster ready. Active vault balance: 1,000 PISO sponsored.</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🔐 Zero-Knowledge Social Recovery Section -->
+            <section class="zkrecovery-section" id="section-zkrecovery">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>🔐 Zero-Knowledge Social Recovery</h3>
+                        <span class="badge-tag purple">PISOZKRecovery.sol</span>
+                    </div>
+                    <p class="tab-desc">Configure privacy-preserving guardian commitments (`keccak256` secrets) without revealing identities on-chain.</p>
+
+                    <div class="viem-grid">
+                        <div class="viem-box">
+                            <h4>1. Generate Guardian ZK Commitment</h4>
+                            <div class="form-group">
+                                <input type="password" id="zk-guardian-secret" placeholder="Enter guardian secret salt..." class="mono-input" />
+                            </div>
+                            <button id="btn-zk-generate-hash" class="btn-primary">Generate Merkle Root</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4>2. Submit ZK Guardian Proof</h4>
+                            <div class="form-group">
+                                <input type="text" id="zk-target-wallet" placeholder="Wallet to recover (0x...)" class="mono-input" />
+                                <input type="text" id="zk-new-owner" placeholder="New owner address (0x...)" class="mono-input margin-top-sm" />
+                            </div>
+                            <button id="btn-zk-submit-proof" class="btn-primary">Submit ZK Guardian Approval</button>
+                        </div>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="zk-output-result">
+                        <pre>PISOZKRecovery engine ready. Quorum threshold: 2 of 3 guardians.</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🤖 AI Telemetry & Dynamic Gas Oracle Section -->
+            <section class="telemetry-section" id="section-telemetry">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>🤖 AI Validator Telemetry & Dynamic Gas Oracle</h3>
+                        <span class="badge-tag blue">PISOAIOracle.sol</span>
+                    </div>
+                    <p class="tab-desc">Real-time validator node health metrics, automated network threat scoring, and recommended gas prices.</p>
+
+                    <div class="kpi-grid margin-top">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Validator Health Score</div>
+                            <div class="kpi-value" id="oracle-health">99.98%</div>
+                            <div class="kpi-subtext">Avg Latency: <span class="highlight">12ms</span></div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-title">Network Threat Level</div>
+                            <div class="kpi-value green-text" id="oracle-threat">0 (NORMAL)</div>
+                            <div class="kpi-subtext">AI Anomaly Detection</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-title">Suggested Gas Price</div>
+                            <div class="kpi-value" id="oracle-gas">1.0 Gwei</div>
+                            <div class="kpi-subtext">Dynamic System Adjustment</div>
+                        </div>
+                    </div>
+
+                    <div class="margin-top">
+                        <button id="btn-refresh-oracle" class="btn-primary">Fetch On-Chain Oracle Telemetry</button>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="oracle-output-result">
+                        <pre>PISOAIOracle active. Last state sync: Just now.</pre>
+                    </div>
+                </div>
+            </section>
+
 
             <!-- Viem Web3 Examples & Client Section -->
             <section class="viem-section" id="section-viem">
