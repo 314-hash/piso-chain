@@ -63,45 +63,103 @@ function setupEventListeners() {
     });
 
 
-    // 1-Click Add PISO Chain to MetaMask
+    // PISO Chain Universal Network Specification
+    const PISO_CHAIN_SPEC = {
+        chainId: "0x1EE349", // 2026001 in hexadecimal
+        chainName: "PISO Chain Devnet",
+        nativeCurrency: {
+            name: "PISO",
+            symbol: "PISO",
+            decimals: 18
+        },
+        rpcUrls: ["https://piso-rpc-dev.loca.lt", "http://127.0.0.1:8545"],
+        blockExplorerUrls: ["https://piso-blockchain.vercel.app/"]
+    };
+
+    /**
+     * Automatically adds or switches wallet network to PISO Chain
+     */
+    async function autoAddAndSwitchPisoNetwork() {
+        if (!window.ethereum) return false;
+        try {
+            // Attempt switching first
+            await window.ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ chainId: PISO_CHAIN_SPEC.chainId }]
+            });
+            return true;
+        } catch (switchErr) {
+            // 4902 error code means chain has not been added to wallet yet
+            if (switchErr.code === 4902 || switchErr.message.includes("Unrecognized chain ID")) {
+                try {
+                    await window.ethereum.request({
+                        method: "wallet_addEthereumChain",
+                        params: [PISO_CHAIN_SPEC]
+                    });
+                    return true;
+                } catch (addErr) {
+                    console.error("Failed to add PISO network:", addErr);
+                    return false;
+                }
+            }
+            console.error("Failed to switch to PISO network:", switchErr);
+            return false;
+        }
+    }
+
+    // 1-Click Add PISO Chain to MetaMask / EVM Wallet
     document.getElementById("btn-add-metamask")?.addEventListener("click", async () => {
         if (window.ethereum) {
-            try {
-                await window.ethereum.request({
-                    method: "wallet_addEthereumChain",
-                    params: [{
-                        chainId: "0x1EE349", // 2026001 in hexadecimal
-                        chainName: "PISO Chain Devnet",
-                        nativeCurrency: {
-                            name: "PISO",
-                            symbol: "PISO",
-                            decimals: 18
-                        },
-                        rpcUrls: ["https://piso-rpc-dev.loca.lt", "http://127.0.0.1:8545", "http://localhost:8545"],
-
-
-                        blockExplorerUrls: ["https://piso-explorer.loca.lt", "https://piso-blockchain.vercel.app/"]
-                    }]
-                });
-                alert("✓ PISO Chain successfully added to MetaMask!");
-            } catch (err) {
-                alert("MetaMask Add Network Error: " + err.message);
+            const success = await autoAddAndSwitchPisoNetwork();
+            if (success) {
+                alert("✓ PISO Chain Devnet automatically added and selected in your wallet!");
             }
         } else {
-            alert("MetaMask is not installed in your browser!");
+            promptMobileWalletRedirect();
         }
     });
 
-    document.getElementById("btn-connect").addEventListener("click", () => {
+    // Responsive Connect Wallet Handler with Automatic RPC & Network Credential Configuration
+    const btnConnect = document.getElementById("btn-connect");
+    btnConnect?.addEventListener("click", async () => {
         if (window.ethereum) {
-            window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then(accs => {
-                    alert("Connected Wallet: " + accs[0]);
-                    document.getElementById("btn-connect").innerText = accs[0].slice(0, 6) + "..." + accs[0].slice(-4);
-                })
-                .catch(err => alert("Connection Error: " + err.message));
+            try {
+                // 1. Request wallet account authorization
+                const accs = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const account = accs[0];
+                
+                // 2. Automatically add & switch to PISO Chain RPC & Credentials
+                await autoAddAndSwitchPisoNetwork();
+
+                // 3. Update Responsive UI Button State
+                if (account) {
+                    btnConnect.innerText = "🟢 " + account.slice(0, 6) + "..." + account.slice(-4);
+                    btnConnect.style.background = "linear-gradient(135deg, #10b981, #059669)";
+                    btnConnect.title = "Connected Account: " + account;
+                    alert("✓ Wallet Connected & PISO Chain Configured!\nAccount: " + account + "\nChain ID: 2026001\nRPC: https://piso-rpc-dev.loca.lt");
+                }
+            } catch (err) {
+                alert("Wallet Connection Error: " + err.message);
+            }
         } else {
-            alert("MetaMask is not installed. Please install MetaMask to connect your wallet.");
+            promptMobileWalletRedirect();
+        }
+    });
+
+    /**
+     * Mobile Deep Link Helper for Users on Mobile Web Browsers
+     */
+    function promptMobileWalletRedirect() {
+        const currentUrl = encodeURIComponent(window.location.href);
+        const userChoice = confirm(
+            "Web3 Provider not detected in this browser!\n\n" +
+            "Would you like to open PISO Chain in MetaMask Mobile App?"
+        );
+        if (userChoice) {
+            window.location.href = "https://metamask.app.link/dapp/" + window.location.host;
+        }
+    }
+
     // Helper to Import Custom ERC-20 Tokens into MetaMask via wallet_watchAsset
     window.addTokenToMetaMask = async function(tokenAddress, tokenSymbol = "PISO", tokenDecimals = 18) {
         if (window.ethereum) {

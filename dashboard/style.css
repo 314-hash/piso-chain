@@ -518,8 +518,20 @@ body.dark-mode {
 
     .header-actions {
         display: flex;
-        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        width: 100%;
     }
+
+    .header-actions .btn-connect-wallet {
+        flex: 1 1 auto;
+        text-align: center;
+        justify-content: center;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
 
     .rpc-form {
         flex-direction: column;
