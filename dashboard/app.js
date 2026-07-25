@@ -1,6 +1,7 @@
 // PISO Chain Dashboard Logic & Live RPC Connector
 
-const RPC_URL = "https://piso-rpc.loca.lt";
+const RPC_URL = "https://piso-rpc-dev.loca.lt";
+
 const DEFAULT_VALIDATOR = "0xE3aFaeC0677A6C34CC190B1f8f68f1d712D45614";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -76,7 +77,8 @@ function setupEventListeners() {
                             symbol: "PISO",
                             decimals: 18
                         },
-                        rpcUrls: ["http://127.0.0.1:8545", "http://localhost:8545", "https://piso-rpc.loca.lt"],
+                        rpcUrls: ["https://piso-rpc-dev.loca.lt", "http://127.0.0.1:8545", "http://localhost:8545"],
+
 
                         blockExplorerUrls: ["https://piso-explorer.loca.lt", "https://piso-blockchain.vercel.app/"]
                     }]

@@ -14,7 +14,8 @@ Your **PISO Chain Layer 1 network** is now live and accessible publicly on the i
 | **Decimals** | 18 |
 | **Chain ID** | `2026001` (`0x1EE349`) |
 | **Web Dashboard (Vercel)** | [`https://piso-blockchain.vercel.app/`](https://piso-blockchain.vercel.app/) |
-| **HTTP RPC URL** | `https://piso-rpc.loca.lt` |
+| **HTTP RPC URL** | `https://piso-rpc-dev.loca.lt
+` |
 | **WebSocket RPC URL** | `wss://piso-ws.loca.lt` |
 | **Block Explorer** | `https://piso-explorer.loca.lt` |
 
@@ -28,7 +29,8 @@ To connect MetaMask or any EVM wallet (Rabby, Rainbow, Coinbase Wallet):
 1. Open **MetaMask** $\rightarrow$ Click Network Selector $\rightarrow$ **Add Network** $\rightarrow$ **Add network manually**.
 2. Fill in the network details:
    - **Network name:** `PISO Chain Devnet`
-   - **New RPC URL:** `https://piso-rpc.loca.lt`
+   - **New RPC URL:** `https://piso-rpc-dev.loca.lt
+`
    - **Chain ID:** `2026001`
    - **Currency symbol:** `PISO`
    - **Block explorer URL:** `https://piso-explorer.loca.lt`
@@ -42,7 +44,8 @@ To connect MetaMask or any EVM wallet (Rabby, Rainbow, Coinbase Wallet):
 ```python
 from web3 import Web3
 
-rpc_url = "https://piso-rpc.loca.lt"
+rpc_url = "https://piso-rpc-dev.loca.lt
+"
 w3 = Web3(Web3.HTTPProvider(rpc_url, request_kwargs={"headers": {"Bypass-Tunnel-Remainder": "true"}}))
 
 print("Connected:", w3.is_connected())
@@ -54,7 +57,8 @@ print("Latest Block:", w3.eth.block_number)
 ```javascript
 import { ethers } from "ethers";
 
-const provider = new ethers.JsonRpcProvider("https://piso-rpc.loca.lt");
+const provider = new ethers.JsonRpcProvider("https://piso-rpc-dev.loca.lt
+");
 const blockNumber = await provider.getBlockNumber();
 console.log("Current PISO Block:", blockNumber);
 ```

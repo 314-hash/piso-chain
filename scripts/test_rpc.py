@@ -7,7 +7,8 @@ import json
 import urllib.request
 import sys
 
-RPC_URL = "https://piso-rpc.loca.lt"
+RPC_URL = "https://piso-rpc-dev.loca.lt"
+
 VALIDATOR_ADDR = "0xE3aFaeC0677A6C34CC190B1f8f68f1d712D45614"
 
 def json_rpc(method, params=[]):
