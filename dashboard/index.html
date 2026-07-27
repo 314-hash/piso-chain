@@ -27,6 +27,9 @@
                 <a href="#overview" class="nav-item active" id="nav-overview">
                     <span class="nav-icon">📊</span> Overview
                 </a>
+                <a href="#faucet" class="nav-item" id="nav-faucet">
+                    <span class="nav-icon">🚰</span> Testnet Faucet
+                </a>
                 <a href="#paymaster" class="nav-item" id="nav-paymaster">
                     <span class="nav-icon">⛽</span> Gasless Paymaster
                 </a>
@@ -114,6 +117,29 @@
                     <div class="kpi-title">Total PISO Supply</div>
                     <div class="kpi-value" id="val-supply">10.0B PISO</div>
                     <div class="kpi-subtext">Native Layer 1 Coin</div>
+                </div>
+            </section>
+
+            <!-- 🚰 Rate-Limited Testnet Faucet Section -->
+            <section class="faucet-section" id="section-faucet">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>🚰 PISO Chain Rate-Limited Testnet Faucet</h3>
+                        <span class="badge-tag green">PISOFaucet.sol</span>
+                    </div>
+                    <p class="tab-desc">Claim 1 free native PISO coin for smart contract development and testing (24-hour rate limit per address).</p>
+
+                    <div class="form-group margin-top">
+                        <label>Target Wallet Address (0x...):</label>
+                        <input type="text" id="faucet-target-addr" placeholder="0x1821F246a27287a2187E1D634B8883030fA14731" class="mono-input" />
+                    </div>
+                    <div class="margin-top">
+                        <button id="btn-claim-faucet" class="btn-primary">🚰 Claim 1 PISO Testnet Coin</button>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="faucet-output-result">
+                        <pre>PISOFaucet vault ready. Vault Balance: 1,000,000 PISO. Rate limit: 24h.</pre>
+                    </div>
                 </div>
             </section>
 

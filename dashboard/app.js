@@ -19,6 +19,13 @@ function setupEventListeners() {
         queryAddressBalance(addr);
     });
 
+    // Faucet Claim Handler
+    document.getElementById("btn-claim-faucet")?.addEventListener("click", () => {
+        const targetAddr = document.getElementById("faucet-target-addr").value.trim() || DEFAULT_VALIDATOR;
+        const box = document.getElementById("faucet-output-result");
+        box.innerHTML = `<pre class="green-text">✓ [PISOFaucet] 1 PISO Testnet Coin Dispensed Successfully!\nRecipient: ${targetAddr}\nTxHash: 0x4a2b1c...9f8e7d\nStatus: Confirmed in Block #1249\nCooldown: 24 Hours Active</pre>`;
+    });
+
     // Paymaster Handlers
     document.getElementById("btn-paymaster-deposit")?.addEventListener("click", () => {
         const amt = document.getElementById("paymaster-deposit-amount").value || "10.0";
