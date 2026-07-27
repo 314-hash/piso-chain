@@ -1,0 +1,158 @@
+version: '3.8'
+
+services:
+  # =========================================================
+  # 1. PISO Chain Validator Node 1 (Primary Consensus Leader)
+  # =========================================================
+  validator1:
+    image: ghcr.io/bnb-chain/bsc:latest
+    container_name: piso-validator-1
+    user: root
+    restart: unless-stopped
+    volumes:
+      - ./genesis/genesis_multi_validator.json:/bsc/config/genesis.json:ro
+      - ./genesis/config.toml:/bsc/config/config.toml:ro
+      - ./docker/data/validator_1/password.txt:/bsc/config/password.txt:ro
+      - ./docker/data/validator_1/data:/root/.ethereum
+      - ./docker/data/validator_1/keystore:/root/.ethereum/keystore
+    ports:
+      - "8545:8545"   # HTTP RPC
+      - "8546:8546"   # WebSocket RPC
+      - "30303:30303" # P2P Port
+    command:
+      - --datadir=/root/.ethereum
+      - --config=/bsc/config/config.toml
+      - --networkid=2026001
+      - --http
+      - --http.addr=0.0.0.0
+      - --http.port=8545
+      - --http.corsdomain=*
+      - --http.api=eth,net,web3,parlia,miner,txpool
+      - --http.vhosts=*
+      - --ws
+      - --ws.addr=0.0.0.0
+      - --ws.port=8546
+      - --ws.origins=*
+      - --ws.api=eth,net,web3,parlia
+      - --mine
+      - --password=/bsc/config/password.txt
+      - --miner.gaslimit=30000000
+      - --allow-insecure-unlock
+
+  # =========================================================
+  # 2. PISO Chain Validator Node 2 (Peer Consensus Signer)
+  # =========================================================
+  validator2:
+    image: ghcr.io/bnb-chain/bsc:latest
+    container_name: piso-validator-2
+    user: root
+    restart: unless-stopped
+    volumes:
+      - ./genesis/genesis_multi_validator.json:/bsc/config/genesis.json:ro
+      - ./genesis/config.toml:/bsc/config/config.toml:ro
+      - ./docker/data/validator_2/password.txt:/bsc/config/password.txt:ro
+      - ./docker/data/validator_2/data:/root/.ethereum
+      - ./docker/data/validator_2/keystore:/root/.ethereum/keystore
+    ports:
+      - "30304:30304" # P2P Port
+    depends_on:
+      - validator1
+    command:
+      - --datadir=/root/.ethereum
+      - --config=/bsc/config/config.toml
+      - --networkid=2026001
+      - --port=30304
+      - --mine
+      - --password=/bsc/config/password.txt
+      - --miner.gaslimit=30000000
+      - --allow-insecure-unlock
+
+  # =========================================================
+  # 3. PISO Chain Validator Node 3 (Peer Consensus Signer)
+  # =========================================================
+  validator3:
+    image: ghcr.io/bnb-chain/bsc:latest
+    container_name: piso-validator-3
+    user: root
+    restart: unless-stopped
+    volumes:
+      - ./genesis/genesis_multi_validator.json:/bsc/config/genesis.json:ro
+      - ./genesis/config.toml:/bsc/config/config.toml:ro
+      - ./docker/data/validator_3/password.txt:/bsc/config/password.txt:ro
+      - ./docker/data/validator_3/data:/root/.ethereum
+      - ./docker/data/validator_3/keystore:/root/.ethereum/keystore
+    ports:
+      - "30305:30305" # P2P Port
+    depends_on:
+      - validator1
+    command:
+      - --datadir=/root/.ethereum
+      - --config=/bsc/config/config.toml
+      - --networkid=2026001
+      - --port=30305
+      - --mine
+      - --password=/bsc/config/password.txt
+      - --miner.gaslimit=30000000
+      - --allow-insecure-unlock
+
+  # =========================================================
+  # 4. Blockscout PostgreSQL Database
+  # =========================================================
+  blockscout-db:
+    image: postgres:15-alpine
+    container_name: piso-blockscout-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: blockscout
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: piso_password_123
+    volumes:
+      - ./explorer/data/db:/var/lib/postgresql/data
+
+  # =========================================================
+  # 5. Blockscout Redis
+  # =========================================================
+  blockscout-redis:
+    image: redis:7-alpine
+    container_name: piso-blockscout-redis
+    restart: unless-stopped
+
+  # =========================================================
+  # 6. Blockscout Explorer Multi-Node Observer
+  # =========================================================
+  explorer:
+    image: blockscout/blockscout:latest
+    container_name: piso-explorer
+    restart: unless-stopped
+    ports:
+      - "8080:4000"
+    environment:
+      - ETHEREUM_JSONRPC_VARIANT=geth
+      - ETHEREUM_JSONRPC_HTTP_URL=http://validator1:8545
+      - ETHEREUM_JSONRPC_WS_URL=ws://validator1:8546
+      - DATABASE_URL=postgresql://postgres:piso_password_123@blockscout-db:5432/blockscout
+      - REDIS_URL=redis://blockscout-redis:6379/0
+      - NETWORK=PISO Multi-Validator Chain
+      - SUBNETWORK=PISO
+      - CHAIN_ID=2026001
+      - COIN=PISO
+    depends_on:
+      - validator1
+      - blockscout-db
+      - blockscout-redis
+
+  # =========================================================
+  # 7. Caddy Gateway Load Balancer
+  # =========================================================
+  caddy-gateway:
+    image: caddy:latest
+    container_name: piso-caddy-gateway
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./gateway/Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - validator1
+      - explorer

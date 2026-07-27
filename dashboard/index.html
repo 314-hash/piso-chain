@@ -73,19 +73,21 @@
         <main class="main-content">
             <!-- Header Bar with Mobile Hamburger -->
             <header class="top-header">
-                <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                <div class="header-top-row">
+                    <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                    <div class="logo-text mobile-only-logo" style="font-size: 16px; font-weight: 800; color: var(--text-primary);">⚡ PISO <span style="color: var(--accent-cyan);">CHAIN</span></div>
+                </div>
                 <div class="search-bar-container">
-                    <input type="text" id="global-search" placeholder="Search Block #, Tx Hash, or Account Address..." />
+                    <input type="text" id="global-search" placeholder="Search Block #, Tx Hash, or Address..." />
                     <button id="search-btn" class="btn-primary">Search</button>
                 </div>
                 <div class="header-actions">
                     <div class="rpc-status" id="rpc-indicator">
-                        <span class="dot green"></span> RPC Online (8545)
+                        <span class="pulse-dot"></span> RPC Online (8545)
                     </div>
-                    <button class="btn-connect-wallet" id="btn-add-metamask" style="background: linear-gradient(135deg, #f97316, #ea580c); margin-right: 8px;">🦊 Add PISO to MetaMask</button>
+                    <button class="btn-connect-wallet" id="btn-add-metamask" style="background: linear-gradient(135deg, #f97316, #ea580c);">🦊 Add to MetaMask</button>
                     <button class="btn-connect-wallet" id="btn-connect">Connect Wallet</button>
                 </div>
-
             </header>
 
             <!-- Metrics Cards Grid -->
