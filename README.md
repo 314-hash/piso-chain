@@ -89,6 +89,7 @@ npm run test
 - [`PISOGovernor.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOGovernor.sol): On-chain DAO governance proposal & voting system.
 - [`PISOPaymaster.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOPaymaster.sol): Native EIP-4337 Account Abstraction gasless paymaster.
 - [`PISOZKRecovery.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOZKRecovery.sol): Zero-Knowledge privacy-preserving social guardian recovery.
+- [`PISOQuantumSecurity.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOQuantumSecurity.sol) (`0x...1002`): NIST FIPS 204 (ML-DSA / Dilithium) & Winternitz (W-OTS+) Post-Quantum Cryptography vault.
 - [`PISOAIOracle.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOAIOracle.sol): Dynamic AI network threat scoring & gas oracle.
 
 ---
@@ -104,7 +105,8 @@ Detailed guides are located in the [`docs/`](file:///c:/Users/janla/extropianjan
 5. ⚡ [`docs/DEVELOPER_API_AND_SDK.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/DEVELOPER_API_AND_SDK.md): Viem, Web3.py, & Ethers.js integration code.
 6. 🚰 [`docs/FAUCET_AND_RELAYER.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/FAUCET_AND_RELAYER.md): 1 PISO Faucet & Bridge Relayer daemon.
 7. 🔍 [`docs/BLOCKCHAIN_EXPLORER_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/BLOCKCHAIN_EXPLORER_GUIDE.md): Blockscout Block Explorer hosting & Sourcify verification.
-8. 🌐 [`docs/public_endpoints.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/public_endpoints.md): Network parameters and MetaMask connection guide.
+8. ⚛️ [`docs/QUANTUM_RESISTANCE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/QUANTUM_RESISTANCE.md): NIST FIPS 204 ML-DSA & W-OTS+ Post-Quantum Cryptography Guide.
+9. 🌐 [`docs/public_endpoints.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/public_endpoints.md): Network parameters and MetaMask connection guide.
 
 ---
 

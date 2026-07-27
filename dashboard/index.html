@@ -36,6 +36,9 @@
                 <a href="#zkrecovery" class="nav-item" id="nav-zkrecovery">
                     <span class="nav-icon">🔐</span> ZK Social Recovery
                 </a>
+                <a href="#quantum" class="nav-item" id="nav-quantum">
+                    <span class="nav-icon">⚛️</span> Quantum Vault
+                </a>
                 <a href="#telemetry" class="nav-item" id="nav-telemetry">
                     <span class="nav-icon">🤖</span> AI Telemetry Oracle
                 </a>
@@ -206,6 +209,39 @@
 
                     <div class="rpc-output-box margin-top" id="zk-output-result">
                         <pre>PISOZKRecovery engine ready. Quorum threshold: 2 of 3 guardians.</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ⚛️ Post-Quantum Security Vault (NIST FIPS 204 ML-DSA / W-OTS+) Section -->
+            <section class="quantum-section" id="section-quantum">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>⚛️ Post-Quantum Security Vault (NIST FIPS 204 ML-DSA)</h3>
+                        <span class="badge-tag purple">PISOQuantumSecurity.sol</span>
+                    </div>
+                    <p class="tab-desc">Protect your account against quantum computer attacks (Shor's algorithm) using Winternitz (W-OTS+) and Dilithium ML-DSA post-quantum signature commitments.</p>
+
+                    <div class="viem-grid">
+                        <div class="viem-box">
+                            <h4>1. Generate PQC Keypair Commitment</h4>
+                            <div class="form-group">
+                                <input type="password" id="pqc-seed-input" placeholder="Enter post-quantum seed salt..." class="mono-input" />
+                            </div>
+                            <button id="btn-pqc-generate" class="btn-primary">Generate W-OTS+ Key Commitment</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4>2. Register Quantum Vault On-Chain</h4>
+                            <div class="form-group">
+                                <input type="text" id="pqc-hash-input" placeholder="0xPQCCommitmentHash..." class="mono-input" />
+                            </div>
+                            <button id="btn-pqc-register" class="btn-primary">Register On-Chain Quantum Vault</button>
+                        </div>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="pqc-output-result">
+                        <pre>PISOQuantumSecurity engine active. NIST Category 5 (256-bit Quantum-Proof) ready.</pre>
                     </div>
                 </div>
             </section>
