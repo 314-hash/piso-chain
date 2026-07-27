@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: piso-rpc-service
+  namespace: piso-chain
+  labels:
+    app: piso-rpc
+spec:
+  type: ClusterIP
+  selector:
+    app: piso-validator
+  ports:
+    - name: http-rpc
+      port: 8545
+      targetPort: 8545
+    - name: ws-rpc
+      port: 8546
+      targetPort: 8546
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: piso-rpc-ingress
+  namespace: piso-chain
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+spec:
+  tls:
+    - hosts:
+        - rpc.piso.network
+      secretName: piso-rpc-tls-cert
+  rules:
+    - host: rpc.piso.network
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: piso-rpc-service
+                port:
+                  name: http-rpc

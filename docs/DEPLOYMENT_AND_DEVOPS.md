@@ -55,22 +55,30 @@ docker-compose -f docker-compose.multi-validator.yml logs -f
 | `30303` | TCP/UDP | Public Internet / Sentries | P2P Peer Communication |
 | `80 / 443` | TCP | Public Internet | Reverse Proxy Gateway |
 
+## ☸️ Kubernetes Cloud Production Manifests
+
+PISO Chain includes complete Kubernetes deployment manifests under [`k8s/`](file:///c:/Users/janla/extropianjanus/piso-chain/k8s):
+
+- [`k8s/validator-statefulset.yaml`](file:///c:/Users/janla/extropianjanus/piso-chain/k8s/validator-statefulset.yaml): Multi-validator StatefulSet with NVMe persistent volumes.
+- [`k8s/rpc-service.yaml`](file:///c:/Users/janla/extropianjanus/piso-chain/k8s/rpc-service.yaml): ClusterIP RPC service & NGINX Ingress with Let's Encrypt TLS cert-manager.
+
+Deploying to Kubernetes:
+
+```bash
+kubectl apply -f k8s/validator-statefulset.yaml
+kubectl apply -f k8s/rpc-service.yaml
+```
+
 ---
 
 ## 📊 Monitoring & Telemetry (Prometheus + Grafana)
 
-To collect real-time node performance and consensus health:
+Prometheus alerting rules are defined in [`monitoring/prometheus-alerts.yaml`](file:///c:/Users/janla/extropianjanus/piso-chain/monitoring/prometheus-alerts.yaml).
 
-1. Enable Geth metrics flag in node `config.toml` or launch flags:
+1. Enable Geth metrics flag:
    `--metrics --metrics.addr=0.0.0.0 --metrics.port=6060`
-2. Configure Prometheus target:
-```yaml
-scrape_configs:
-  - job_name: 'piso_validators'
-    static_configs:
-      - targets: ['validator1:6060', 'validator2:6060', 'validator3:6060']
-```
-3. Key Metrics to Alert On:
-   - `chain_head_block`: Ensure block height increases every 3s.
-   - `p2p_peers`: Alert if active peer count falls below 2.
-   - `consensus_missed_proposals`: Alert immediately if any node misses block signing slots.
+2. Key Alerting Rules ([`monitoring/prometheus-alerts.yaml`](file:///c:/Users/janla/extropianjanus/piso-chain/monitoring/prometheus-alerts.yaml)):
+   - `ValidatorNodeDown`: Triggers if validator instance is unreachable for >1m.
+   - `HighMissedBlockProposals`: Triggers if validator misses proposals (prevents jailing).
+   - `BlockProductionStalled`: Triggers if chain head height stops advancing for 30s.
+   - `LowP2PPeerCount`: Triggers if node has less than 2 P2P peers connected.

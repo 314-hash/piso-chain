@@ -1,0 +1,38 @@
+groups:
+  - name: piso_chain_validator_alerts
+    rules:
+      - alert: ValidatorNodeDown
+        expr: up{job="piso_validators"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "PISO Chain Validator Node Down"
+          description: "Validator instance {{ $labels.instance }} has been unreachable for more than 1 minute."
+
+      - alert: HighMissedBlockProposals
+        expr: rate(consensus_missed_proposals[5m]) > 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Validator Missing Block Proposals"
+          description: "Validator {{ $labels.instance }} is missing block proposals. Risk of on-chain jailing/slashing."
+
+      - alert: LowP2PPeerCount
+        expr: p2p_peers < 2
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low P2P Peer Count"
+          description: "Node {{ $labels.instance }} has less than 2 P2P peers connected."
+
+      - alert: BlockProductionStalled
+        expr: delta(chain_head_block[1m]) == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Block Production Stalled"
+          description: "PISO Chain head block height has not advanced for 30 seconds."
