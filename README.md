@@ -1,31 +1,34 @@
-# PISO Chain (Layer 1 Blockchain - Multi-Validator Enterprise Edition)
+# PISO Chain (Layer 1 Blockchain - Enterprise Multi-Validator Network)
 
-**PISO Chain** is a high-performance EVM-compatible Layer 1 blockchain powered by **BSC Parlia Proof-of-Staked-Authority (PoSA)** consensus, delivering 3-second block times, low-cost gas, enterprise multi-validator Byzantine fault tolerance, and native smart contract staking governance.
+[![CI/CD Pipeline](https://github.com/314-hash/piso-chain/actions/workflows/ci.yml/badge.svg)](https://github.com/314-hash/piso-chain/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![EVM Compatibility](https://img.shields.io/badge/EVM-Compatible-emerald.svg)](https://ethereum.org)
+[![Consensus: PoSA](https://img.shields.io/badge/Consensus-BSC_Parlia_PoSA-orange.svg)](https://github.com/bnb-chain/bsc)
+
+**PISO Chain** is a high-performance, EVM-compatible Layer 1 blockchain network built on **BSC Parlia Proof-of-Staked-Authority (PoSA)** consensus. It provides 3-second block finality, near-zero transaction fees, native account abstraction (EIP-4337), privacy-preserving Zero-Knowledge social recovery, an automated cross-chain relayer bridge, and an on-chain 1 PISO testnet faucet.
 
 ---
 
-## Network Parameters
+## 🌐 Network Specification & Endpoints
 
 | Parameter | Specification |
 | :--- | :--- |
 | **Chain Name** | PISO Chain |
+| **Chain ID** | `2026001` (`0x1EE349`) |
+| **Native Coin** | PISO (18 Decimals) |
+| **Block Time** | `3.0` Seconds |
+| **Consensus Engine** | BSC Parlia PoSA / BFT Multi-Signer Engine |
+| **Active Signer Capacity** | 3 to 21 Consensus Signers |
 | **Web Dashboard** | [`https://piso-blockchain.vercel.app/`](https://piso-blockchain.vercel.app/) |
-| **Native Coin** | PISO |
-| **Symbol** | PISO |
-| **Decimals** | 18 |
-| **Chain ID** | `2026001` |
-| **Block Time** | 3 Seconds |
-| **Consensus Engine** | BSC Parlia PoSA / QBFT Multi-Validator Engine |
-| **Validator Capacity**| 3 to 21 Active Consensus Signers |
-| **HTTP RPC Port** | `8545` |
-| **WebSocket Port** | `8546` |
-| **P2P Ports** | `30303` (Val 1), `30304` (Val 2), `30305` (Val 3) |
+| **HTTP RPC URL** | `https://piso-rpc-dev.loca.lt` / `http://localhost:8545` |
+| **WebSocket RPC** | `wss://piso-ws-dev.loca.lt` / `ws://localhost:8546` |
+| **Block Explorer** | `https://piso-blockchain.vercel.app/` / `http://localhost:8080` |
 
 ---
 
-## Multi-Validator Architecture
+## 🏛️ Multi-Validator Architecture
 
-PISO Chain uses a robust multi-node architecture designed for high availability and DDoS resilience:
+PISO Chain relies on a production Sentry Node topology to shield consensus signers from DDoS attacks:
 
 ```
                       +-----------------------------+
@@ -46,30 +49,20 @@ PISO Chain uses a robust multi-node architecture designed for high availability 
   +------------------+      +------------------+      +------------------+
 ```
 
-1. **Signer Consensus Nodes (Validators):** Execute state transitions and generate blocks. They exchange signatures over P2P using Parlia PoSA engine.
-2. **Sentry Nodes:** Internet-facing non-validating nodes that shield validator IP addresses from direct DDoS attacks.
-3. **On-Chain ValidatorSet Contract (`PISOValidatorSet.sol`):** Manages dynamic validator registration, delegation, block missing count tracking, and automatic jailing/slashing of faulty validators.
-
 ---
 
-## Quick Start: Launching Local 3-Validator Cluster
+## 🚀 Quick Start (Local Multi-Validator Cluster)
 
-### 1. Provision Keystores & Multi-Validator Genesis
-
-Run the cluster provisioner script to create validator accounts and insert their consensus addresses into the genesis `extraData`:
+### 1. Provision Keystores & Multi-Signer Genesis
 
 ```bash
-python scripts/setup_multi_validator_cluster.py
+.venv\Scripts\python.exe scripts/setup_multi_validator_cluster.py
 ```
 
-Outputs created:
-- `genesis/genesis_multi_validator.json` (Multi-validator Genesis file)
-- `docker/data/validator_1/`, `validator_2/`, `validator_3/` (Node data & keystores)
-
-### 2. Launch Multi-Validator Docker Stack
+### 2. Spin Up 3-Validator Docker Stack
 
 ```bash
-python scripts/start_multi_validator.py
+.venv\Scripts\python.exe scripts/start_multi_validator.py
 ```
 
 Or manually using Docker Compose:
@@ -78,43 +71,62 @@ Or manually using Docker Compose:
 docker-compose -f docker-compose.multi-validator.yml up -d
 ```
 
+### 3. Run Automated Smart Contract Unit Test Suite (100% Pass)
+
+```bash
+npm run test
+```
+
 ---
 
-## Core System Smart Contracts
+## 📜 System Smart Contracts Suite
 
-- [`PISOValidatorSet.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOValidatorSet.sol): Handles validator registration, staking, missing block slashing, and unjailing. Deployed at precompiled address `0x0000000000000000000000000000000000001000`.
-- [`PISOStaking.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOStaking.sol): Liquid staking and yields for PISO holders.
-- [`PISOBridge.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOBridge.sol): Cross-chain asset bridge to Ethereum & BNB Smart Chain.
+- [`PISOValidatorSet.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOValidatorSet.sol) (`0x...1000`): Dynamic PoSA validator registration, staking (100k PISO min), and epoch rotation.
+- [`PISOSlashIndicator.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOSlashIndicator.sol) (`0x...1001`): Slashing engine for block proposal misses (50=temporary jail, 150=felony) & double-sign proof verification (20% burn).
+- [`PISOFaucet.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOFaucet.sol): On-chain rate-limited faucet dispensing 1 PISO testnet coin every 24 hours.
+- [`PISOBridge.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOBridge.sol): Cross-chain asset wrapper & bridge smart contract.
+- [`PISOStaking.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOStaking.sol): Native liquid staking delegation protocol.
 - [`PISOGovernor.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOGovernor.sol): On-chain DAO governance proposal & voting system.
+- [`PISOPaymaster.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOPaymaster.sol): Native EIP-4337 Account Abstraction gasless paymaster.
+- [`PISOZKRecovery.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOZKRecovery.sol): Zero-Knowledge privacy-preserving social guardian recovery.
+- [`PISOAIOracle.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOAIOracle.sol): Dynamic AI network threat scoring & gas oracle.
 
 ---
 
-## Directory Structure
+## 📚 Technical Documentation Index
+
+Detailed guides are located in the [`docs/`](file:///c:/Users/janla/extropianjanus/piso-chain/docs) folder:
+
+1. 🏛️ [`docs/ARCHITECTURE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/ARCHITECTURE.md): Technical Architecture, Consensus System & Slashing Matrix.
+2. 🛡️ [`docs/VALIDATOR_NODE_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/VALIDATOR_NODE_GUIDE.md): Node Operator Guide, Hardware Requirements & Staking.
+3. 📜 [`docs/SMART_CONTRACTS.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/SMART_CONTRACTS.md): Full Smart Contracts Reference.
+4. 🐋 [`docs/DEPLOYMENT_AND_DEVOPS.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/DEPLOYMENT_AND_DEVOPS.md): Docker, Kubernetes StatefulSets, & Monitoring.
+5. ⚡ [`docs/DEVELOPER_API_AND_SDK.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/DEVELOPER_API_AND_SDK.md): Viem, Web3.py, & Ethers.js integration code.
+6. 🚰 [`docs/FAUCET_AND_RELAYER.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/FAUCET_AND_RELAYER.md): 1 PISO Faucet & Bridge Relayer daemon.
+7. 🔍 [`docs/BLOCKCHAIN_EXPLORER_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/BLOCKCHAIN_EXPLORER_GUIDE.md): Blockscout Block Explorer hosting & Sourcify verification.
+8. 🌐 [`docs/public_endpoints.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/public_endpoints.md): Network parameters and MetaMask connection guide.
+
+---
+
+## 📁 Repository Structure
 
 ```
 piso-chain/
-├── genesis/
-│   ├── genesis_multi_validator.json  # 3-Validator Parlia PoSA genesis config
-│   └── config.toml                   # Geth/BSC node engine configuration
-├── contracts/                        # System & Governance Smart Contracts
-│   ├── PISOValidatorSet.sol          # Dynamic Multi-Validator PoSA engine contract
-│   ├── PISOStaking.sol               # Native staking contract
-│   ├── PISOBridge.sol                # Relayer & Bridge contract
-│   └── PISOGovernor.sol              # On-chain DAO Governance
+├── .github/workflows/ci.yml           # GitHub Actions Automated CI/CD Pipeline
+├── genesis/                          # Multi-validator genesis & node credentials
+├── contracts/                        # Complete Suite of System Smart Contracts
 ├── docker/                           # Containerized node data & keystores
-├── docker-compose.yml                # Legacy Single-Node launcher
-├── docker-compose.multi-validator.yml# Multi-Validator Cluster Compose configuration
+├── docker-compose.multi-validator.yml# 3-Validator PoSA Docker Stack
+├── k8s/                              # Kubernetes StatefulSet & Production Manifests
+├── bridge/                           # Cross-chain relayer daemon script
+├── dashboard/                        # Mobile-Responsive Web Dashboard (HTML/CSS/JS)
 ├── scripts/
-│   ├── setup_multi_validator_cluster.py # Provisions dynamic N-validator genesis & keys
-│   ├── start_multi_validator.py      # Automated cluster orchestrator
-│   └── test_rpc.py                   # RPC connectivity & health check tool
-└── gateway/                          # Caddy reverse proxy & load balancer
+│   ├── setup_multi_validator_cluster.py # Dynamic N-Validator Genesis & Key Generator
+│   ├── start_multi_validator.py      # Automated Cluster Orchestrator
+│   ├── deploy_system_contracts.py    # Contract Deployer & Verifier Tool
+│   └── test_rpc.py                   # RPC Connectivity Tester
+├── test/
+│   └── PISOChainSystem.test.js       # Hardhat System Contract Unit Tests (100% Pass)
+├── docs/                             # Complete Technical Documentation Suite
+└── README.md                         # Master Network Landing Page
 ```
-
----
-
-## Security & Best Practices
-
-1. **Validator Key Isolation:** Store consensus private keys in hardware modules (HSM / AWS KMS) or encrypted keystores with unique vault passwords.
-2. **Private Network Peering:** Never expose validator node RPC or SSH ports directly to the internet. Connect validators strictly through Sentry Nodes via WireGuard/VPC Peering.
-3. **Slashing Protection:** Run strict missing-block accounting (`PISOValidatorSet.sol`) to automatically jail unresponsive nodes after 50 missed blocks.
