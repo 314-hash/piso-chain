@@ -106,7 +106,8 @@ Detailed guides are located in the [`docs/`](file:///c:/Users/janla/extropianjan
 6. 🚰 [`docs/FAUCET_AND_RELAYER.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/FAUCET_AND_RELAYER.md): 1 PISO Faucet & Bridge Relayer daemon.
 7. 🔍 [`docs/BLOCKCHAIN_EXPLORER_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/BLOCKCHAIN_EXPLORER_GUIDE.md): Blockscout Block Explorer hosting & Sourcify verification.
 8. ⚛️ [`docs/QUANTUM_RESISTANCE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/QUANTUM_RESISTANCE.md): NIST FIPS 204 ML-DSA & W-OTS+ Post-Quantum Cryptography Guide.
-9. 🌐 [`docs/public_endpoints.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/public_endpoints.md): Network parameters and MetaMask connection guide.
+9. 🚀 [`docs/MAINNET_LAUNCH_CHECKLIST.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/MAINNET_LAUNCH_CHECKLIST.md): Mainnet Launch Readiness & Production Checklist.
+10. 🌐 [`docs/public_endpoints.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/public_endpoints.md): Network parameters and MetaMask connection guide.
 
 ---
 

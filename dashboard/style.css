@@ -703,7 +703,217 @@ body.dark-mode {
         margin-bottom: 16px;
     }
 
-    .logo-text {
-        font-size: 18px;
+}
+
+/* ==========================================================================
+   PISO Chain Mainnet Wallet Studio Custom Styles
+   ========================================================================== */
+.mnemonic-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+@media (max-width: 768px) {
+    .mnemonic-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
+
+@media (max-width: 480px) {
+    .mnemonic-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.mnemonic-word-chip {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    user-select: all;
+    transition: all 0.2s ease;
+}
+
+.mnemonic-word-chip:hover {
+    border-color: var(--accent-cyan);
+    background: rgba(6, 182, 212, 0.08);
+}
+
+.mnemonic-index {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 18px;
+}
+
+.mnemonic-word {
+    color: var(--accent-cyan);
+    font-weight: 600;
+}
+
+.wallet-wizard-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 12px;
+    overflow-x: auto;
+}
+
+.wizard-tab-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.wizard-tab-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-cyan);
+}
+
+.wizard-tab-btn.active {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+    border-color: var(--accent-cyan);
+    color: var(--text-primary);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+}
+
+.paper-wallet-card {
+    background: linear-gradient(135deg, #0d111a, #161e2e);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.paper-wallet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+
+.paper-qr-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.qr-box {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 12px;
+    display: inline-block;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.qr-box canvas, .qr-box img {
+    display: block;
+    max-width: 140px;
+    height: auto;
+}
+
+.qr-label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 8px;
+}
+
+.pqc-key-box {
+    background: rgba(13, 148, 136, 0.1);
+    border: 1px dashed var(--accent-cyan);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #2dd4bf;
+    word-break: break-all;
+}
+
+.security-alert-box {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 10px;
+    padding: 16px;
+    color: #fca5a5;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 16px 0;
+}
+
+.security-alert-box strong {
+    color: #ef4444;
+}
+
+.badge-mainnet {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.badge-quantum {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    .sidebar, .top-header, .wallet-wizard-tabs, .btn-primary, .btn-secondary, button {
+        display: none !important;
+    }
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .paper-wallet-card {
+        border: 2px solid #000000 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+    }
+    .pqc-key-box {
+        color: #000000 !important;
+        border-color: #000000 !important;
+        background: #f0f0f0 !important;
+    }
+}
+

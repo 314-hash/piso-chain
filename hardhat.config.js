@@ -12,6 +12,9 @@ module.exports = {
     }
   },
   networks: {
+    hardhat: {
+      chainId: 2026001
+    },
     piso: {
       url: process.env.RPC_URL || "http://localhost:8545",
       chainId: 2026001,

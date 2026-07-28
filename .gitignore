@@ -6,6 +6,7 @@
 *.pem
 *.crt
 *.keystore
+PISO_Mainnet_UTC--*.json
 genesis/key.txt
 genesis/password.txt
 genesis/jwt.hex
