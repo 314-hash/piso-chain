@@ -9,6 +9,7 @@ contract PISOBridge {
     address public owner;
     uint8 public threshold;
     uint256 public relayerCount;
+    bool private _locked;
 
     mapping(address => bool) public isRelayer;
     mapping(bytes32 => bool) public processedTransactions;
@@ -31,6 +32,13 @@ contract PISOBridge {
         _;
     }
 
+    modifier nonReentrant() {
+        require(!_locked, "PISOBridge: reentrant call");
+        _locked = true;
+        _;
+        _locked = false;
+    }
+
     constructor(address[] memory _relayers, uint8 _threshold) {
         require(_threshold > 0 && _threshold <= _relayers.length, "PISOBridge: invalid threshold");
         owner = msg.sender;
@@ -50,7 +58,7 @@ contract PISOBridge {
         emit Deposit(msg.sender, msg.value, targetChainId, targetAddress);
     }
 
-    function voteProposal(address payable recipient, uint256 amount, bytes32 txHash) external onlyRelayer {
+    function voteProposal(address payable recipient, uint256 amount, bytes32 txHash) external onlyRelayer nonReentrant {
         require(!processedTransactions[txHash], "PISOBridge: transaction already processed");
         require(!votes[txHash][msg.sender], "PISOBridge: relayer already voted");
 

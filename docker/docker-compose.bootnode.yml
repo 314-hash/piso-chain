@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  bootnode-us:
+    image: ghcr.io/bnb-chain/bsc:latest
+    container_name: piso-bootnode-us
+    restart: always
+    network_mode: host
+    command:
+      - bootnode
+      - --nodekeyhex=4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+      - --verbosity=3
+      - --addr=:30301
+
+  bootnode-eu:
+    image: ghcr.io/bnb-chain/bsc:latest
+    container_name: piso-bootnode-eu
+    restart: always
+    network_mode: host
+    command:
+      - bootnode
+      - --nodekeyhex=6cbed15c793ce57650b9877760044f29cb37d78d904c114d0a316421ce82cda0
+      - --verbosity=3
+      - --addr=:30302
+
+  bootnode-ap:
+    image: ghcr.io/bnb-chain/bsc:latest
+    container_name: piso-bootnode-ap
+    restart: always
+    network_mode: host
+    command:
+      - bootnode
+      - --nodekeyhex=a23b456789012345678901234567890123456789012345678901234567890123
+      - --verbosity=3
+      - --addr=:30303

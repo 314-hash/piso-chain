@@ -16,6 +16,7 @@ contract PISOStaking {
     uint256 public constant MIN_VALIDATOR_STAKE = 100_000 ether; // 100k PISO
     uint256 public constant MIN_DELEGATION = 100 ether;          // 100 PISO
     uint256 public maxValidators = 21;
+    bool private _locked;
 
     address public admin;
     address[] public validatorList;
@@ -30,6 +31,13 @@ contract PISOStaking {
     modifier onlyAdmin() {
         require(msg.sender == admin, "PISOStaking: caller is not admin");
         _;
+    }
+
+    modifier nonReentrant() {
+        require(!_locked, "PISOStaking: reentrant call");
+        _locked = true;
+        _;
+        _locked = false;
     }
 
     constructor() {
@@ -70,13 +78,14 @@ contract PISOStaking {
     /**
      * @notice Unstake delegated PISO coins from a validator
      */
-    function unstake(address validatorAddr, uint256 amount) external {
+    function unstake(address validatorAddr, uint256 amount) external nonReentrant {
         require(delegations[msg.sender][validatorAddr] >= amount, "PISOStaking: insufficient delegated stake");
 
         delegations[msg.sender][validatorAddr] -= amount;
         validators[validatorAddr].totalStake -= amount;
 
-        payable(msg.sender).transfer(amount);
+        (bool success, ) = payable(msg.sender).call{value: amount}("");
+        require(success, "PISOStaking: unstake transfer failed");
         emit Unstaked(msg.sender, validatorAddr, amount);
     }
 

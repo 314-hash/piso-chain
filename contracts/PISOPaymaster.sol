@@ -7,6 +7,7 @@ pragma solidity ^0.8.20;
  */
 contract PISOPaymaster {
     address public owner;
+    bool private _locked;
     mapping(address => bool) public approvedSponsors;
     mapping(address => uint256) public sponsorBalances;
 
@@ -23,6 +24,13 @@ contract PISOPaymaster {
     modifier onlySponsor() {
         require(approvedSponsors[msg.sender], "PISOPaymaster: caller is not an approved sponsor");
         _;
+    }
+
+    modifier nonReentrant() {
+        require(!_locked, "PISOPaymaster: reentrant call");
+        _locked = true;
+        _;
+        _locked = false;
     }
 
     constructor() {
@@ -70,10 +78,11 @@ contract PISOPaymaster {
     /**
      * @notice Withdraw unused gas deposit from Paymaster vault.
      */
-    function withdrawDeposit(uint256 amount) external {
+    function withdrawDeposit(uint256 amount) external nonReentrant {
         require(sponsorBalances[msg.sender] >= amount, "PISOPaymaster: insufficient balance to withdraw");
         sponsorBalances[msg.sender] -= amount;
-        payable(msg.sender).transfer(amount);
+        (bool success, ) = payable(msg.sender).call{value: amount}("");
+        require(success, "PISOPaymaster: withdraw failed");
         emit SponsorWithdrawn(msg.sender, amount);
     }
 

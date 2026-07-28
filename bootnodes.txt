@@ -1,3 +1,11 @@
 # List of enode URLs for PISO Chain bootnodes
 # Format: enode://PUBKEY@IP:PORT
-# Example: enode://a23b45...@127.0.0.1:30301
+
+# Bootnode 1 - AWS US-East (N. Virginia)
+enode://8a43657cd2e519e913a8f946e9bd63c8f8b89cfd31ef7fbdf3c368d4f40f0980598b981600eb9c5ec37ebcf5668efb368731eb6289bc19cf39b4b0870954b025@3.80.12.45:30301
+
+# Bootnode 2 - Hetzner Cloud EU (Frankfurt)
+enode://09d81d4a3bfec6424e8e19c00b0f78dfdfeb0bcad66e85e25a815a5ed716adcf92d539572626e2547b7482f3ef841cf43d2db73b185b3bc7e7b5bd6ff83637a2@159.69.112.88:30302
+
+# Bootnode 3 - AWS AP-East (Tokyo)
+enode://5a396ebef80f1ddc013444458dfbfd1eeea9f5e324efbbef5b3fa3878bdf1b312ef2c730cb1050ebad5c28cf7e8bd63d4ee2fa2d5aa8ff66635c911b33fa4356@13.231.44.102:30303

@@ -12,6 +12,7 @@ contract PISOFaucet {
     uint256 public dripAmount = 1 ether; // 1 PISO per drip request
     uint256 public cooldownTime = 24 hours; // 24-hour rate limit
     bool public paused = false;
+    bool private _locked;
 
     // Last request timestamp mapping
     mapping(address => uint256) public lastRequestTime;
@@ -33,14 +34,21 @@ contract PISOFaucet {
         _;
     }
 
+    modifier nonReentrant() {
+        require(!_locked, "PISOFaucet: Reentrant call");
+        _locked = true;
+        _;
+        _locked = false;
+    }
+
     constructor() {
         owner = msg.sender;
     }
 
     /**
-     * @notice Claim 100 native PISO coins for development and testing.
+     * @notice Claim 1 native PISO coin for development and testing.
      */
-    function requestTokens() external whenNotPaused {
+    function requestTokens() external whenNotPaused nonReentrant {
         require(
             block.timestamp >= lastRequestTime[msg.sender] + cooldownTime,
             "PISOFaucet: Cooldown active. Try again in 24 hours."

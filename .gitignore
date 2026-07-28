@@ -7,9 +7,13 @@
 *.crt
 *.keystore
 PISO_Mainnet_UTC--*.json
+genesis/cluster_nodes.json
+genesis/quantum_vault_keys.json
 genesis/key.txt
 genesis/password.txt
 genesis/jwt.hex
+cluster_nodes.json
+quantum_vault_keys.json
 keystore/
 docker/keystore/
 secrets/
@@ -52,4 +56,3 @@ data/
 Thumbs.db
 .vscode/
 .idea/
-
