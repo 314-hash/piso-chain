@@ -10,7 +10,7 @@ services:
     user: root
     restart: unless-stopped
     volumes:
-      - ./genesis/genesis_multi_validator.json:/bsc/config/genesis.json:ro
+      - ./genesis/genesis_mainnet.json:/bsc/config/genesis.json:ro
       - ./genesis/config.toml:/bsc/config/config.toml:ro
       - ./docker/data/validator_1/password.txt:/bsc/config/password.txt:ro
       - ./docker/data/validator_1/data:/root/.ethereum
@@ -35,6 +35,8 @@ services:
       - --ws.origins=*
       - --ws.api=eth,net,web3,parlia
       - --mine
+      - --miner.etherbase=0x4C2B0DDA95754015B2DAF8A3302adbcf2fE248dc
+      - --unlock=0x4C2B0DDA95754015B2DAF8A3302adbcf2fE248dc
       - --password=/bsc/config/password.txt
       - --miner.gaslimit=30000000
       - --allow-insecure-unlock
@@ -48,7 +50,7 @@ services:
     user: root
     restart: unless-stopped
     volumes:
-      - ./genesis/genesis_multi_validator.json:/bsc/config/genesis.json:ro
+      - ./genesis/genesis_mainnet.json:/bsc/config/genesis.json:ro
       - ./genesis/config.toml:/bsc/config/config.toml:ro
       - ./docker/data/validator_2/password.txt:/bsc/config/password.txt:ro
       - ./docker/data/validator_2/data:/root/.ethereum
@@ -63,6 +65,8 @@ services:
       - --networkid=2026001
       - --port=30304
       - --mine
+      - --miner.etherbase=0x50D06b3ad935b9502BCe53b501B233BdFc87A355
+      - --unlock=0x50D06b3ad935b9502BCe53b501B233BdFc87A355
       - --password=/bsc/config/password.txt
       - --miner.gaslimit=30000000
       - --allow-insecure-unlock
@@ -76,7 +80,7 @@ services:
     user: root
     restart: unless-stopped
     volumes:
-      - ./genesis/genesis_multi_validator.json:/bsc/config/genesis.json:ro
+      - ./genesis/genesis_mainnet.json:/bsc/config/genesis.json:ro
       - ./genesis/config.toml:/bsc/config/config.toml:ro
       - ./docker/data/validator_3/password.txt:/bsc/config/password.txt:ro
       - ./docker/data/validator_3/data:/root/.ethereum
@@ -91,6 +95,8 @@ services:
       - --networkid=2026001
       - --port=30305
       - --mine
+      - --miner.etherbase=0x19b183909fb264a09672E40D65C64f914ff26b41
+      - --unlock=0x19b183909fb264a09672E40D65C64f914ff26b41
       - --password=/bsc/config/password.txt
       - --miner.gaslimit=30000000
       - --allow-insecure-unlock

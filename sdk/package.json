@@ -1,0 +1,38 @@
+{
+  "name": "@piso-chain/sdk",
+  "version": "1.0.0",
+  "description": "Official TypeScript/JavaScript SDK for interacting with PISO Chain, System Contracts, EIP-4337 Paymasters, and Post-Quantum Security Vaults.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"SDK tests initialized\""
+  },
+  "keywords": [
+    "piso-chain",
+    "sdk",
+    "web3",
+    "evm",
+    "posa",
+    "post-quantum",
+    "eip-4337",
+    "paymaster"
+  ],
+  "author": "314-hash",
+  "license": "MIT",
+  "peerDependencies": {
+    "ethers": "^6.0.0",
+    "viem": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}

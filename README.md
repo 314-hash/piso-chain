@@ -109,6 +109,10 @@ Detailed guides are located in the [`docs/`](file:///c:/Users/janla/extropianjan
 9. 🚀 [`docs/MAINNET_LAUNCH_CHECKLIST.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/MAINNET_LAUNCH_CHECKLIST.md): Mainnet Launch Readiness & Production Checklist.
 10. ☸️ [`docs/KUBERNETES_AND_DOCKER_CLUSTER_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/KUBERNETES_AND_DOCKER_CLUSTER_GUIDE.md): Multi-Validator Docker & Kubernetes Setup Guide.
 11. 🌐 [`docs/public_endpoints.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/public_endpoints.md): Network parameters and MetaMask connection guide.
+12. 📊 [`PITCH.md`](file:///c:/Users/janla/extropianjanus/piso-chain/PITCH.md): Investor Pitch Deck & Ecosystem Overview.
+13. 👑 [`docs/VALIDATOR_SELECTION_AND_GOVERNANCE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/VALIDATOR_SELECTION_AND_GOVERNANCE.md): Founder's Guide to Genesis Signers, 33% Cloud Rule & DAO Governance.
+14. 👥 [`CORE_TEAM.md`](file:///c:/Users/janla/extropianjanus/piso-chain/CORE_TEAM.md): Core Team Engineering, Cryptography & Advisory Board.
+15. 💎 [`TOKENOMICS.md`](file:///c:/Users/janla/extropianjanus/piso-chain/TOKENOMICS.md): Token Allocation, Staking Yield APR, Vesting Schedule & Burn Mechanics.
 
 ---
 
@@ -131,6 +135,9 @@ piso-chain/
 │   └── test_rpc.py                   # RPC Connectivity Tester
 ├── test/
 │   └── PISOChainSystem.test.js       # Hardhat System Contract Unit Tests (100% Pass)
+├── sdk/                              # Official TypeScript Developer SDK (@piso-chain/sdk)
+├── indexer/                          # On-Chain Event Indexer & REST API Service
+├── bundler/                          # EIP-4337 UserOperation Bundler & Paymaster Service
 ├── docs/                             # Complete Technical Documentation Suite
 └── README.md                         # Master Network Landing Page
 ```

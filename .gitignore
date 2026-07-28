@@ -31,6 +31,9 @@ __pycache__/
 
 # Node.js & Hardhat Smart Contract Build Artifacts
 node_modules/
+sdk/node_modules/
+sdk/dist/
+*.tsbuildinfo
 artifacts/
 cache/
 typechain/
@@ -49,9 +52,11 @@ explorer/data/
 docker/data/
 data/
 *.ldb
+indexer.db
 
 # Logs & Temporary / OS Files
 *.log
+bridge_state.json
 .DS_Store
 Thumbs.db
 .vscode/

@@ -1,8 +1,10 @@
 // PISO Chain Dashboard Logic & Live RPC Connector
 
-const RPC_URL = "https://piso-rpc-dev.loca.lt";
+const RPC_URL = window.location.origin.includes("localhost") || window.location.origin.includes("127.0.0.1")
+    ? "http://localhost:8545"
+    : "http://localhost:8545";
 
-const DEFAULT_VALIDATOR = "0xE3aFaeC0677A6C34CC190B1f8f68f1d712D45614";
+const DEFAULT_VALIDATOR = "0xB5A772355e12CA975C175C9a7CFBD48BBEE482D8";
 
 document.addEventListener("DOMContentLoaded", () => {
     initCharts();
