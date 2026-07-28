@@ -107,7 +107,8 @@ Detailed guides are located in the [`docs/`](file:///c:/Users/janla/extropianjan
 7. 🔍 [`docs/BLOCKCHAIN_EXPLORER_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/BLOCKCHAIN_EXPLORER_GUIDE.md): Blockscout Block Explorer hosting & Sourcify verification.
 8. ⚛️ [`docs/QUANTUM_RESISTANCE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/QUANTUM_RESISTANCE.md): NIST FIPS 204 ML-DSA & W-OTS+ Post-Quantum Cryptography Guide.
 9. 🚀 [`docs/MAINNET_LAUNCH_CHECKLIST.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/MAINNET_LAUNCH_CHECKLIST.md): Mainnet Launch Readiness & Production Checklist.
-10. 🌐 [`docs/public_endpoints.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/public_endpoints.md): Network parameters and MetaMask connection guide.
+10. ☸️ [`docs/KUBERNETES_AND_DOCKER_CLUSTER_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/KUBERNETES_AND_DOCKER_CLUSTER_GUIDE.md): Multi-Validator Docker & Kubernetes Setup Guide.
+11. 🌐 [`docs/public_endpoints.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/public_endpoints.md): Network parameters and MetaMask connection guide.
 
 ---
 

@@ -2,25 +2,25 @@
   {
     "id": 1,
     "name": "validator_1",
-    "address": "0xB5A772355e12CA975C175C9a7CFBD48BBEE482D8",
-    "priv_key": "4e524e86620e3e5027519d18630935f99fc3a520f1175061f0678c4e1ad9a3e8",
-    "keystore": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_1\\keystore\\UTC--2026-07-27T00-00-00.000000000Z--b5a772355e12ca975c175c9a7cfbd48bbee482d8",
+    "address": "0x4C2B0DDA95754015B2DAF8A3302adbcf2fE248dc",
+    "priv_key": "068a9b10bdd9a80a02b9c78672a64782e2e51b93f2fe6dce65fc274ec2e53774",
+    "keystore": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_1\\keystore\\UTC--2026-07-27T00-00-00.000000000Z--4c2b0dda95754015b2daf8a3302adbcf2fe248dc",
     "password_file": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_1\\password.txt"
   },
   {
     "id": 2,
     "name": "validator_2",
-    "address": "0xD15756BA4D4cc40A8aA4f772117a2E991C7705Ad",
-    "priv_key": "098ace23b4970f49dba3839e863eb1583790d96b3980e19affbc6064b7c70802",
-    "keystore": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_2\\keystore\\UTC--2026-07-27T00-00-00.000000000Z--d15756ba4d4cc40a8aa4f772117a2e991c7705ad",
+    "address": "0x50D06b3ad935b9502BCe53b501B233BdFc87A355",
+    "priv_key": "8fe76ee6ca4fe3764e45ab5290f0ad24e1e564b7ec5dc59389b3ab8042e3f818",
+    "keystore": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_2\\keystore\\UTC--2026-07-27T00-00-00.000000000Z--50d06b3ad935b9502bce53b501b233bdfc87a355",
     "password_file": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_2\\password.txt"
   },
   {
     "id": 3,
     "name": "validator_3",
-    "address": "0x90BdAF5a0890b4Cc21FB3081d1D8c7121EE6a7d2",
-    "priv_key": "ab95ce108d36a02b5c8ebe76b39b99fc5fcd1db721a901b43aa037256fa06708",
-    "keystore": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_3\\keystore\\UTC--2026-07-27T00-00-00.000000000Z--90bdaf5a0890b4cc21fb3081d1d8c7121ee6a7d2",
+    "address": "0x19b183909fb264a09672E40D65C64f914ff26b41",
+    "priv_key": "8ddb60a1cc3076a75ea36f0e0a1a917df02760e739591ac82945ca4454a06d8c",
+    "keystore": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_3\\keystore\\UTC--2026-07-27T00-00-00.000000000Z--19b183909fb264a09672e40d65c64f914ff26b41",
     "password_file": "C:\\Users\\janla\\extropianjanus\\piso-chain\\docker\\data\\validator_3\\password.txt"
   }
 ]
