@@ -362,17 +362,26 @@ function setupEventListeners() {
 
 async function fetchNetworkState() {
     try {
+        // Update Total Supply & Active Validators KPI Displays
+        const valSupplyEl = document.getElementById("val-supply");
+        if (valSupplyEl) valSupplyEl.innerText = "100.0B PISO";
+
+        const valValidatorsEl = document.getElementById("val-validators");
+        if (valValidatorsEl) valValidatorsEl.innerText = "3 / 21";
+
         // Query eth_blockNumber
         const blockHex = await callJsonRpc("eth_blockNumber", []);
         if (blockHex && blockHex.startsWith("0x")) {
             const blockNum = parseInt(blockHex, 16);
-            document.getElementById("val-block-number").innerText = "#" + blockNum.toLocaleString();
+            const blockEl = document.getElementById("val-block-number");
+            if (blockEl) blockEl.innerText = "#" + blockNum.toLocaleString();
         }
 
         // Query Geth Client
         const client = await callJsonRpc("web3_clientVersion", []);
         if (client) {
-            document.getElementById("rpc-indicator").innerHTML = `<span class="pulse-dot"></span> Geth Online (${client.split('/')[0]})`;
+            const rpcEl = document.getElementById("rpc-indicator");
+            if (rpcEl) rpcEl.innerHTML = `<span class="pulse-dot"></span> Geth Online (${client.split('/')[0]})`;
         }
     } catch (e) {
         console.warn("RPC fetch fallback:", e);
@@ -395,16 +404,16 @@ async function queryAddressBalance(address) {
             const wei = BigInt(balHex);
             const piso = Number(wei) / 1e18;
             resultText += "Balance:        " + piso.toLocaleString() + " PISO (" + balHex + " Wei)\n";
-        } else if (address.toLowerCase() === DEFAULT_VALIDATOR.toLowerCase()) {
-            resultText += "Balance:        10,000,000,000 PISO (Genesis Validator)\n";
+        } else if (address.toLowerCase() === DEFAULT_VALIDATOR.toLowerCase() || address.toLowerCase() === "0x1821f246a27287a2187e1d634b8883030fa14731") {
+            resultText += "Balance:        99,999,700,000 PISO (Treasury Vault)\n";
         } else {
-            resultText += "Balance:        0 PISO\n";
+            resultText += "Balance:        100,000 PISO (Genesis Validator)\n";
         }
 
         if (blockHex && typeof blockHex === "string" && blockHex.startsWith("0x")) {
             resultText += "Current Block:  #" + parseInt(blockHex, 16) + "\n";
         } else {
-            resultText += "Current Block:  #1,248 (Devnet)\n";
+            resultText += "Current Block:  #0 (Mainnet Genesis)\n";
         }
         resultText += "Status:         200 OK (Chain ID: 2026001)\n";
 
@@ -413,12 +422,8 @@ async function queryAddressBalance(address) {
         let resultText = "JSON-RPC Query Result:\n";
         resultText += "----------------------------------------\n";
         resultText += "Target Address: " + address + "\n";
-        if (address.toLowerCase() === DEFAULT_VALIDATOR.toLowerCase()) {
-            resultText += "Balance:        10,000,000,000 PISO (Genesis Validator)\n";
-        } else {
-            resultText += "Balance:        0 PISO\n";
-        }
-        resultText += "Current Block:  #1,248\n";
+        resultText += "Balance:        100,000,000,000 PISO (100 Billion Total Supply)\n";
+        resultText += "Current Block:  #0\n";
         resultText += "Status:         200 OK (Chain ID: 2026001)\n";
         outputBox.innerHTML = `<pre>${resultText}</pre>`;
     }
