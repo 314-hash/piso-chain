@@ -36,10 +36,14 @@ Launching a new Layer 1 network with too many unverified validators leads to hig
 - **Tier 1 Professional Infrastructure Providers (3 Nodes)**: Enterprise staking firms (e.g., Blockdaemon, Ankr, InfStones) running Sentry node topologies with 24/7 DevOps coverage.
 - **Strategic VCs & Institutional Partners (2 Nodes)**: Key backers with long-term token lockups and high economic skin-in-the-game.
 
-### BFT Quorum Mathematics at Genesis
-By Byzantine Fault Tolerance (BFT) math, consensus finality requires $2f + 1$ agreement:
-- **3 Signers**: BFT Quorum = **2/3** signatures required per block ($f = 0$ tolerated failures).
-- **7 Signers**: BFT Quorum = **5/7** signatures required per block ($f = 2$ tolerated failures).
+### Initial Active Genesis Signer Addresses
+The production Mainnet genesis block (`genesis_mainnet.json`) allocates consensus rights to the following 3 active validator wallets:
+
+| Node | Genesis Signer Wallet Address | Initial Stake Balance | Consensus Role |
+| :-: | :--- | :---: | :--- |
+| **Validator 1** | `0x4C2B0DDA95754015B2DAF8A3302adbcf2fE248dc` | `100,000 PISO` | Primary RPC Gateway & Consensus Signer |
+| **Validator 2** | `0x50D06b3ad935b9502BCe53b501B233BdFc87A355` | `100,000 PISO` | Peer BFT Consensus Signer |
+| **Validator 3** | `0x19b183909fb264a09672E40D65C64f914ff26b41` | `100,000 PISO` | Peer BFT Consensus Signer |
 
 ---
 
