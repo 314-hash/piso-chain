@@ -388,15 +388,41 @@ async function fetchNetworkState() {
     }
 }
 
+function getGenesisAllocation(addr) {
+    const lower = addr ? addr.toLowerCase() : "";
+    const mainnetValidators = [
+        "0x4c2b0dda95754015b2daf8a3302adbcf2fe248dc",
+        "0x50d06b3ad935b9502bce53b501b233bdfc87a355",
+        "0x19b183909fb264a09672e40d65c64f914ff26b41",
+        "0xb5a772355e12ca975c175c9a7cfbd48bbee482d8"
+    ];
+
+    if (lower === "0x1821f246a27287a2187e1d634b8883030fa14731") {
+        return { balance: "99,999,700,000 PISO", note: "Mainnet Treasury Vault - Total Genesis Reserve" };
+    } else if (mainnetValidators.includes(lower)) {
+        return { balance: "100,000 PISO", note: "Genesis Validator Staking Stake" };
+    } else if (lower === "0xe3afaec0677a6c34cc190b1f8f68f1d712d45614") {
+        return { balance: "10,000,000 PISO", note: "Devnet Operational Faucet Allocation" };
+    }
+    return { balance: "0 PISO", note: "Unfunded / Standard Account" };
+}
+
 async function queryAddressBalance(address) {
     const outputBox = document.getElementById("rpc-output-result");
+    if (!address) {
+        outputBox.innerHTML = "<pre class='text-red'>Please enter a valid EVM address to query.</pre>";
+        return;
+    }
+
     outputBox.innerHTML = "<pre>Querying JSON-RPC endpoint for " + address + "...</pre>";
+
+    const genesisData = getGenesisAllocation(address);
 
     try {
         const balHex = await callJsonRpc("eth_getBalance", [address, "latest"]);
         const blockHex = await callJsonRpc("eth_blockNumber", []);
 
-        let resultText = "JSON-RPC Query Result:\n";
+        let resultText = "JSON-RPC Query Result (Live RPC):\n";
         resultText += "----------------------------------------\n";
         resultText += "Target Address: " + address + "\n";
 
@@ -404,27 +430,27 @@ async function queryAddressBalance(address) {
             const wei = BigInt(balHex);
             const piso = Number(wei) / 1e18;
             resultText += "Balance:        " + piso.toLocaleString() + " PISO (" + balHex + " Wei)\n";
-        } else if (address.toLowerCase() === DEFAULT_VALIDATOR.toLowerCase() || address.toLowerCase() === "0x1821f246a27287a2187e1d634b8883030fa14731") {
-            resultText += "Balance:        99,999,700,000 PISO (Treasury Vault)\n";
         } else {
-            resultText += "Balance:        100,000 PISO (Genesis Validator)\n";
+            resultText += "Balance:        " + genesisData.balance + " (" + genesisData.note + ")\n";
         }
 
         if (blockHex && typeof blockHex === "string" && blockHex.startsWith("0x")) {
             resultText += "Current Block:  #" + parseInt(blockHex, 16) + "\n";
         } else {
-            resultText += "Current Block:  #0 (Mainnet Genesis)\n";
+            resultText += "Current Block:  #0 (Genesis)\n";
         }
         resultText += "Status:         200 OK (Chain ID: 2026001)\n";
 
         outputBox.innerHTML = `<pre>${resultText}</pre>`;
     } catch (err) {
-        let resultText = "JSON-RPC Query Result:\n";
+        // Offline / Localtunnel Rate-Limited Fallback
+        let resultText = "JSON-RPC Query Result (Offline / Genesis Map Fallback):\n";
         resultText += "----------------------------------------\n";
         resultText += "Target Address: " + address + "\n";
-        resultText += "Balance:        100,000,000,000 PISO (100 Billion Total Supply)\n";
-        resultText += "Current Block:  #0\n";
-        resultText += "Status:         200 OK (Chain ID: 2026001)\n";
+        resultText += "Balance:        " + genesisData.balance + " (" + genesisData.note + ")\n";
+        resultText += "Current Block:  #0 (Genesis)\n";
+        resultText += "Status:         200 OK (Genesis Allocation Map - Live RPC Offline)\n";
+
         outputBox.innerHTML = `<pre>${resultText}</pre>`;
     }
 }

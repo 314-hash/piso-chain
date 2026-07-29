@@ -10,7 +10,7 @@ let currentMnemonic = '';
 let activeTab = 'create';
 const RPC_ENDPOINT = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
     ? 'http://localhost:8545'
-    : 'http://localhost:8545';
+    : 'https://piso-rpc-dev.loca.lt';
 
 const CHAIN_ID = 2026001;
 let provider = null;
@@ -409,7 +409,7 @@ async function addPISOMainnetToMetaMask() {
             await window.ethereum.request({
                 method: 'wallet_addEthereumChain',
                 params: [{
-                    chainId: '0x1ee679', // 2026001 in hex
+                    chainId: '0x1EE349', // 2026001 in hex
                     chainName: 'PISO Chain Mainnet',
                     nativeCurrency: { name: 'PISO', symbol: 'PISO', decimals: 18 },
                     rpcUrls: [RPC_ENDPOINT],
