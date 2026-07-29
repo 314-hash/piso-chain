@@ -27,13 +27,13 @@ services:
       - --http.addr=0.0.0.0
       - --http.port=8545
       - --http.corsdomain=*
-      - --http.api=eth,net,web3,parlia,miner,txpool
+      - --http.api=eth,net,web3,miner,txpool
       - --http.vhosts=*
       - --ws
       - --ws.addr=0.0.0.0
       - --ws.port=8546
       - --ws.origins=*
-      - --ws.api=eth,net,web3,parlia
+      - --ws.api=eth,net,web3
       - --mine
       - --miner.etherbase=0x4C2B0DDA95754015B2DAF8A3302adbcf2fE248dc
       - --unlock=0x4C2B0DDA95754015B2DAF8A3302adbcf2fE248dc
