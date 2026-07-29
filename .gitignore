@@ -44,6 +44,9 @@ coverage.json
 dist/
 out/
 
+# External Repositories & Submodules
+jcode/
+
 # Database & Chain Node Data
 geth-data/
 postgres_data/

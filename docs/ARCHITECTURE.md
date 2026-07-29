@@ -1,6 +1,6 @@
 # PISO Chain Technical Architecture & Consensus System
 
-PISO Chain is an EVM-compatible Layer 1 blockchain optimized for high throughput (up to 2,500 TPS), 3-second block finality, native account abstraction (EIP-4337), post-quantum security (NIST FIPS 204 ML-DSA), and dynamic **Proof-of-Staked-Authority (PoSA)** consensus.
+PISO Chain is an EVM-compatible Layer 1 blockchain optimized for high throughput (up to 2,500 TPS), 3-second block finality, native account abstraction (EIP-4337), post-quantum security (NIST FIPS 204 ML-DSA), dynamic **Proof-of-Staked-Authority (PoSA)** consensus, and the **PISO Agent OS Autonomous AI Worker Ecosystem**.
 
 ---
 
@@ -27,7 +27,7 @@ PISO Chain is an EVM-compatible Layer 1 blockchain optimized for high throughput
         |                                                                                   |
         |  +-----------------------+   +-----------------------+   +---------------------+  |
         |  |  Validator Node #1    |   |  Validator Node #2    |   |  Validator Node #3  |  |
-        |  | (0x4C2B0DDA...248dc)  |<->| (0x50D06b3a...7a355)  |<->| (0x19b18390...26b41)|  |
+        |  | (0x680fecF8...2b3c)   |<->| (0x0f4856be...aBf5)   |<->| (0xF82d8707...0f9f) |  |
         |  +-----------+-----------+   +-----------+-----------+   +----------+----------+  |
         +--------------|---------------------------|--------------------------|-------------+
                        |                           |                          |
@@ -47,8 +47,27 @@ PISO Chain is an EVM-compatible Layer 1 blockchain optimized for high throughput
                                   |  - PISOZKRecovery (0x...1008)         |
                                   |  - PISOAIOracle (0x...1009)           |
                                   |  - PISOAccountRecovery (0x...100A)    |
+                                  +-------------------+-------------------+
+                                                      |
+                                                      v
+                                  +---------------------------------------+
+                                  | PISO AGENT OS & WORKER HARNESS        |
+                                  |  - jcode RAM-Efficient Swarm Harness  |
+                                  |  - Escrow Task Verification Engine    |
+                                  |  - SHA-256 Cryptographic Work Proofs  |
+                                  |  - Dynamic Reputation Scoring System  |
                                   +---------------------------------------+
 ```
+
+---
+
+## 🤖 PISO Agent OS & Autonomous AI Worker Layer
+
+PISO Chain natively supports verified autonomous AI workers operating as economic participants:
+
+* **Harness Engine**: Integrated **`jcode`** (`https://github.com/1jehuang/jcode.git`) high-performance, low-RAM agent harness featuring zero-copy semantic memory graphs, inline Mermaid rendering, and sub-agent swarm coordination.
+* **Smart Escrow Task Protocol**: Jobs locked on-chain require cryptographic SHA-256 work proof submissions before releasing PISO payouts.
+* **On-Chain Reputation System**: Automatic reputation scoring (`100.0` max) updated upon verified job completion.
 
 ---
 
@@ -65,7 +84,7 @@ PISO Chain utilizes the **BSC Parlia Proof-of-Staked-Authority (PoSA)** engine c
 | **Block Period** | `3.0` Seconds |
 | **Epoch Length** | `200` Blocks (~10 Minutes) |
 | **Active Validator Capacity** | 3 to 21 Consensus Signers |
-| **Genesis Signer Set** | 3 Signers (`0x4C2B...`, `0x50D0...`, `0x19b1...`) |
+| **Genesis Signer Set** | 3 Signers (`0x680fecF8...`, `0x0f4856be...`, `0xF82d8707...`) |
 | **BFT Fault Tolerance** | $F = \lfloor\frac{N-1}{3}\rfloor$ (Tolerates up to 1/3 faulty nodes) |
 | **Block Gas Limit** | `30,000,000` Gas |
 | **Native Coin** | PISO (18 Decimals) |
