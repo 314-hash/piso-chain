@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # Validator Node 1 (Primary RPC & WS Gateway)
+  validator-1:
+    image: python:3.11-slim
+    container_name: piso-validator-1
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ../:/app
+    environment:
+      - NODE_ID=1
+      - CHAIN_ID=2026001
+      - RPC_PORT=8545
+      - WS_PORT=8546
+    command: python scripts/start_live_rpc.py --port 8545
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+
+  # Validator Node 2 (PoSA Consensus Partner)
+  validator-2:
+    image: python:3.11-slim
+    container_name: piso-validator-2
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ../:/app
+    environment:
+      - NODE_ID=2
+      - CHAIN_ID=2026001
+    command: python scripts/start_live_rpc.py --port 8547
+    ports:
+      - "8547:8547"
+
+  # Validator Node 3 (PoSA Consensus Partner)
+  validator-3:
+    image: python:3.11-slim
+    container_name: piso-validator-3
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ../:/app
+    environment:
+      - NODE_ID=3
+      - CHAIN_ID=2026001
+    command: python scripts/start_live_rpc.py --port 8548
+    ports:
+      - "8548:8548"
+
+  # PISO Chain REST API Engine
+  piso-rest-api:
+    image: python:3.11-slim
+    container_name: piso-rest-api
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ../:/app
+    command: python api/rest_server.py --port 8081
+    ports:
+      - "8081:8081"
+    depends_on:
+      - validator-1
+
+  # Otterscan L1 Block Explorer Interface
+  otterscan-explorer:
+    image: otterscan/otterscan:latest
+    container_name: piso-otterscan-explorer
+    restart: unless-stopped
+    environment:
+      - VITE_RPC_URL=http://localhost:8545
+      - VITE_CHAIN_ID=2026001
+    ports:
+      - "8080:80"
+    depends_on:
+      - validator-1
