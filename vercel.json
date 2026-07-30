@@ -2,5 +2,22 @@
   "version": 2,
   "name": "piso-blockchain",
   "cleanUrls": true,
-  "outputDirectory": "dashboard"
+  "outputDirectory": "dashboard",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "X-Requested-With, Content-Type, Accept, Authorization" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/wallet", "destination": "/wallet.html" },
+    { "source": "/contracts", "destination": "/contracts.html" }
+  ]
 }

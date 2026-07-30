@@ -1,0 +1,41 @@
+name: Deploy PISO Chain Web Dashboard to Vercel
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy-vercel:
+    name: Deploy Dashboard to Vercel Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Verify Dashboard Output Directory
+        run: |
+          echo "Verifying PISO Chain Dashboard build output directory..."
+          ls -la dashboard/
+          test -f dashboard/index.html
+          test -f dashboard/contracts.html
+          test -f dashboard/wallet.html
+          test -f dashboard/style.css
+          test -f dashboard/app.js
+          test -f dashboard/contracts.js
+          test -f dashboard/wallet.js
+          echo "✓ Dashboard static build verification successful!"
+
+      - name: Build Vercel Project Artifacts
+        run: npx vercel build --token ${{ secrets.VERCEL_TOKEN }}
+        continue-on-error: true
+
+      - name: Deploy Project Artifacts to Vercel Production
+        run: npx vercel deploy --prebuilt --prod --token ${{ secrets.VERCEL_TOKEN }}
+        continue-on-error: true
