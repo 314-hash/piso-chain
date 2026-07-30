@@ -13,6 +13,7 @@ const RPC_ENDPOINT = window.location.origin.includes('localhost') || window.loca
     : 'https://piso-rpc-dev.loca.lt';
 
 const CHAIN_ID = 2026001;
+const REOWN_PROJECT_ID = 'ea38145dff0d1004d9ccb49fbd848595';
 let provider = null;
 
 // Initialize on DOM Ready

@@ -74,3 +74,6 @@ Thumbs.db
 .gemini/
 .agent/
 .agents/
+.claude/
+agent/
+PISO Chain Mainnet Studio/

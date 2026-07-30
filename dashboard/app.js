@@ -89,6 +89,9 @@ function setupEventListeners() {
     });
 
 
+    // Reown AppKit / WalletConnect Project Credentials
+    const REOWN_PROJECT_ID = "ea38145dff0d1004d9ccb49fbd848595";
+
     // PISO Chain Universal Network Specification
     const PISO_CHAIN_SPEC = {
         chainId: "0x1EE349", // 2026001 in hexadecimal
