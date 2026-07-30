@@ -1,18 +1,27 @@
 # Satoshilabs SLIP-44 PR Submission Template for PISO Chain
 
-To register PISO Chain in the official [satoshilabs/slips](https://github.com/satoshilabs/slips) repository (`slip-0044.md`), append the following row:
+To register PISO Chain in the official [satoshilabs/slips](https://github.com/satoshilabs/slips) repository (`slip-0044.md`), append the following row right after Coin Type 2027 (`UNC`):
 
 ```markdown
-| Index (dec) | Index (hex) | Coin | Path | Description | Link |
-| --- | --- | --- | --- | --- | --- |
-| 2026 | 0x000007EA | PISO | `m/44'/2026'` | PISO Chain L1 Mainnet | https://github.com/314-hash/piso-chain |
+| 2028       | PISO    | PISO Chain                        |
 ```
 
 ## Pull Request Summary
-- **Coin Name**: PISO Chain
-- **Ticker**: PISO
-- **Coin Type (Decimal)**: 2026
-- **Coin Type (Hex)**: `0x7EA`
-- **Derivation Path**: `m/44'/2026'/0'/0/0`
-- **Default Curve**: `secp256k1`
-- **Repository**: `https://github.com/314-hash/piso-chain`
+
+## Summary
+
+Register a new SLIP-0044 coin type for PISO Chain.
+
+### Project
+- Name: PISO Chain
+- Symbol: PISO
+- Coin Type (Decimal): 2028
+- Coin Type (Hex): `0x000007EC`
+- Derivation Path: `m/44'/2028'/0'/0/0`
+- Chain Type: Layer 1 Blockchain
+- Repository: https://github.com/314-hash/piso-chain
+
+### Notes
+- Verified that coin type 2026 was assigned to ASTRON Token; selected next available unassigned coin type **2028**.
+- Table formatting follows repository conventions.
+- No existing entries were modified.
