@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/piso_logo.jpg" alt="PISO Chain Native Coin Logo" width="220" />
+</p>
+
 # 🚀 PISO Chain — Investor & Ecosystem Pitch Deck
 
 > **The World's First Enterprise-Grade, Post-Quantum Secure, AI-Protected Layer 1 Blockchain**

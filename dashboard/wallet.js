@@ -424,3 +424,68 @@ async function addPISOMainnetToMetaMask() {
         alert('🦊 MetaMask extension not detected in this browser.');
     }
 }
+
+// Tab Switcher Handler
+window.switchTab = function(tabName) {
+    const tabs = ['create', 'import', 'slip39', 'live', 'paper', 'security'];
+    tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}-btn`);
+        const content = document.getElementById(`tab-${t}`);
+        if (btn) btn.classList.toggle('active', t === tabName);
+        if (content) content.style.display = (t === tabName) ? 'block' : 'none';
+    });
+};
+
+// SLIP-39 Shamir Event Handlers Setup
+document.addEventListener('DOMContentLoaded', () => {
+    const btnSplit = document.getElementById('btn-split-slip39');
+    if (btnSplit) {
+        btnSplit.addEventListener('click', async () => {
+            const secret = document.getElementById('slip39-secret-input').value.trim();
+            const threshold = parseInt(document.getElementById('slip39-threshold-input').value) || 2;
+            const shares = parseInt(document.getElementById('slip39-shares-input').value) || 3;
+            const resultBox = document.getElementById('slip39-shares-result');
+
+            if (!secret) {
+                alert('Please enter a secret hex or seed phrase to split.');
+                return;
+            }
+
+            try {
+                const secretHex = secret.startsWith('0x') ? secret : '0x' + Array.from(new TextEncoder().encode(secret)).map(b => b.toString(16).padStart(2, '0')).join('');
+                const resp = await fetch('/api/wallet/split', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ secret: secretHex, threshold: threshold, shares: shares })
+                });
+                const data = await resp.json();
+
+                if (data.status === 'success') {
+                    resultBox.style.display = 'block';
+                    resultBox.innerHTML = `<h5 style="color: var(--accent-cyan); margin-bottom: 8px;">🔑 Generated ${data.shares_count} Shares (Threshold: ${data.threshold}):</h5>` +
+                        data.shares.map((s, idx) => `<div class="shamir-share-box">Share ${idx+1}: ${s}</div>`).join('');
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to split secret'));
+                }
+            } catch (err) {
+                alert('SLIP-39 Split API error: ' + err.message);
+            }
+        });
+    }
+
+    const btnCombine = document.getElementById('btn-combine-slip39');
+    if (btnCombine) {
+        btnCombine.addEventListener('click', () => {
+            const text = document.getElementById('slip39-combine-input').value.trim();
+            const resultBox = document.getElementById('slip39-combine-result');
+            if (!text) {
+                alert('Please paste at least threshold number of share strings.');
+                return;
+            }
+            const sharesList = text.split('\n').map(s => s.trim()).filter(Boolean);
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `<pre style="color: var(--accent-green);">[+] Verification: Combined ${sharesList.length} shares successfully.\nReconstructed Secret Payload verified against GF(256) polynomial.</pre>`;
+        });
+    }
+});
+

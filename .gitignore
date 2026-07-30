@@ -18,6 +18,11 @@ keystore/
 docker/keystore/
 secrets/
 
+# Security Audit Archives & Release Bundles
+*.zip
+*.tar.gz
+PISO_Chain_Audit_Bundle_*.zip
+
 # Python & Virtual Environments
 .venv/
 venv/
@@ -64,3 +69,5 @@ bridge_state.json
 Thumbs.db
 .vscode/
 .idea/
+.gemini/
+.agent/

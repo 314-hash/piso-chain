@@ -16,7 +16,7 @@
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar-drawer">
             <div class="logo-area">
-                <div class="logo-icon">⚡</div>
+                <img src="piso_logo.jpg" alt="PISO Logo" style="height: 36px; width: 36px; border-radius: 50%; border: 1.5px solid #ffd700; margin-right: 10px; object-fit: cover;">
                 <div class="logo-text">PISO <span>CHAIN</span></div>
                 <button class="close-drawer-btn" id="close-drawer">✕</button>
             </div>
@@ -88,6 +88,9 @@
                 </button>
                 <button class="wizard-tab-btn" id="tab-import-btn" onclick="switchTab('import')">
                     📥 Import Existing Wallet
+                </button>
+                <button class="wizard-tab-btn" id="tab-slip39-btn" onclick="switchTab('slip39')" style="border-color: var(--accent-cyan);">
+                    🔑 SLIP-39 Shamir Backup
                 </button>
                 <button class="wizard-tab-btn" id="tab-live-btn" onclick="switchTab('live')">
                     ⚡ Live Wallet & Sender
@@ -234,6 +237,57 @@
 
                     <div class="rpc-output-box margin-top" id="import-status-output" style="display: none;">
                         <pre>Ready to import wallet.</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: SLIP-39 Shamir Secret Sharing -->
+            <div class="tab-content" id="tab-slip39" style="display: none;">
+                <div class="panel-card hero-gold-card">
+                    <div class="panel-header">
+                        <h3>🔑 SLIP-39 Shamir Secret Sharing & Threshold Recovery</h3>
+                        <span class="badge-slip39">Galois Field GF(256)</span>
+                    </div>
+                    <p class="tab-desc">Split your master seed or private key into N Shamir shares with threshold M. Reconstruct original secrets with any M shares for Validator Backup, DAO Treasury, or Wallet Recovery.</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;" class="margin-top">
+                        <!-- Split Panel -->
+                        <div style="background: var(--bg-dark); padding: 20px; border-radius: 10px; border: 1px solid var(--card-border);">
+                            <h4 style="color: var(--accent-cyan); margin-bottom: 12px;">✂️ Split Secret into Shares</h4>
+                            <div class="form-group">
+                                <label>Secret Hex or Seed Phrase:</label>
+                                <input type="text" id="slip39-secret-input" class="mono-input" placeholder="e.g. 0x0123456789abcdef... or 24-word seed" />
+                            </div>
+                            <div style="display: flex; gap: 12px;" class="margin-top">
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Threshold (M):</label>
+                                    <input type="number" id="slip39-threshold-input" value="2" min="1" max="10" class="mono-input" />
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Total Shares (N):</label>
+                                    <input type="number" id="slip39-shares-input" value="3" min="1" max="10" class="mono-input" />
+                                </div>
+                            </div>
+                            <button id="btn-split-slip39" class="btn-primary margin-top" style="width: 100%; background: linear-gradient(135deg, var(--accent-cyan), #0284c7);">
+                                ✂️ Generate SLIP-39 Shares
+                            </button>
+                            <div id="slip39-shares-result" class="margin-top" style="display: none;"></div>
+                        </div>
+
+                        <!-- Recover Panel -->
+                        <div style="background: var(--bg-dark); padding: 20px; border-radius: 10px; border: 1px solid var(--card-border);">
+                            <h4 style="color: var(--accent-green); margin-bottom: 12px;">🧩 Reconstruct Secret from Shares</h4>
+                            <div class="form-group">
+                                <label>Paste Threshold Shares (one per line):</label>
+                                <textarea id="slip39-combine-input" rows="4" class="mono-input" placeholder="01-02-a1b2c3d4...&#10;02-02-e5f6g7h8..."></textarea>
+                            </div>
+                            <button id="btn-combine-slip39" class="btn-primary margin-top" style="width: 100%; background: linear-gradient(135deg, var(--accent-green), #059669);">
+                                🧩 Reconstruct Master Secret
+                            </button>
+                            <div id="slip39-combine-result" class="rpc-output-box margin-top" style="display: none;">
+                                <pre>Reconstruction result will appear here.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

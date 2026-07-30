@@ -1,0 +1,100 @@
+"""
+OpenAPI 3.0 Specification for PISO Chain REST API.
+"""
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PISO Chain REST API",
+    "description": "Standard REST API for Wallet Management, Validator Operations, and Network Diagnostics.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/wallet/create": {
+      "post": {
+        "summary": "Create new BIP-39 Wallet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "words": { "type": "integer", "enum": [12, 18, 24], "default": 24 },
+                  "passphrase": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Wallet created successfully" }
+        }
+      }
+    },
+    "/api/wallet/recover": {
+      "post": {
+        "summary": "Recover Wallet from Mnemonic",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mnemonic": { "type": "string" },
+                  "passphrase": { "type": "string" }
+                },
+                "required": ["mnemonic"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Wallet recovered successfully" }
+        }
+      }
+    },
+    "/api/wallet/balance": {
+      "get": {
+        "summary": "Get Account Balance",
+        "parameters": [
+          { "name": "address", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Account balance retrieved" }
+        }
+      }
+    },
+    "/api/wallet/send": {
+      "post": {
+        "summary": "Broadcast Raw Transaction",
+        "responses": {
+          "200": { "description": "Transaction submitted" }
+        }
+      }
+    },
+    "/api/validator/create": {
+      "post": {
+        "summary": "Generate Isolated Validator Key",
+        "responses": {
+          "200": { "description": "Validator key created" }
+        }
+      }
+    },
+    "/api/node/status": {
+      "get": {
+        "summary": "Get Node Status & Health",
+        "responses": {
+          "200": { "description": "Node status object" }
+        }
+      }
+    },
+    "/api/network/info": {
+      "get": {
+        "summary": "Get Network Information",
+        "responses": {
+          "200": { "description": "Network info" }
+        }
+      }
+    }
+  }
+}

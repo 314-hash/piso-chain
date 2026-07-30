@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/piso_logo.jpg" alt="PISO Chain Native Coin Logo" width="220" />
+</p>
+
 # PISO Chain (Layer 1 Blockchain - Enterprise Multi-Validator Network & PISO Agent OS)
 
 [![CI/CD Pipeline](https://github.com/314-hash/piso-chain/actions/workflows/ci.yml/badge.svg)](https://github.com/314-hash/piso-chain/actions/workflows/ci.yml)

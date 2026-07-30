@@ -1,0 +1,20 @@
+network: piso-mainnet
+coin_type: 2026
+symbol: PISO
+name: PISO Chain L1 Native Coin
+derivation_path: "m/44'/2026'/0'/0/0"
+curve: secp256k1
+
+networks:
+  mainnet:
+    coin_type: 2026
+    symbol: PISO
+  devnet:
+    coin_type: 3140
+    symbol: PISO-DEV
+  ethereum:
+    coin_type: 60
+    symbol: ETH
+  bitcoin:
+    coin_type: 0
+    symbol: BTC

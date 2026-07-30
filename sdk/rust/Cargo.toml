@@ -1,0 +1,10 @@
+[package]
+name = "piso-sdk"
+version = "1.0.0"
+edition = "2021"
+authors = ["314-hash"]
+description = "PISO Chain Official Rust SDK"
+
+[dependencies]
+hex = "0.4"
+sha2 = "0.10"

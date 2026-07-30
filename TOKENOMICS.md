@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/piso_logo.jpg" alt="PISO Chain Native Coin Logo" width="220" />
+</p>
+
 # 💎 PISO Chain ($PISO) Tokenomics & Economic Security Model
 
 > **Institutional-Grade Economic Architecture, Distribution, Staking Yields, and Deflationary Mechanics**
