@@ -1,0 +1,19 @@
+{
+  "chains": {
+    "eip155:2026001": {
+      "name": "PISO Chain Mainnet",
+      "id": "eip155:2026001",
+      "rpc": [
+        "https://rpc.piso-chain.org"
+      ],
+      "blockExplorerUrls": [
+        "https://explorer.piso-chain.org"
+      ],
+      "nativeCurrency": {
+        "name": "PISO Coin",
+        "symbol": "PISO",
+        "decimals": 18
+      }
+    }
+  }
+}
