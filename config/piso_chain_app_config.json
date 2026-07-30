@@ -1,0 +1,37 @@
+{
+  "name": "PISO Chain Mainnet",
+  "url": "https://piso-blockchain.vercel.app",
+  "packageName": "org.pisochain.app",
+  "appType": "WEB",
+  "themeType": "AURORA",
+  "webViewConfig": {
+    "desktopMode": false,
+    "javaScriptEnabled": true,
+    "domStorageEnabled": true,
+    "databaseEnabled": true,
+    "hardwareAcceleration": true,
+    "corsBypassEnabled": true,
+    "mixedContentMode": 0,
+    "userAgent": "Mozilla/5.0 (Linux; Android 14; Mobile; PISOChainApp) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+    "statusBarColor": "#0b0e14",
+    "navigationBarColor": "#141923",
+    "supportZoom": false,
+    "allowFileAccess": true
+  },
+  "splashEnabled": true,
+  "splashConfig": {
+    "title": "PISO CHAIN MAINNET",
+    "subtitle": "Post-Quantum L1 Blockchain & Wallet Studio",
+    "durationMs": 2500,
+    "backgroundColor": "#0b0e14",
+    "textColor": "#06b6d4"
+  },
+  "apkExportConfig": {
+    "appName": "PISO Chain",
+    "packageName": "org.pisochain.app",
+    "versionName": "1.1.0",
+    "versionCode": 101,
+    "targetSdk": 34,
+    "minSdk": 24
+  }
+}
