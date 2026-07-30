@@ -258,16 +258,29 @@
                     <span class="nav-icon">⚛️</span> Quantum Vault
                 </a>
             </nav>
+            <div class="network-status-badge">
+                <span class="pulse-dot green"></span>
+                <div class="badge-info">
+                    <span class="network-name">Mainnet Parlia</span>
+                    <span class="chain-id">Chain ID: 2026001</span>
+                </div>
+            </div>
         </aside>
+
+        <!-- Sidebar Mobile Overlay -->
+        <div class="drawer-overlay" id="drawer-overlay"></div>
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Header Bar -->
+            <!-- Header Bar with Mobile Hamburger -->
             <header class="top-header">
-                <button class="mobile-drawer-toggle" id="mobile-drawer-toggle">☰</button>
+                <div class="header-top-row">
+                    <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                    <div class="logo-text mobile-only-logo" style="font-size: 16px; font-weight: 800; color: var(--text-primary);">⚡ PISO <span style="color: var(--accent-cyan);">CHAIN</span></div>
+                </div>
                 <div class="header-title">
-                    <h1>System Smart Contracts Hub & Interaction Studio</h1>
-                    <p class="subtitle">Complete Master Address Registry & Web3 Read/Write Playground for PISO Chain Mainnet</p>
+                    <h1 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin: 0;">System Smart Contracts Hub</h1>
+                    <p class="subtitle" style="font-size: 0.85rem; color: var(--text-secondary); margin: 4px 0 0 0;">Complete Master Address Registry & Web3 Read/Write Studio</p>
                 </div>
                 <div class="network-badge" id="connection-status">
                     <span class="badge badge-success">● Connected to Mainnet (Chain 2026001)</span>

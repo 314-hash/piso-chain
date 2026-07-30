@@ -129,12 +129,28 @@ function initProvider() {
 }
 
 function setupMobileDrawer() {
-    const toggleBtn = document.getElementById("mobile-drawer-toggle");
+    const burger = document.getElementById("hamburger-btn") || document.getElementById("mobile-drawer-toggle");
     const closeBtn = document.getElementById("close-drawer");
     const sidebar = document.getElementById("sidebar-drawer");
+    const overlay = document.getElementById("drawer-overlay");
 
-    toggleBtn?.addEventListener("click", () => sidebar?.classList.add("open"));
-    closeBtn?.addEventListener("click", () => sidebar?.classList.remove("open"));
+    function toggleDrawer(open) {
+        if (open) {
+            sidebar?.classList.add("open");
+            overlay?.classList.add("active");
+        } else {
+            sidebar?.classList.remove("open");
+            overlay?.classList.remove("active");
+        }
+    }
+
+    burger?.addEventListener("click", () => toggleDrawer(true));
+    closeBtn?.addEventListener("click", () => toggleDrawer(false));
+    overlay?.addEventListener("click", () => toggleDrawer(false));
+
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.addEventListener("click", () => toggleDrawer(false));
+    });
 }
 
 function renderContractsList() {

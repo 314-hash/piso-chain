@@ -546,7 +546,7 @@ body.dark-mode {
     display: none;
 }
 
-.mobile-hamburger {
+.mobile-hamburger, .mobile-drawer-toggle {
     display: none;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -587,6 +587,16 @@ body.dark-mode {
     display: block;
 }
 
+/* Mobile Touch Optimization & Word Wrapping Defaults */
+button, input, select, textarea, .nav-item, .tab-btn, .wizard-tab-btn {
+    touch-action: manipulation;
+}
+
+code, pre, .mono, .address-value, .pqc-key-box, .shamir-share-box, .rpc-output-box pre {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
+
 /* Mobile Responsive Breakpoints */
 @media (max-width: 1024px) {
     .charts-row {
@@ -601,6 +611,10 @@ body.dark-mode {
     
     .search-bar-container {
         max-width: 100%;
+    }
+    
+    .ai-escrow-grid {
+        grid-template-columns: 1fr !important;
     }
 }
 
@@ -619,7 +633,7 @@ body.dark-mode {
         left: 0;
     }
 
-    .mobile-hamburger, .close-drawer-btn {
+    .mobile-hamburger, .mobile-drawer-toggle, .close-drawer-btn {
         display: inline-flex;
     }
 
@@ -629,6 +643,7 @@ body.dark-mode {
 
     .main-content {
         padding: 16px 12px;
+        width: 100%;
     }
 
     .top-header {
@@ -691,6 +706,41 @@ body.dark-mode {
         flex-wrap: nowrap;
         padding-bottom: 6px;
     }
+    
+    .hero-flex-container {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+    
+    .hero-header-group {
+        flex-direction: column;
+        align-items: center !important;
+        text-align: center;
+    }
+    
+    .hero-action-buttons {
+        width: 100%;
+    }
+    
+    .hero-action-buttons a, .hero-action-buttons button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .paper-qr-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+    
+    .paper-wallet-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -703,6 +753,9 @@ body.dark-mode {
         margin-bottom: 16px;
     }
 
+    .contracts-grid {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 /* ==========================================================================

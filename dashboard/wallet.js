@@ -107,6 +107,11 @@ function setupMobileDrawer() {
     const drawer = document.getElementById('sidebar-drawer');
     const overlay = document.getElementById('drawer-overlay');
 
+    const closeDrawer = () => {
+        if (drawer) drawer.classList.remove('open');
+        if (overlay) overlay.classList.remove('active');
+    };
+
     if (hamburger && drawer && overlay) {
         hamburger.addEventListener('click', () => {
             drawer.classList.add('open');
@@ -114,13 +119,12 @@ function setupMobileDrawer() {
         });
     }
 
-    const closeDrawer = () => {
-        if (drawer) drawer.classList.remove('open');
-        if (overlay) overlay.classList.remove('active');
-    };
-
     if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
     if (overlay) overlay.addEventListener('click', closeDrawer);
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', closeDrawer);
+    });
 }
 
 // Wizard Tab Switcher

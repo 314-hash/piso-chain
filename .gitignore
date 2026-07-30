@@ -9,11 +9,13 @@
 PISO_Mainnet_UTC--*.json
 genesis/cluster_nodes.json
 genesis/quantum_vault_keys.json
+genesis/onboarded_validators/
 genesis/key.txt
 genesis/password.txt
 genesis/jwt.hex
 cluster_nodes.json
 quantum_vault_keys.json
+onboarded_validators/
 keystore/
 docker/keystore/
 secrets/
@@ -71,3 +73,4 @@ Thumbs.db
 .idea/
 .gemini/
 .agent/
+.agents/
