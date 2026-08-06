@@ -29,6 +29,44 @@ import argparse
 from datetime import datetime, timezone
 from typing import Optional
 
+# RapidJSON fallback for Windows Python environment
+try:
+    import rapidjson
+except Exception:
+    class MockRapidJSON:
+        PM_COMMENTS = 0
+        PM_TRAILING_COMMAS = 0
+        NM_NATIVE = 0
+        NM_NAN = 0
+        JSONDecodeError = ValueError
+
+        @staticmethod
+        def loads(s, *args, **kwargs):
+            content = str(s)
+            cleaned = "\n".join([line for line in content.splitlines() if not line.strip().startswith("//")])
+            return json.loads(cleaned)
+
+        @staticmethod
+        def load(fp, *args, **kwargs):
+            raw = fp.read()
+            if isinstance(raw, bytes):
+                raw = raw.decode('utf-8')
+            return MockRapidJSON.loads(raw)
+
+        @staticmethod
+        def dumps(obj, *args, **kwargs):
+            return json.dumps(obj)
+
+        @staticmethod
+        def dump(obj, fp, *args, **kwargs):
+            return json.dump(obj, fp)
+    sys.modules['rapidjson'] = MockRapidJSON()
+
+
+
+
+
+
 import requests
 from web3 import Web3
 from web3.middleware import ExtraDataToPOAMiddleware
@@ -365,32 +403,32 @@ class FreqtradeBridge:
                 self._mark_submitted(trade_id)
                 submitted += 1
                 log.info(f"  ✔ Proof submitted | TxHash: {tx_hash}")
+                log.info(f"  + Proof submitted | TxHash: {tx_hash}")
             else:
-                log.error(f"  ✘ Proof submission failed for trade #{trade_id}")
+                log.error(f"  - Proof submission failed for trade #{trade_id}")
 
         return submitted
 
-    def run_loop(self, poll_interval: int = POLL_INTERVAL_SECONDS):
-        """Main polling loop."""
+    def run_loop(self):
+        """Continuous polling loop."""
         mode = "DRY-RUN" if self.dry_run else "LIVE"
-        log.info(f"═══ PISO Chain ↔ Freqtrade Bridge [{mode}] ═══")
-        log.info(f"Poll interval: {poll_interval}s | Oracle: {ORACLE_ADDRESS or 'NOT SET'}")
+        log.info(f"=== PISO Chain -> Freqtrade Bridge [{mode}] ===")
+        log.info(f"Poll interval: {POLL_INTERVAL_SECONDS}s | Oracle: {self.piso.oracle.address if self.piso.oracle else 'NOT SET'}")
 
         while True:
             try:
-                log.info(f"── Polling freqtrade [{datetime.now().strftime('%H:%M:%S')}] ──")
-                submitted = self.poll_and_submit()
-                if submitted > 0:
-                    log.info(f"✅ Submitted {submitted} proof(s) to PISO Chain")
+                log.info(f"--- Polling freqtrade [{datetime.now().strftime('%H:%M:%S')}] ---")
+                self.poll_and_submit()
             except KeyboardInterrupt:
-                log.info("Bridge stopped by user.")
+                log.info("Bridge stopped by user")
                 break
             except Exception as e:
-                log.error(f"Poll error: {e}")
-            time.sleep(poll_interval)
+                log.error(f"Bridge loop error: {e}")
+
+            time.sleep(POLL_INTERVAL_SECONDS)
 
 
-# ── CLI Entry Point ───────────────────────────────────────────────────────────
+# -- CLI Entry Point -----------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser(description="PISO Chain ↔ Freqtrade Bridge")
