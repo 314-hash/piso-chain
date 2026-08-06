@@ -110,7 +110,8 @@
   },
 
   "_piso_chain": {
-    "rpc_url": "http://localhost:8545",
+    "rpc_url": "https://piso-rpc-dev.loca.lt",
+
     "chain_id": 2026001,
     "oracle_contract": "",
     "worker_address": "",

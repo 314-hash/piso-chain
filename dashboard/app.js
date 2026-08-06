@@ -1,8 +1,7 @@
 // PISO Chain Dashboard Logic & Live RPC Connector
 
-const RPC_URL = window.location.origin.includes("localhost") || window.location.origin.includes("127.0.0.1")
-    ? "http://localhost:8545"
-    : "http://localhost:8545";
+const RPC_URL = "https://piso-rpc-dev.loca.lt";
+const RPC_LOCAL_FALLBACK = "http://localhost:8545";
 
 const DEFAULT_VALIDATOR = "0xB5A772355e12CA975C175C9a7CFBD48BBEE482D8";
 
@@ -1356,11 +1355,12 @@ const PISO_CHAIN = {
     id: 2026001,
     name: "PISO Chain",
     nativeCurrency: { name: "PISO", symbol: "PISO", decimals: 18 },
-    rpcUrls: { default: { http: ["http://localhost:8545"] } },
-    blockExplorers: { default: { name: "PISO Explorer", url: "http://localhost:8085" } }
+    rpcUrls: { default: { http: ["https://piso-rpc-dev.loca.lt", "http://localhost:8545"] } },
+    blockExplorers: { default: { name: "PISO Explorer", url: "https://piso-blockchain.vercel.app/" } }
 };
 
-const PISO_RPC = "http://localhost:8545";
+const PISO_RPC = "https://piso-rpc-dev.loca.lt";
+
 const VIEM_OUTPUT = () => document.getElementById("viem-output-result");
 
 function viemLog(html) {

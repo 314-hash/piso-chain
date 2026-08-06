@@ -3,7 +3,8 @@
  * Provides live Read/Write contract interaction, state querying, and ABI inspection for all 11 System Contracts.
  */
 
-const RPC_ENDPOINT = "http://localhost:8545";
+const RPC_ENDPOINT = "https://piso-rpc-dev.loca.lt";
+
 const CHAIN_ID = 2026001;
 
 // Master Contracts Registry
@@ -36,8 +37,17 @@ const SYSTEM_CONTRACTS = [
         writeMethods: ["registerQuantumPublicKey(bytes pubKey)"]
     },
     {
-        name: "PISOFaucet",
+        name: "PISOProofOfWork",
         address: "0x0000000000000000000000000000000000001003",
+        category: "Consensus & Mining Engine",
+        badge: "Proof of Work",
+        desc: "Dynamic Proof of Work (PoW) verification engine, challenge creator with PISO token reward pool, and nonce validator.",
+        readMethods: ["getChallenge(uint256)", "verifyProof(bytes32,address,uint256,uint256)", "totalValidProofs()"],
+        writeMethods: ["createChallenge(bytes32 challengeHash, uint256 targetDifficulty)", "submitWork(uint256 challengeId, uint256 nonce)"]
+    },
+    {
+        name: "PISOFaucet",
+        address: "0x0000000000000000000000000000000000001004",
         category: "Token Dispenser",
         badge: "Testnet Faucet",
         desc: "On-chain rate-limited testnet faucet dispensing 1 PISO coin per recipient wallet every 24 hours.",

@@ -8,9 +8,9 @@
 let activeWallet = null;
 let currentMnemonic = '';
 let activeTab = 'create';
-const RPC_ENDPOINT = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
-    ? 'http://localhost:8545'
-    : 'https://piso-rpc-dev.loca.lt';
+const RPC_ENDPOINT = 'https://piso-rpc-dev.loca.lt';
+const RPC_LOCAL_FALLBACK = 'http://localhost:8545';
+
 
 const CHAIN_ID = 2026001;
 const REOWN_PROJECT_ID = 'ea38145dff0d1004d9ccb49fbd848595';

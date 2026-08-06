@@ -38,7 +38,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-PISO_RPC_URL          = os.getenv("RPC_URL", "http://localhost:8545")
+PISO_RPC_URL          = os.getenv("RPC_URL", "https://piso-rpc-dev.loca.lt")
+
 FREQTRADE_API_URL     = os.getenv("FREQTRADE_API_URL", "http://localhost:8180")
 FREQTRADE_API_USER    = os.getenv("FREQTRADE_API_USER", "pisobot")
 FREQTRADE_API_PASS    = os.getenv("FREQTRADE_API_PASSWORD", "changeme")
