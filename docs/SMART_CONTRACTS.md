@@ -1,6 +1,6 @@
 # PISO Chain Smart Contracts Reference
 
-This document details the complete suite of **18 System Smart Contracts** precompiled and deployed on **PISO Chain Mainnet** (Chain ID `2026001`).
+This document details the complete suite of **19 System Smart Contracts** precompiled and deployed on **PISO Chain Mainnet** (Chain ID `2026001`).
 
 ---
 
@@ -26,6 +26,8 @@ This document details the complete suite of **18 System Smart Contracts** precom
 | **16** | `PISOCopilotKit` | `0x000000000000000000000000000000000000100F` | [`contracts/PISOCopilotKit.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOCopilotKit.sol) | CopilotKit AG-UI protocol, Generative UI, and Human-in-the-Loop signature approval vault. |
 | **17** | `PISOBullshitDetector` | `0x0000000000000000000000000000000000001010` | [`contracts/PISOBullshitDetector.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOBullshitDetector.sol) | Bullshit-Detector claim verification, independent web source checking, and 0-10 BS score vault. |
 | **18** | `PISOPublicApisOracle` | `0x0000000000000000000000000000000000001011` | [`contracts/PISOPublicApisOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPublicApisOracle.sol) | Public APIs discovery catalog & cryptographic API query proof vault. |
+| **19** | `PISOFreqtradeOracle` | `0x0000000000000000000000000000000000001012` | [`contracts/PISOFreqtradeOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOFreqtradeOracle.sol) | Freqtrade algorithmic trading proof-of-work verification oracle & $PISO rewards. |
+
 
 ---
 
@@ -104,5 +106,16 @@ This document details the complete suite of **18 System Smart Contracts** precom
 ---
 
 ### 11. `PISOAccountRecovery.sol` (`0x...100A`)
-- **Source:** [`contracts/PISOAccountRecovery.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOAccountRecovery.sol)
+- **Source:** [`contracts/PISOAccountRecovery.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOAccountRecovery.sol)
 - **Description:** On-chain guardian multi-sig key rotation and smart contract account recovery engine.
+
+---
+
+### 19. `PISOFreqtradeOracle.sol` (`0x...1012`)
+- **Source:** [`contracts/PISOFreqtradeOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOFreqtradeOracle.sol)
+- **Description:** Algorithmic trading proof verification oracle. Polls Freqtrade REST API sessions, verifies SHA-256 trade work proofs (`submitTradeProof`), checks profit threshold (>0.10% min profit), and rewards authorized worker wallets with 10 PISO tokens per verified profitable trade.
+- **Key Functions**:
+  - `submitTradeProof(bytes32 sha256Proof, uint256 tradeId, uint256 profitBps, uint256 timestamp)`: Verifies trade proofs on-chain.
+  - `verifyProfitThreshold(uint256 profitBps)`: Ensures minimum profit percentage before dispensing rewards.
+  - `authorizeWorker(address worker)`: Grants trading bot worker permission to submit work proofs.
+

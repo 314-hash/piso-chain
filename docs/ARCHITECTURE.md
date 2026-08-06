@@ -30,5 +30,6 @@ PISO Chain is an enterprise Layer 1 EVM-compatible blockchain powered by BSC Par
 8. **CopilotKit AG-UI Assistant (`jcode/copilot_kit.py`)**: Generative UI component rendering, shared state streaming, and Human-in-the-Loop signature approvals.
 9. **Bullshit-Detector Fact-Checker (`jcode/bullshit_detector.py`)**: Claim-by-claim content verification engine, independent web source checking, and 0-10 BS score logging.
 10. **Public APIs Directory Oracle (`jcode/public_apis_oracle.py`)**: Discovery catalog & oracle engine enabling AI Agents to query 1,000+ public APIs (Crypto, Forex, Stocks, Weather) with on-chain data proofs.
-11. **RPC & REST API (`rpc/`, `api/`)**: JSON-RPC 2.0 and OpenAPI 3.0 interfaces.
-12. **Quantum Readiness (`wallet/crypto/`)**: Pluggable `Signer` interface supporting classical ECDSA and NIST PQC algorithms (ML-DSA / Dilithium).
+11. **Freqtrade Algorithmic Trading Bot & Proof Oracle (`contracts/PISOFreqtradeOracle.sol`, `bridge/freqtrade_bridge.py`, `core/freqtrade_agent.py`)**: Automated trading worker daemon polling Freqtrade REST API sessions, verifying SHA-256 trade work proofs, and dispensing native $PISO token rewards for profitable trades.
+12. **RPC & REST API (`rpc/`, `api/`)**: JSON-RPC 2.0 and OpenAPI 3.0 interfaces.
+13. **Quantum Readiness (`wallet/crypto/`)**: Pluggable `Signer` interface supporting classical ECDSA and NIST PQC algorithms (ML-DSA / Dilithium).
