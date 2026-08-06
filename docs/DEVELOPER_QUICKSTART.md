@@ -12,8 +12,15 @@ Welcome to **PISO Chain** — the enterprise-grade Layer 1 blockchain engineered
 - **RPC Endpoint (HTTP)**: `https://rpc.piso-chain.org` (Local: `http://localhost:8545`)
 - **WebSocket Endpoint**: `wss://rpc.piso-chain.org` (Local: `ws://localhost:8546`)
 - **REST API Endpoint**: `http://localhost:8081`
-- **SLIP-44 Coin Type**: `2028'` (`m/44'/2028'/0'/0/0`)
-- **Block Explorer**: `https://explorer.piso-chain.org`
+- **SLIP-0044 Coin Type**: `2026'` (`m/44'/2026'/0'/0/0`)
+- **Block Explorer**: `https://explorer.piso-chain.org` (Local: `http://localhost:8085`)
+- **PoW System Contract**: `0x0000000000000000000000000000000000001003`
+- **GeoLibre GIS Spatial Oracle**: `0x000000000000000000000000000000000000100B`
+- **Turbo-Fieldfare AI Engine**: `0x000000000000000000000000000000000000100C`
+- **Agent-Reach Web Oracle**: `0x000000000000000000000000000000000000100D`
+- **OpenPlanter Entity Graph**: `0x000000000000000000000000000000000000100E`
+- **CopilotKit AG-UI Assistant**: `0x000000000000000000000000000000000000100F`
+- **Bullshit-Detector Oracle**: `0x0000000000000000000000000000000000001010`
 
 ---
 

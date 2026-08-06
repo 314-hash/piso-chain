@@ -24,6 +24,44 @@ import subprocess
 import logging
 from typing import Dict, Any, List, Optional
 
+# RapidJSON fallback for Windows Python environment
+try:
+    import rapidjson
+except Exception:
+    class MockRapidJSON:
+        PM_COMMENTS = 0
+        PM_TRAILING_COMMAS = 0
+        NM_NATIVE = 0
+        NM_NAN = 0
+        JSONDecodeError = ValueError
+
+        @staticmethod
+        def loads(s, *args, **kwargs):
+            content = str(s)
+            cleaned = "\n".join([line for line in content.splitlines() if not line.strip().startswith("//")])
+            return json.loads(cleaned)
+
+        @staticmethod
+        def load(fp, *args, **kwargs):
+            raw = fp.read()
+            if isinstance(raw, bytes):
+                raw = raw.decode('utf-8')
+            return MockRapidJSON.loads(raw)
+
+        @staticmethod
+        def dumps(obj, *args, **kwargs):
+            return json.dumps(obj)
+
+        @staticmethod
+        def dump(obj, fp, *args, **kwargs):
+            return json.dump(obj, fp)
+    sys.modules['rapidjson'] = MockRapidJSON()
+
+
+
+
+
+
 # ── Logging ────────────────────────────────────────────────────────────────────
 
 logging.basicConfig(
@@ -86,12 +124,16 @@ class FreqtradeAgent:
         if self._bot_process and self._bot_process.poll() is None:
             return self._status_response("Bot is already running", pid=self._bot_process.pid)
 
+        user_dir = os.path.dirname(config_path)
         args = [
-            sys.executable, "-m", "freqtrade", "trade",
+            sys.executable, "-c",
+            "import sys,json;Mock=type('MockRapidJSON',(),{'PM_COMMENTS':0,'PM_TRAILING_COMMAS':0,'NM_NATIVE':0,'NM_NAN':0,'JSONDecodeError':ValueError,'loads':staticmethod(lambda s,*a,**k:json.loads('\\n'.join([l for l in str(s).splitlines() if not l.strip().startswith('//')]))),'load':staticmethod(lambda fp,*a,**k:json.loads('\\n'.join([l for l in (fp.read().decode('utf-8') if isinstance(fp.read,bytes) else str(fp.read())).splitlines() if not l.strip().startswith('//')]))),'dumps':staticmethod(json.dumps),'dump':staticmethod(json.dump)});sys.modules['rapidjson']=Mock();from freqtrade.main import main;main()",
+            "trade",
+            "--userdir", user_dir,
             "--config", config_path,
-            "--strategy-path", os.path.dirname(os.path.abspath(FREQTRADE_STRATEGY_PATH)),
+            "--strategy-path", user_dir,
             "--strategy", "PISOStrategy",
-            "--logfile", "logs/freqtrade_piso.log",
+            "--logfile", os.path.join(user_dir, "logs", "freqtrade_piso.log"),
         ]
         if dry_run:
             args.extend(["--dry-run-wallet", "1000"])
@@ -99,10 +141,9 @@ class FreqtradeAgent:
         log.info(f"Starting freqtrade bot: {' '.join(args)}")
         self._bot_process = subprocess.Popen(
             args,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            cwd=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "freqtrade")),
+            cwd=user_dir,
         )
+
 
         return self._status_response(
             "Freqtrade bot started",

@@ -35,6 +35,7 @@ def create_mainnet_genesis(validators, treasury_addr="0x1821F246a27287a2187E1D63
         "0x0000000000000000000000000000000000001000": { "balance": "0x0" }, # PISOValidatorSet
         "0x0000000000000000000000000000000000001001": { "balance": "0x0" }, # PISOSlashIndicator
         "0x0000000000000000000000000000000000001002": { "balance": "0x0" }, # PISOQuantumSecurity
+        "0x0000000000000000000000000000000000001003": { "balance": piso_to_wei_hex(1_000_000) }, # PISOProofOfWork Reward Vault (1M PISO)
     }
 
     # Fund Mainnet Genesis Signers with initial operational balance (100,000 PISO minimum stake)

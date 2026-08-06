@@ -7,7 +7,9 @@
   "timeframe": "5m",
   "dry_run": true,
   "dry_run_wallet": 1000,
+  "user_data_dir": "config/freqtrade",
   "cancel_open_orders_on_exit": false,
+
 
   "trading_mode": "spot",
   "margin_mode": "",

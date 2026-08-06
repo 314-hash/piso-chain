@@ -1,6 +1,6 @@
 # PISO Chain Smart Contracts Reference
 
-This document details the complete suite of **11 System Smart Contracts** precompiled and deployed on **PISO Chain Mainnet** (Chain ID `2026001`).
+This document details the complete suite of **18 System Smart Contracts** precompiled and deployed on **PISO Chain Mainnet** (Chain ID `2026001`).
 
 ---
 
@@ -8,17 +8,24 @@ This document details the complete suite of **11 System Smart Contracts** precom
 
 | # | Contract Name | System Address | Source File | Core Protocol Functionality |
 | :-: | :--- | :--- | :--- | :--- |
-| **1** | `PISOValidatorSet` | `0x0000000000000000000000000000000000001000` | [`contracts/PISOValidatorSet.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOValidatorSet.sol) | PoSA consensus validator registration, 100k PISO min stake, epoch rotation (`200` blocks). |
-| **2** | `PISOSlashIndicator` | `0x0000000000000000000000000000000000001001` | [`contracts/PISOSlashIndicator.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOSlashIndicator.sol) | Misdemeanor tracking (50 misses = jailing) & double-signing proof verification (20% burn). |
-| **3** | `PISOQuantumSecurity` | `0x0000000000000000000000000000000000001002` | [`contracts/PISOQuantumSecurity.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOQuantumSecurity.sol) | NIST FIPS 204 (ML-DSA / Dilithium) & Winternitz (W-OTS+) Post-Quantum Cryptography vault. |
-| **4** | `PISOFaucet` | `0x0000000000000000000000000000000000001003` | [`contracts/PISOFaucet.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOFaucet.sol) | Rate-limited testnet faucet dispensing `1 PISO` per 24 hours. |
-| **5** | `PISOStaking` | `0x0000000000000000000000000000000000001004` | [`contracts/PISOStaking.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOStaking.sol) | Native liquid staking delegation protocol earning block transaction fee rewards. |
-| **6** | `PISOGovernor` | `0x0000000000000000000000000000000000001005` | [`contracts/PISOGovernor.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOGovernor.sol) | On-chain DAO governance proposal & voting system for protocol parameter upgrades. |
-| **7** | `PISOPaymaster` | `0x0000000000000000000000000000000000001006` | [`contracts/PISOPaymaster.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOPaymaster.sol) | Native EIP-4337 Account Abstraction paymaster for sponsoring gasless dApp transactions. |
-| **8** | `PISOBridge` | `0x0000000000000000000000000000000000001007` | [`contracts/PISOBridge.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOBridge.sol) | Multi-sig threshold cross-chain bridge relayer for wrapping and transferring PISO assets. |
-| **9** | `PISOZKRecovery` | `0x0000000000000000000000000000000000001008` | [`contracts/PISOZKRecovery.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOZKRecovery.sol) | Zero-Knowledge privacy-preserving social guardian wallet recovery via Merkle roots. |
-| **10** | `PISOAIOracle` | `0x0000000000000000000000000000000000001009` | [`contracts/PISOAIOracle.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOAIOracle.sol) | Dynamic AI network threat scoring engine and dynamic gas floor adjustment oracle. |
-| **11** | `PISOAccountRecovery` | `0x000000000000000000000000000000000000100A` | [`contracts/PISOAccountRecovery.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOAccountRecovery.sol) | Guardian multi-sig key rotation and smart contract account recovery engine. |
+| **1** | `PISOValidatorSet` | `0x0000000000000000000000000000000000001000` | [`contracts/PISOValidatorSet.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOValidatorSet.sol) | PoSA consensus validator registration, 100k PISO min stake, epoch rotation (`200` blocks). |
+| **2** | `PISOSlashIndicator` | `0x0000000000000000000000000000000000001001` | [`contracts/PISOSlashIndicator.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOSlashIndicator.sol) | Misdemeanor tracking (50 misses = jailing) & double-signing proof verification (20% burn). |
+| **3** | `PISOQuantumSecurity` | `0x0000000000000000000000000000000000001002` | [`contracts/PISOQuantumSecurity.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOQuantumSecurity.sol) | NIST FIPS 204 (ML-DSA / Dilithium) & Winternitz (W-OTS+) Post-Quantum Cryptography vault. |
+| **4** | `PISOProofOfWork` | `0x0000000000000000000000000000000000001003` | [`contracts/PISOProofOfWork.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOProofOfWork.sol) | PoW target difficulty nonce verification engine & reward vault (`nonReentrant` defense). |
+| **5** | `PISOFaucet` | `0x0000000000000000000000000000000000001004` | [`contracts/PISOFaucet.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOFaucet.sol) | Rate-limited testnet faucet dispensing `1 PISO` per 24 hours. |
+| **6** | `PISOStaking` | `0x0000000000000000000000000000000000001005` | [`contracts/PISOStaking.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOStaking.sol) | Native liquid staking delegation protocol earning block transaction fee rewards. |
+| **7** | `PISOGovernor` | `0x0000000000000000000000000000000000001006` | [`contracts/PISOGovernor.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOGovernor.sol) | On-chain DAO governance proposal & voting system for protocol parameter upgrades. |
+| **8** | `PISOPaymaster` | `0x0000000000000000000000000000000000001007` | [`contracts/PISOPaymaster.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPaymaster.sol) | Native EIP-4337 Account Abstraction paymaster for sponsoring gasless dApp transactions. |
+| **9** | `PISOBridge` | `0x0000000000000000000000000000000000001008` | [`contracts/PISOBridge.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOBridge.sol) | Multi-sig threshold cross-chain bridge relayer for wrapping and transferring PISO assets. |
+| **10** | `PISOZKRecovery` | `0x0000000000000000000000000000000000001009` | [`contracts/PISOZKRecovery.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOZKRecovery.sol) | Zero-Knowledge privacy-preserving social guardian wallet recovery via Merkle roots. |
+| **11** | `PISOAIOracle` | `0x000000000000000000000000000000000000100A` | [`contracts/PISOAIOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOAIOracle.sol) | Dynamic AI network threat scoring engine and dynamic gas floor adjustment oracle. |
+| **12** | `PISOValidatorGeoLocation` | `0x000000000000000000000000000000000000100B` | [`contracts/PISOValidatorGeoLocation.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOValidatorGeoLocation.sol) | DePIN proof-of-physical-location & GeoLibre GIS spatial oracle validator mapping. |
+| **13** | `PISOTurboFieldfareAI` | `0x000000000000000000000000000000000000100C` | [`contracts/PISOTurboFieldfareAI.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOTurboFieldfareAI.sol) | On-chain verification vault for Turbo-Fieldfare ultra-low-RAM (~2 GB RAM) AI inference. |
+| **14** | `PISOAgentReachOracle` | `0x000000000000000000000000000000000000100D` | [`contracts/PISOAgentReachOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOAgentReachOracle.sol) | Agent-Reach real-time web intelligence, YouTube, RSS, and GitHub oracle proof vault. |
+| **15** | `PISOOpenPlanter` | `0x000000000000000000000000000000000000100E` | [`contracts/PISOOpenPlanter.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOOpenPlanter.sol) | OpenPlanter recursive entity resolution & Cytoscape.js knowledge graph evidence vault. |
+| **16** | `PISOCopilotKit` | `0x000000000000000000000000000000000000100F` | [`contracts/PISOCopilotKit.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOCopilotKit.sol) | CopilotKit AG-UI protocol, Generative UI, and Human-in-the-Loop signature approval vault. |
+| **17** | `PISOBullshitDetector` | `0x0000000000000000000000000000000000001010` | [`contracts/PISOBullshitDetector.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOBullshitDetector.sol) | Bullshit-Detector claim verification, independent web source checking, and 0-10 BS score vault. |
+| **18** | `PISOPublicApisOracle` | `0x0000000000000000000000000000000000001011` | [`contracts/PISOPublicApisOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPublicApisOracle.sol) | Public APIs discovery catalog & cryptographic API query proof vault. |
 
 ---
 

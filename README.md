@@ -91,8 +91,16 @@ npm --prefix sdk run build
 - [`PISOGovernor.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOGovernor.sol): On-chain DAO governance proposal & voting system.
 - [`PISOPaymaster.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOPaymaster.sol): Native EIP-4337 Account Abstraction gasless paymaster.
 - [`PISOZKRecovery.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOZKRecovery.sol): Zero-Knowledge privacy-preserving social guardian recovery.
-- [`PISOQuantumSecurity.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOQuantumSecurity.sol) (`0x...1002`): NIST FIPS 204 (ML-DSA / Dilithium) & Winternitz (W-OTS+) Post-Quantum Cryptography vault.
-- [`PISOAIOracle.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOAIOracle.sol): Dynamic AI network threat scoring & gas oracle.
+- [`PISOQuantumSecurity.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOQuantumSecurity.sol) (`0x...1002`): NIST FIPS 204 (ML-DSA / Dilithium) & Winternitz (W-OTS+) Post-Quantum Cryptography vault.
+- [`PISOProofOfWork.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOProofOfWork.sol) (`0x...1003`): Dynamic Proof of Work (PoW) verification engine & computational task reward vault.
+- [`PISOValidatorGeoLocation.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOValidatorGeoLocation.sol): DePIN proof-of-physical-location & GeoLibre GIS spatial oracle.
+- [`PISOTurboFieldfareAI.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOTurboFieldfareAI.sol): On-chain verification vault for Turbo-Fieldfare ~2 GB RAM AI agent inference.
+- [`PISOAgentReachOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOAgentReachOracle.sol): Agent-Reach real-time web intelligence, YouTube, RSS, and GitHub oracle proof vault.
+- [`PISOOpenPlanter.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOOpenPlanter.sol): OpenPlanter recursive entity resolution & Cytoscape.js knowledge graph evidence vault.
+- [`PISOCopilotKit.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOCopilotKit.sol): CopilotKit AG-UI protocol, Generative UI, and Human-in-the-Loop signature approval vault.
+- [`PISOBullshitDetector.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOBullshitDetector.sol): Bullshit-Detector claim verification, independent web source checking, and 0-10 BS score vault.
+- [`PISOPublicApisOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPublicApisOracle.sol): Public APIs directory discovery catalog & oracle proof vault.
+- [`PISOAIOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOAIOracle.sol): Dynamic AI network threat scoring & gas oracle.
 
 ---
 
@@ -105,13 +113,20 @@ Detailed guides are located in the [`docs/`](file:///c:/Users/janla/extropianjan
 3. 📜 [`docs/SMART_CONTRACTS.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/SMART_CONTRACTS.md): Full Smart Contracts Reference.
 4. 🐋 [`docs/DEPLOYMENT_AND_DEVOPS.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/DEPLOYMENT_AND_DEVOPS.md): Docker, Kubernetes StatefulSets, & Monitoring.
 5. ⚡ [`docs/DEVELOPER_API_AND_SDK.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/DEVELOPER_API_AND_SDK.md): Viem, Web3.py, & Ethers.js integration code.
+5b. ⚡ [`docs/VIEM_EXAMPLES.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/VIEM_EXAMPLES.md): DappUniversity Viem Examples — 6 canonical Viem v2 patterns for PISO Chain (createPublicClient, createWalletClient, sendTransaction, readContract, writeContract, getLogs).
 6. 🚰 [`docs/FAUCET_AND_RELAYER.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/FAUCET_AND_RELAYER.md): 1 PISO Faucet & Bridge Relayer daemon.
 7. 🔍 [`docs/BLOCKCHAIN_EXPLORER_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/BLOCKCHAIN_EXPLORER_GUIDE.md): Block Explorer hosting & dashboard guide.
-8. ⚛️ [`docs/QUANTUM_RESISTANCE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/QUANTUM_RESISTANCE.md): NIST FIPS 204 ML-DSA Post-Quantum Guide.
-9. 🚀 [`docs/MAINNET_LAUNCH_CHECKLIST.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/MAINNET_LAUNCH_CHECKLIST.md): Mainnet Launch Readiness & Production Checklist.
-10. ☸️ [`docs/KUBERNETES_AND_DOCKER_CLUSTER_GUIDE.md`](file:///c:/Users/janla/extropianjanus/piso-chain/docs/KUBERNETES_AND_DOCKER_CLUSTER_GUIDE.md): Multi-Validator Setup Guide.
-11. 📊 [`PITCH.md`](file:///c:/Users/janla/extropianjanus/piso-chain/PITCH.md): Investor Pitch Deck & Ecosystem Overview.
-12. 💎 [`TOKENOMICS.md`](file:///c:/Users/janla/extropianjanus/piso-chain/TOKENOMICS.md): Token Allocation, Staking Yield APR & Vesting.
+9. 🗺️ [`docs/GEOLIBRE_GIS_INTEGRATION.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/GEOLIBRE_GIS_INTEGRATION.md): GeoLibre GIS Spatial Oracle & DePIN Node Map.
+10. ⚡ [`docs/TURBO_FIELDFARE_AI.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/TURBO_FIELDFARE_AI.md): Turbo-Fieldfare Ultra-Low-RAM AI Agent Engine.
+11. 👁️ [`docs/AGENT_REACH_ORACLE.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/AGENT_REACH_ORACLE.md): Agent-Reach Web Intelligence & Telemetry Oracle.
+12. 🌱 [`docs/OPENPLANTER_KNOWLEDGE_GRAPH.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/OPENPLANTER_KNOWLEDGE_GRAPH.md): OpenPlanter Recursive Entity Resolution & Knowledge Graph.
+13. 🤖 [`docs/COPILOTKIT_AG_UI.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/COPILOTKIT_AG_UI.md): CopilotKit AG-UI Protocol & Generative UI Assistant.
+14. 🛡️ [`docs/BULLSHIT_DETECTOR_ORACLE.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/BULLSHIT_DETECTOR_ORACLE.md): Bullshit-Detector Fact-Checker & Hype Scoring Oracle.
+15. 🌐 [`docs/PUBLIC_APIS_ORACLE.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/PUBLIC_APIS_ORACLE.md): Public APIs Directory Discovery & Oracle Hub.
+16. 📖 [`docs/USER_TUTORIAL_MANUAL.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/USER_TUTORIAL_MANUAL.md): First-Time User Beginner Manual & 1-Click Mining Guide.
+17. 🚀 [`docs/MAINNET_LAUNCH_CHECKLIST.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/MAINNET_LAUNCH_CHECKLIST.md): Mainnet Launch Readiness & Production Checklist.
+18. 📊 [`PITCH.md`](file:///c:/Users/janla/piso-chain/piso-chain/PITCH.md): Investor Pitch Deck & Ecosystem Overview.
+19. 💎 [`TOKENOMICS.md`](file:///c:/Users/janla/piso-chain/piso-chain/TOKENOMICS.md): Token Allocation, Staking Yield APR & Vesting.
 
 ---
 

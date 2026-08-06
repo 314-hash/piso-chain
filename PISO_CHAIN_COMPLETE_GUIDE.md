@@ -9,6 +9,14 @@
 
 ### Core Protocol Pillars:
 * **Consensus Engine**: BSC Parlia PoSA / BFT Multi-Signer Engine (3 to 21 Active Consensus Signers).
+* **Proof of Work (PoW) & 1-Click Mining**: Keccak-256 target difficulty solver (`PISOProofOfWork.sol` `0x...1003`) & 1-Click 24h automated mining engine.
+* **SLIP-0044 Registered Coin Type**: Standardized HD wallet derivation path `m/44'/2026'/0'/0/0` per SatoshiLabs SLIP-0044 registry.
+* **GeoLibre GIS & DePIN Spatial Oracle**: Powered by `opengeos` GeoLibre & MapLibre GL JS (`PISOValidatorGeoLocation.sol`).
+* **Turbo-Fieldfare AI Engine**: Gemma 4 26B-A4B inference in ~2 GB RAM footprint (`PISOTurboFieldfareAI.sol` & `jcode/turbo_fieldfare.py`).
+* **Agent-Reach Web Oracle**: 1-click live web scraping, YouTube subtitles, RSS feeds, and GitHub issue telemetry (`PISOAgentReachOracle.sol` & `jcode/agent_reach.py`).
+* **OpenPlanter Entity Graph**: Recursive entity resolution across EVM transactions & contracts (`PISOOpenPlanter.sol` & `jcode/open_planter.py`).
+* **CopilotKit AG-UI Assistant**: Generative UI component rendering, shared state streaming, and HITL approvals (`PISOCopilotKit.sol` & `jcode/copilot_kit.py`).
+* **Bullshit-Detector Fact-Checker**: Claim-by-claim content verification engine & 0-10 BS score logging (`PISOBullshitDetector.sol` & `jcode/bullshit_detector.py`).
 * **Agent OS Integration**: Powered by `jcode` (`https://github.com/1jehuang/jcode.git`) high-efficiency agent harness.
 * **Total Supply**: `100,000,000,000 PISO` (100 Billion Native Coins).
 * **Block Finality**: `3.0 Seconds` deterministic block production.

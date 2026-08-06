@@ -19,7 +19,8 @@ class APDUCommand:
         self.p2 = p2
         self.data = data
 
-    def serialize(()) -> bytes:
+    def serialize(self) -> bytes:
+
         lc = len(self.data)
         if lc > 255:
             raise ValueError("APDU data payload exceeds 255 bytes.")

@@ -64,6 +64,14 @@ data/
 *.ldb
 indexer.db
 
+# Freqtrade Bot Data & Logs
+*.sqlite
+*.sqlite3
+config/freqtrade/logs/
+config/freqtrade/data/
+config/freqtrade/backtest_results/
+freqtrade/user_data/
+
 # Logs & Temporary / OS Files
 *.log
 bridge_state.json
@@ -78,3 +86,4 @@ Thumbs.db
 agent/
 PISO Chain Mainnet Studio/
 web-to-app/
+

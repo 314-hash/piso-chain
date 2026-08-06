@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
     <title>PISO Chain - System Smart Contracts Hub & Interaction Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -301,7 +305,29 @@
                 <!-- Dynamically Rendered by contracts.js -->
             </section>
         </main>
-    </div>
+    <!-- 📱 Mobile Bottom Navigation Bar (App Experience) -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html#overview" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Home</span>
+        </a>
+        <a href="index.html#pow" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">⛏️</span>
+            <span>Mining</span>
+        </a>
+        <a href="wallet.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">👛</span>
+            <span>Wallet</span>
+        </a>
+        <a href="contracts.html" class="mobile-bottom-item active">
+            <span class="mobile-nav-icon">📜</span>
+            <span>Contracts</span>
+        </a>
+        <a href="index.html#faucet" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🚰</span>
+            <span>Faucet</span>
+        </a>
+    </nav>
 
     <script src="contracts.js"></script>
 </body>

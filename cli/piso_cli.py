@@ -8,6 +8,13 @@ import sys
 import argparse
 import json
 import os
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(script_dir)
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
+from core.pow import PoWEngine
 from wallet.mnemonic.bip39 import BIP39Mnemonic
 from wallet.hdwallet.hdwallet import HDWallet
 from wallet.derivation.path import DerivationPath, BIP44Derivation
@@ -15,6 +22,7 @@ from wallet.recovery.recovery import WalletRecovery
 from wallet.validator.validator_key import ValidatorKey, KeyRole
 from wallet.slip39.shamir import ShamirSecretSharing, Share
 from wallet.account.account import Account
+
 
 
 def cmd_wallet_create(args):
@@ -133,6 +141,44 @@ def cmd_validator_export(args):
     print(json.dumps(keystore, indent=2))
 
 
+def cmd_pow_mine(args):
+    engine = PoWEngine(algo=args.algo)
+    res = engine.mine(
+        challenge_hash=args.challenge,
+        miner_address=args.miner,
+        difficulty_bits=args.difficulty,
+        max_iterations=args.max_iterations
+    )
+    print(json.dumps(res, indent=2))
+
+
+def cmd_pow_verify(args):
+    engine = PoWEngine(algo=args.algo)
+    valid = engine.verify_proof(
+        challenge_hash=args.challenge,
+        nonce=args.nonce,
+        miner_address=args.miner,
+        difficulty_bits=args.difficulty
+    )
+    res = {
+        "status": "success",
+        "valid": valid,
+        "challenge": args.challenge,
+        "miner": args.miner,
+        "nonce": args.nonce,
+        "difficulty_bits": args.difficulty,
+        "algo": args.algo
+    }
+    print(json.dumps(res, indent=2))
+
+
+def cmd_pow_benchmark(args):
+    engine = PoWEngine(algo=args.algo)
+    res = engine.benchmark(duration_seconds=args.duration)
+    res["status"] = "success"
+    print(json.dumps(res, indent=2))
+
+
 def main():
     parser = argparse.ArgumentParser(prog="piso", description="PISO Chain Enterprise CLI Engine")
     subparsers = parser.add_subparsers(dest="subcommand", help="Subcommand to execute")
@@ -176,11 +222,34 @@ def main():
     p_vexport.add_argument("--password", type=str, default="DefaultPassword123!")
     p_vexport.set_defaults(func=cmd_validator_export)
 
+    # PoW Mining & Verification Commands
+    p_pmine = subparsers.add_parser("pow:mine", help="Mine Proof of Work solution for target challenge")
+    p_pmine.add_argument("--challenge", type=str, required=True, help="Challenge 32-byte hex string")
+    p_pmine.add_argument("--miner", type=str, default="0x0000000000000000000000000000000000000000", help="Miner wallet address")
+    p_pmine.add_argument("--difficulty", type=int, default=16, help="Target difficulty in zero bits")
+    p_pmine.add_argument("--max-iterations", type=int, default=5000000, help="Max hash iterations")
+    p_pmine.add_argument("--algo", type=str, choices=["keccak256", "sha256"], default="keccak256")
+    p_pmine.set_defaults(func=cmd_pow_mine)
+
+    p_pverify = subparsers.add_parser("pow:verify", help="Verify a Proof of Work nonce solution")
+    p_pverify.add_argument("--challenge", type=str, required=True, help="Challenge 32-byte hex string")
+    p_pverify.add_argument("--miner", type=str, default="0x0000000000000000000000000000000000000000")
+    p_pverify.add_argument("--nonce", type=int, required=True, help="Mined nonce uint256")
+    p_pverify.add_argument("--difficulty", type=int, default=16, help="Target difficulty in zero bits")
+    p_pverify.add_argument("--algo", type=str, choices=["keccak256", "sha256"], default="keccak256")
+    p_pverify.set_defaults(func=cmd_pow_verify)
+
+    p_pbench = subparsers.add_parser("pow:benchmark", help="Benchmark CPU/GPU hashing rate")
+    p_pbench.add_argument("--duration", type=float, default=1.0, help="Duration in seconds")
+    p_pbench.add_argument("--algo", type=str, choices=["keccak256", "sha256"], default="keccak256")
+    p_pbench.set_defaults(func=cmd_pow_benchmark)
+
     args = parser.parse_args()
     if hasattr(args, "func"):
         args.func(args)
     else:
         parser.print_help()
+
 
 
 if __name__ == "__main__":
