@@ -32,6 +32,37 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setupEventListeners() {
+    // 📱 Mobile Drawer & Hamburger Navbar Event Listeners
+    const hamburgerBtn  = document.getElementById("hamburger-btn");
+    const closeDrawerBtn = document.getElementById("close-drawer");
+    const sidebarDrawer = document.getElementById("sidebar-drawer");
+    const drawerOverlay = document.getElementById("drawer-overlay");
+
+    function openMobileDrawer() {
+        sidebarDrawer?.classList.add("open");
+        drawerOverlay?.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeMobileDrawer() {
+        sidebarDrawer?.classList.remove("open");
+        drawerOverlay?.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+
+    hamburgerBtn?.addEventListener("click", openMobileDrawer);
+    closeDrawerBtn?.addEventListener("click", closeMobileDrawer);
+    drawerOverlay?.addEventListener("click", closeMobileDrawer);
+
+    // Auto-close drawer on mobile when clicking any sidebar nav item
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.addEventListener("click", () => {
+            if (window.innerWidth <= 992) {
+                closeMobileDrawer();
+            }
+        });
+    });
+
     document.getElementById("btn-check-balance").addEventListener("click", () => {
         const addr = document.getElementById("rpc-addr-input").value.trim();
         queryAddressBalance(addr);
