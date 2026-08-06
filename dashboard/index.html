@@ -1584,92 +1584,96 @@ logs.forEach(log => console.log(log.args))</pre>
     </div>
 
     <!-- ══ FREQTRADE TRADING BOT SECTION ══════════════════════════════════════ -->
-    <section id="freqtrade" style="padding: 24px 0; display: none;" class="freqtrade-section">
-      <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+    <section id="freqtrade" style="display: none;" class="freqtrade-section">
+      <div class="freqtrade-container">
 
         <!-- Header -->
-        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
-          <div>
-            <h2 style="font-size:1.5rem; font-weight:800; color:#fff; margin:0 0 6px 0;">
-              📈 Freqtrade Trading Bot
-            </h2>
-            <p style="color:var(--text-secondary); margin:0; font-size:0.9rem;">
-              Algorithmic trading bot integrated as a PISO Agent OS worker · Profits verified on-chain via <code style="color:#10b981;">PISOFreqtradeOracle.sol</code>
+        <div class="freqtrade-header">
+          <div class="freqtrade-title-group">
+            <h2>📈 Freqtrade Trading Bot</h2>
+            <p>
+              Algorithmic trading bot integrated as a PISO Agent OS worker · Profits verified on-chain via <code style="color:var(--accent-green);">PISOFreqtradeOracle.sol</code>
             </p>
           </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-            <div id="ft-bot-status" style="display:flex; align-items:center; gap:6px; font-size:0.9rem; padding:6px 14px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:20px;">
+          <div class="freqtrade-actions">
+            <div id="ft-bot-status" style="display:flex; align-items:center; gap:6px; font-size:0.88rem; padding:6px 14px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:20px;">
               <span class="pulse-dot" style="background:#6b7280;"></span> Checking...
             </div>
             <button id="ft-refresh-btn" class="btn-secondary" style="padding:8px 16px; font-size:0.85rem;">🔄 Refresh</button>
           </div>
         </div>
 
-        <!-- KPI Cards Row -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px; margin-bottom:24px;">
-          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:20px;">
-            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Total P&amp;L</div>
-            <div id="ft-profit-all" style="font-size:1.8rem; font-weight:800; color:#10b981;">—</div>
-            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">All closed trades</div>
+        <!-- Responsive KPI Grid -->
+        <div class="freqtrade-kpi-grid">
+          <div class="freqtrade-kpi-card kpi-profit">
+            <div class="freqtrade-kpi-label">Total P&amp;L</div>
+            <div id="ft-profit-all" class="freqtrade-kpi-value" style="color:#10b981;">—</div>
+            <div class="freqtrade-kpi-subtext">All closed trades</div>
           </div>
-          <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.25); border-radius:14px; padding:20px;">
-            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Open Trades</div>
-            <div id="ft-open-count" style="font-size:1.8rem; font-weight:800; color:#60a5fa;">—</div>
-            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Currently active</div>
+          <div class="freqtrade-kpi-card kpi-open">
+            <div class="freqtrade-kpi-label">Open Trades</div>
+            <div id="ft-open-count" class="freqtrade-kpi-value" style="color:#60a5fa;">—</div>
+            <div class="freqtrade-kpi-subtext">Currently active</div>
           </div>
-          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:14px; padding:20px;">
-            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Winning Trades</div>
-            <div id="ft-wins" style="font-size:1.8rem; font-weight:800; color:#10b981;">—</div>
-            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Profitable closes</div>
+          <div class="freqtrade-kpi-card kpi-wins">
+            <div class="freqtrade-kpi-label">Winning Trades</div>
+            <div id="ft-wins" class="freqtrade-kpi-value" style="color:#10b981;">—</div>
+            <div class="freqtrade-kpi-subtext">Profitable closes</div>
           </div>
-          <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:14px; padding:20px;">
-            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Losing Trades</div>
-            <div id="ft-losses" style="font-size:1.8rem; font-weight:800; color:#ef4444;">—</div>
-            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Loss closes</div>
+          <div class="freqtrade-kpi-card kpi-losses">
+            <div class="freqtrade-kpi-label">Losing Trades</div>
+            <div id="ft-losses" class="freqtrade-kpi-value" style="color:#ef4444;">—</div>
+            <div class="freqtrade-kpi-subtext">Loss closes</div>
           </div>
-          <div style="background:rgba(168,85,247,0.08); border:1px solid rgba(168,85,247,0.25); border-radius:14px; padding:20px;">
-            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">$PISO Rewards</div>
-            <div style="font-size:1.8rem; font-weight:800; color:#a855f7;">10 <span style="font-size:0.9rem;">/ trade</span></div>
-            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Per profitable trade</div>
+          <div class="freqtrade-kpi-card kpi-rewards">
+            <div class="freqtrade-kpi-label">$PISO Rewards</div>
+            <div class="freqtrade-kpi-value" style="color:#a855f7;">10 <span style="font-size:0.85rem; font-weight:400;">/ trade</span></div>
+            <div class="freqtrade-kpi-subtext">Per profitable trade</div>
           </div>
         </div>
 
-        <!-- Open Trades Table -->
-        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; overflow:hidden; margin-bottom:20px;">
-          <div style="padding:16px 20px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:10px;">
-            <span style="color:#60a5fa; font-size:1rem;">📊</span>
-            <h3 style="margin:0; font-size:1rem; font-weight:700; color:#fff;">Open Trades</h3>
-            <span style="font-size:0.75rem; color:var(--text-muted); margin-left:auto;">Auto-refresh every 15s · Strategy: PISOStrategy (EMA+RSI)</span>
+        <!-- Open Trades Table Card -->
+        <div class="freqtrade-table-card">
+          <div class="freqtrade-table-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="color:#60a5fa;">📊</span>
+              <h3 style="margin:0; font-size:0.98rem; font-weight:700; color:#fff;">Open Trades</h3>
+            </div>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Auto-refresh every 15s · Strategy: PISOStrategy (EMA+RSI)</span>
           </div>
-          <div style="overflow-x:auto;">
-            <table style="width:100%; border-collapse:collapse;">
+          <div class="freqtrade-table-scroll">
+            <table class="freqtrade-table">
               <thead>
-                <tr style="background:rgba(255,255,255,0.03);">
-                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Trade ID</th>
-                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Pair</th>
-                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Strategy</th>
-                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Profit %</th>
-                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Status</th>
+                <tr>
+                  <th>Trade ID</th>
+                  <th>Pair</th>
+                  <th>Strategy</th>
+                  <th>Profit %</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody id="ft-trades-body">
-                <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:28px; font-size:0.9rem;">Waiting for freqtrade bot to connect on port 8180…</td></tr>
+                <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:28px; font-size:0.88rem;">Waiting for freqtrade bot to connect on port 8180…</td></tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- On-Chain Oracle Status + Commands -->
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; flex-wrap:wrap;">
-          <div style="background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.2); border-radius:14px; padding:20px;">
-            <h4 style="margin:0 0 12px 0; color:#10b981; font-size:0.95rem; font-weight:700;">🔗 PISOFreqtradeOracle.sol</h4>
-            <div id="ft-oracle-status" style="font-size:0.85rem; color:var(--text-secondary); font-family:monospace; margin-bottom:12px;">Checking oracle connection…</div>
-            <div style="font-size:0.8rem; color:var(--text-muted);">Chain ID: 2026001 · Reward: 10 PISO/trade · Min profit: 0.10%</div>
+        <!-- On-Chain Oracle Status + Commands Grid -->
+        <div class="freqtrade-bottom-grid">
+          <div class="freqtrade-info-card" style="border-color: rgba(16,185,129,0.25); background: rgba(16,185,129,0.04);">
+            <h4 style="margin:0 0 10px 0; color:#10b981; font-size:0.95rem; font-weight:700; display:flex; align-items:center; gap:6px;">
+              🔗 PISOFreqtradeOracle.sol
+            </h4>
+            <div id="ft-oracle-status" style="font-size:0.82rem; color:var(--text-secondary); font-family:var(--font-mono); margin-bottom:10px; word-break:break-all;">Checking oracle connection…</div>
+            <div style="font-size:0.78rem; color:var(--text-muted);">Chain ID: 2026001 · Reward: 10 PISO/trade · Min profit: 0.10%</div>
           </div>
-          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px;">
-            <h4 style="margin:0 0 12px 0; color:#fff; font-size:0.95rem; font-weight:700;">🚀 Quick Start Commands</h4>
-            <pre style="font-size:0.78rem; color:#a3e635; background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; overflow-x:auto; margin:0; line-height:1.6;"># Start bot (dry-run / paper trading)
-python jcode/freqtrade_agent.py --start-bot --dry-run
+          <div class="freqtrade-info-card">
+            <h4 style="margin:0 0 10px 0; color:#fff; font-size:0.95rem; font-weight:700; display:flex; align-items:center; gap:6px;">
+              🚀 Quick Start Commands
+            </h4>
+            <pre class="freqtrade-code-block"># Start bot (dry-run / paper trading)
+python core/freqtrade_agent.py --start-bot --dry-run
 
 # Start bridge daemon
 python bridge/freqtrade_bridge.py --dry-run
@@ -1681,6 +1685,7 @@ docker-compose up freqtrade freqtrade-bridge</pre>
 
       </div>
     </section>
+
 
     <script src="app.js"></script>
     <script>
