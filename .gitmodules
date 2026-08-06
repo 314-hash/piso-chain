@@ -1,3 +1,6 @@
 [submodule "freqtrade"]
 	path = freqtrade
 	url = https://github.com/freqtrade/freqtrade.git
+[submodule "sakura_crossing"]
+	path = sakura_crossing
+	url = https://github.com/Kenton-GMI/sakura-crossing.git

@@ -1,6 +1,6 @@
 # PISO Chain Smart Contracts Reference
 
-This document details the complete suite of **19 System Smart Contracts** precompiled and deployed on **PISO Chain Mainnet** (Chain ID `2026001`).
+This document details the complete suite of **20 System Smart Contracts** precompiled and deployed on **PISO Chain Mainnet** (Chain ID `2026001`).
 
 ---
 
@@ -27,6 +27,8 @@ This document details the complete suite of **19 System Smart Contracts** precom
 | **17** | `PISOBullshitDetector` | `0x0000000000000000000000000000000000001010` | [`contracts/PISOBullshitDetector.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOBullshitDetector.sol) | Bullshit-Detector claim verification, independent web source checking, and 0-10 BS score vault. |
 | **18** | `PISOPublicApisOracle` | `0x0000000000000000000000000000000000001011` | [`contracts/PISOPublicApisOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPublicApisOracle.sol) | Public APIs discovery catalog & cryptographic API query proof vault. |
 | **19** | `PISOFreqtradeOracle` | `0x0000000000000000000000000000000000001012` | [`contracts/PISOFreqtradeOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOFreqtradeOracle.sol) | Freqtrade algorithmic trading proof-of-work verification oracle & $PISO rewards. |
+| **20** | `PISOSakuraAIOracle` | `0x0000000000000000000000000000000000001013` | [`contracts/PISOSakuraAIOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOSakuraAIOracle.sol) | Sakura Crossing off-chain multi-agent swarm verification oracle & PISO reward vault. |
+
 
 
 ---

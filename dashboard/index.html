@@ -42,6 +42,12 @@
                 <a href="#pow" class="nav-item" id="nav-pow" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.15)); border: 1px solid #f59e0b;">
                     <span class="nav-icon">⛏️</span> PoW Mining Studio
                 </a>
+                <a href="#freqtrade" class="nav-item" id="nav-freqtrade" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.15)); border: 1px solid #10b981;">
+                    <span class="nav-icon">📈</span> Trading Bot (freqtrade)
+                </a>
+                <a href="#sakura" class="nav-item" id="nav-sakura" style="background: linear-gradient(135deg, rgba(244, 114, 182, 0.2), rgba(236, 72, 153, 0.2)); border: 1px solid #f472b6;">
+                    <span class="nav-icon">🌸</span> Sakura AI Agent Layer
+                </a>
                 <a href="#geolibre" class="nav-item" id="nav-geolibre" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15)); border: 1px solid #10b981;">
                     <span class="nav-icon">🗺️</span> GeoLibre GIS Map
                 </a>
@@ -569,6 +575,71 @@
                     </div>
                 </div>
             </section>
+
+            <!-- 🌸 Sakura Crossing AI Agent Layer Section -->
+            <section class="sakura-section" id="section-sakura">
+                <div class="panel-card" style="border: 1px solid #f472b6; background: linear-gradient(135deg, rgba(244, 114, 182, 0.08), rgba(236, 72, 153, 0.08));">
+                    <div class="panel-header">
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>🌸</span> Sakura Crossing AI Agent Layer & Orchestrator
+                        </h3>
+                        <span class="badge-tag pink" style="background: rgba(244, 114, 182, 0.25); color: #f472b6; border: 1px solid #f472b6;">PISOSakuraAIOracle.sol (0x...1013)</span>
+                    </div>
+                    <p class="tab-desc">
+                        Off-Chain Multi-Agent Swarm Orchestrator & Enterprise AI Layer integrated with PISO Chain. 20 specialized intelligent agents executing governance auditing, Freqtrade risk assessment, compliance, smart contract auditing, and workflow DAG automation.
+                    </p>
+
+                    <div class="viem-grid margin-top">
+                        <!-- Left: 20-Agent Selector & Task Executor -->
+                        <div class="viem-box" style="border: 1px solid rgba(244, 114, 182, 0.4);">
+                            <h4 style="color: #f472b6;">🤖 Select Specialized Intelligent Agent (20 Agents)</h4>
+                            <div class="form-group margin-top-sm">
+                                <label>Target AI Agent:</label>
+                                <select id="sakura-agent-select" class="mono-input" style="background: #1e1b2e; color: #f472b6; border: 1px solid #f472b6;">
+                                    <option value="SmartContractAuditor">🔍 SmartContractAuditor (Solidity Vulnerability Scanner)</option>
+                                    <option value="GovernanceAgent">🏛️ GovernanceAgent (Proposal Summaries & Risk Scoring)</option>
+                                    <option value="TreasuryAgent">💰 TreasuryAgent (Token Burn & Reserve Analytics)</option>
+                                    <option value="ValidatorAgent">🛡️ ValidatorAgent (3.0s Block & Jailing Monitor)</option>
+                                    <option value="TradingAgent">📈 TradingAgent (Freqtrade Risk & Trade Proofs)</option>
+                                    <option value="ComplianceAgent">⚖️ ComplianceAgent (AML & Wallet Risk Analyzer)</option>
+                                    <option value="BlockchainAnalyticsAgent">📊 BlockchainAnalyticsAgent (TPS & TVL Telemetry)</option>
+                                    <option value="ExplorerAssistant">🌐 ExplorerAssistant (Blockscout Natural Language Helper)</option>
+                                    <option value="WalletAssistant">💼 WalletAssistant (EIP-4337 Portfolio Assistant)</option>
+                                    <option value="IdentityAgent">🔐 IdentityAgent (Passkeys & ZK Social Recovery)</option>
+                                    <option value="SupplyChainAgent">📦 SupplyChainAgent (DePIN Logistics Workflow)</option>
+                                    <option value="DePINAgent">📡 DePINAgent (Hardware & Bandwidth Monitor)</option>
+                                    <option value="GISAgent">🗺️ GISAgent (GeoLibre Spatial Mapping Engine)</option>
+                                    <option value="CustomerSupportAgent">💬 CustomerSupportAgent (24/7 Web3 Helpdesk)</option>
+                                    <option value="BusinessAutomationAgent">🏢 BusinessAutomationAgent (ERP/CRM Payroll Automation)</option>
+                                    <option value="DocumentationAssistant">📖 DocumentationAssistant (Whitepaper & API Q&A)</option>
+                                    <option value="DeveloperCopilot">💻 DeveloperCopilot (Viem & Hardhat Snippet Generator)</option>
+                                    <option value="SecurityMonitoringAgent">🚨 SecurityMonitoringAgent (Mempool Exploit Monitor)</option>
+                                    <option value="ProposalReviewAgent">📜 ProposalReviewAgent (DAO Budget Impact Reviewer)</option>
+                                    <option value="RiskAssessmentAgent">🛡️ RiskAssessmentAgent (Macro Protocol Risk Engine)</option>
+                                </select>
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>Task Instruction / Prompt:</label>
+                                <textarea id="sakura-agent-prompt" rows="3" class="mono-input" style="background: #0f0d19; color: #e2e8f0;" placeholder="Enter instructions for the selected Sakura agent..."></textarea>
+                            </div>
+                            <button id="btn-run-sakura-agent" class="btn-primary margin-top-sm" style="background: linear-gradient(135deg, #f472b6, #ec4899); width: 100%;">🌸 Execute Sakura Agent Task</button>
+                        </div>
+
+                        <!-- Right: Execution Output & On-Chain Oracle Proof -->
+                        <div class="viem-box" style="border: 1px solid rgba(236, 72, 153, 0.4);">
+                            <h4 style="color: #ec4899;">📜 Execution Output & On-Chain Proof</h4>
+                            <div id="sakura-output-box" class="code-block mono-text" style="background: #0b0914; color: #f472b6; height: 230px; overflow-y: auto; padding: 12px; border-radius: 8px; border: 1px solid rgba(244, 114, 182, 0.2);">
+// Ready. Select an agent and click "Execute Sakura Agent Task"...
+                            </div>
+                            <div class="margin-top-sm" style="font-size: 12px; color: #94a3b8; display: flex; justify-content: space-between; align-items: center;">
+                                <span>Oracle: <strong>0x...1013</strong></span>
+                                <span id="sakura-status-badge" class="badge-tag pink">STATUS: IDLE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
 
             <!-- 👁️ Agent-Reach Web Intelligence & Telemetry Oracle Section -->
             <section class="agentreach-section" id="section-agentreach">

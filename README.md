@@ -101,6 +101,7 @@ npm --prefix sdk run build
 - [`PISOBullshitDetector.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOBullshitDetector.sol): Bullshit-Detector claim verification, independent web source checking, and 0-10 BS score vault.
 - [`PISOPublicApisOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPublicApisOracle.sol): Public APIs directory discovery catalog & oracle proof vault.
 - [`PISOFreqtradeOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOFreqtradeOracle.sol): Freqtrade algorithmic trading proof-of-work verification oracle & $PISO token reward vault.
+- [`PISOSakuraAIOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOSakuraAIOracle.sol): Sakura Crossing off-chain multi-agent swarm verification oracle & PISO reward vault.
 - [`PISOAIOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOAIOracle.sol): Dynamic AI network threat scoring & gas oracle.
 
 
