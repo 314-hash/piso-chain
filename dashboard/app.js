@@ -1015,14 +1015,9 @@ async function handleViemBlockQuery() {
     try {
         if (window.viem && window.viem.createPublicClient) {
             const client = window.viem.createPublicClient({
-async function handleViemBlockQuery() {
-    const output = document.getElementById("viem-output-result");
-    output.innerHTML = "<pre>Executing Viem createPublicClient.getBlockNumber()...</pre>";
-    try {
-        if (window.viem && window.viem.createPublicClient) {
-            const client = window.viem.createPublicClient({
                 transport: window.viem.http("http://localhost:8545")
             });
+
             const blockNum = await client.getBlockNumber();
             output.innerHTML = `<pre>Viem PublicClient Result:
 ----------------------------------------
