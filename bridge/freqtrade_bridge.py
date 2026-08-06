@@ -186,28 +186,41 @@ class FreqtradeClient:
 class PISOChainClient:
     """Web3.py wrapper for PISO Chain (PoA — uses ExtraDataToPOAMiddleware)."""
 
-    def __init__(self, rpc_url: str, private_key: str, oracle_address: str):
+    def __init__(self, rpc_url: str, private_key: str, oracle_address: str, dry_run: bool = False):
         self.w3 = Web3(Web3.HTTPProvider(rpc_url))
         self.w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
-
-        if not self.w3.is_connected():
-            raise ConnectionError(f"Cannot connect to PISO Chain RPC: {rpc_url}")
-
         self.account = self.w3.eth.account.from_key(private_key)
-        log.info(f"PISO Chain connected | Worker: {self.account.address}")
-        log.info(f"Chain ID : {self.w3.eth.chain_id}")
-        log.info(f"Balance  : {self.w3.from_wei(self.w3.eth.get_balance(self.account.address), 'ether'):.4f} PISO")
+        self.is_connected = False
 
-        if oracle_address:
+        try:
+            if self.w3.is_connected():
+                self.is_connected = True
+                log.info(f"PISO Chain connected | Worker: {self.account.address}")
+                log.info(f"Chain ID : {self.w3.eth.chain_id}")
+                log.info(f"Balance  : {self.w3.from_wei(self.w3.eth.get_balance(self.account.address), 'ether'):.4f} PISO")
+            else:
+                if not dry_run:
+                    raise ConnectionError(f"Cannot connect to PISO Chain RPC: {rpc_url}")
+                log.warning(f"PISO Chain RPC ({rpc_url}) offline — running bridge in simulated dry-run mode")
+        except Exception as e:
+            if not dry_run:
+                raise ConnectionError(f"Cannot connect to PISO Chain RPC ({rpc_url}): {e}")
+            log.warning(f"PISO Chain RPC ({rpc_url}) offline ({e}) — running bridge in simulated dry-run mode")
+
+        if oracle_address and self.is_connected:
             self.oracle = self.w3.eth.contract(
                 address=Web3.to_checksum_address(oracle_address),
                 abi=ORACLE_ABI,
             )
-            vault_bal = self.oracle.functions.getVaultBalance().call()
-            log.info(f"Oracle vault: {self.w3.from_wei(vault_bal, 'ether'):.2f} PISO")
+            try:
+                vault_bal = self.oracle.functions.getVaultBalance().call()
+                log.info(f"Oracle vault: {self.w3.from_wei(vault_bal, 'ether'):.2f} PISO")
+            except Exception as e:
+                log.warning(f"Could not fetch oracle balance: {e}")
         else:
             self.oracle = None
-            log.warning("FREQTRADE_ORACLE_ADDRESS not set — on-chain submissions disabled")
+            log.warning("FREQTRADE_ORACLE_ADDRESS not set or RPC offline — on-chain submissions simulated")
+
 
     def submit_trade_proof(
         self,
@@ -390,7 +403,7 @@ def main():
     private_key = WORKER_PRIVATE_KEY or "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
 
     ft_client   = FreqtradeClient(FREQTRADE_API_URL, FREQTRADE_API_USER, FREQTRADE_API_PASS)
-    piso_client = PISOChainClient(PISO_RPC_URL, private_key, ORACLE_ADDRESS)
+    piso_client = PISOChainClient(PISO_RPC_URL, private_key, ORACLE_ADDRESS, dry_run=args.dry_run)
     bridge      = FreqtradeBridge(ft_client, piso_client, dry_run=args.dry_run)
 
     if args.once:
