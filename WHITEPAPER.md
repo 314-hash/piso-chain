@@ -64,7 +64,21 @@ $$\text{Proof}_{\text{Work}} = \text{SHA256}(\text{JobID} \parallel \text{Worker
 
 Upon submitting $\text{Proof}_{\text{Work}}$ to the smart contract, the escrow contract verifies the cryptographic signature and dispatches PISO rewards directly to the worker's EIP-4337 wallet.
 
+### 2.3 Proof of Work (PoW) Mining Engine & Keccak-256 Nonce Verification (`PISOProofOfWork.sol`)
+In addition to PoSA validator consensus, PISO Chain implements a **Proof of Work (PoW) Computational Verification Engine** ([`PISOProofOfWork.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOProofOfWork.sol) at precompiled address `0x0000000000000000000000000000000000001003`).
+
+$$\text{Hash}_{\text{Proof}} = \text{Keccak256}(\text{ChallengeHash} \parallel \text{MinerAddress} \parallel \text{Nonce}) < \text{TargetDifficulty}$$
+
+Miners solve network difficulty challenges by computing a 64-bit Nonce such that the leading bits of $\text{Hash}_{\text{Proof}}$ match the target zero-bit difficulty matrix. Valid nonces submitted on-chain unlock PISO rewards directly from the Proof of Work Escrow Vault.
+
+### 2.4 1-Click 24-Hour Automated Mining & Daily Yield Vault
+To democratize network participation for web and mobile users without specialized hardware, PISO Chain incorporates a **1-Click 24-Hour Continuous Mining Session**:
+- **Continuous Yield Accumulation**: Yield accumulates in real-time at $+0.000578\text{ PISO/sec}$ ($50\text{ PISO/day}$).
+- **State Persistence**: Browser local storage tracks 24-hour cycle timer (`24:00:00`), yield accumulators, and reset cycles.
+- **On-Chain Payout Verification**: Users claim accumulated daily mining yield directly to their EVM wallet address via smart contract calls.
+
 ---
+
 
 ## ⚡ 3. Consensus Mechanism & Network Architecture
 
