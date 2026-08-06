@@ -100,7 +100,9 @@ npm --prefix sdk run build
 - [`PISOCopilotKit.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOCopilotKit.sol): CopilotKit AG-UI protocol, Generative UI, and Human-in-the-Loop signature approval vault.
 - [`PISOBullshitDetector.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOBullshitDetector.sol): Bullshit-Detector claim verification, independent web source checking, and 0-10 BS score vault.
 - [`PISOPublicApisOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPublicApisOracle.sol): Public APIs directory discovery catalog & oracle proof vault.
+- [`PISOFreqtradeOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOFreqtradeOracle.sol): Freqtrade algorithmic trading proof-of-work verification oracle & $PISO token reward vault.
 - [`PISOAIOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOAIOracle.sol): Dynamic AI network threat scoring & gas oracle.
+
 
 ---
 
@@ -125,8 +127,10 @@ Detailed guides are located in the [`docs/`](file:///c:/Users/janla/extropianjan
 15. 🌐 [`docs/PUBLIC_APIS_ORACLE.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/PUBLIC_APIS_ORACLE.md): Public APIs Directory Discovery & Oracle Hub.
 16. 📖 [`docs/USER_TUTORIAL_MANUAL.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/USER_TUTORIAL_MANUAL.md): First-Time User Beginner Manual & 1-Click Mining Guide.
 17. 🚀 [`docs/MAINNET_LAUNCH_CHECKLIST.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/MAINNET_LAUNCH_CHECKLIST.md): Mainnet Launch Readiness & Production Checklist.
-18. 📊 [`PITCH.md`](file:///c:/Users/janla/piso-chain/piso-chain/PITCH.md): Investor Pitch Deck & Ecosystem Overview.
-19. 💎 [`TOKENOMICS.md`](file:///c:/Users/janla/piso-chain/piso-chain/TOKENOMICS.md): Token Allocation, Staking Yield APR & Vesting.
+18. 📈 [`docs/FREQTRADE_INTEGRATION.md`](file:///c:/Users/janla/piso-chain/piso-chain/docs/FREQTRADE_INTEGRATION.md): Freqtrade Algorithmic Trading Bot & Proof Oracle Integration Guide.
+19. 📊 [`PITCH.md`](file:///c:/Users/janla/piso-chain/piso-chain/PITCH.md): Investor Pitch Deck & Ecosystem Overview.
+20. 💎 [`TOKENOMICS.md`](file:///c:/Users/janla/piso-chain/piso-chain/TOKENOMICS.md): Token Allocation, Staking Yield APR & Vesting.
+
 
 ---
 

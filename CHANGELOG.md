@@ -2,7 +2,17 @@
 
 All notable changes to the PISO Chain Protocol are documented in this file.
 
+## [1.5.0] - Freqtrade Algorithmic Bot, Vercel Live Deployment & Responsive UX
+
+### Added
+- **Freqtrade Algorithmic Trading Bot & Proof Oracle (`contracts/PISOFreqtradeOracle.sol`)**: Submodule integration of Freqtrade (`piso-chain/freqtrade`), `PISOStrategy.py` (EMA9/21/50 + RSI momentum strategy), `piso_config.json`, and SHA-256 work proof verification smart contract dispensing 10 PISO token rewards for verified profitable trades (>0.10% min profit).
+- **PISO ↔ Freqtrade Bridge Daemon (`bridge/freqtrade_bridge.py`)**: 30-second REST API polling daemon connecting Freqtrade dry-run and live trading sessions to `PISOFreqtradeOracle.sol`. Includes Windows Python 3.14 `MockRapidJSON` compatibility layer and offline RPC fallback.
+- **PISO Agent OS Worker (`core/freqtrade_agent.py`)**: Standardized `jcode` agent worker harness (`piso-freqtrade-agent-v1`) managing Freqtrade bot subprocess lifecycle.
+- **Vercel Live Deployment (`https://piso-blockchain.vercel.app/`)**: Automated static dashboard deployment pipeline on Vercel with clean URLs, headers, and `/wallet` / `/contracts` rewrites.
+- **100% Mobile & Desktop Responsive Design**: Upgraded Web Dashboard UI with responsive sidebar drawer, backdrop overlay, touch-scrolling data tables, mobile bottom app bar, and fluid auto-fitting PoW Mining Studio cards (`clamp()` & grid auto-fit).
+
 ## [1.3.0] - DappUniversity Viem Examples Interactive Playground
+
 
 ### Added
 - **DappUniversity Viem Examples Integration (`docs/VIEM_EXAMPLES.md`)**: Full 6-example interactive playground adapted from [dappuniversity/viem-examples](https://github.com/dappuniversity/viem-examples) for PISO Chain (Chain ID `2026001`): Public Client (`getBlockNumber`, `getGasPrice`, `getBalance`), Wallet Client (`createWalletClient`, `privateKeyToAccount`), Send Signed Transaction (`sendTransaction`, `waitForTransactionReceipt`), Read Contract (`readContract` on `PISOStaking`, `PISOValidatorSet`, `PISOGovernor`), Write Contract (`simulateContract` + `writeContract` for staking), and Contract Events (`getLogs` with `parseAbiItem`).
