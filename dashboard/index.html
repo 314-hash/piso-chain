@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
     <title>PISO Chain - L1 Mainnet & Validator Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +17,8 @@
         window.viem = { createPublicClient, http, formatEther, parseEther };
     </script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.js"></script>
 </head>
 <body class="dark-mode">
     <div class="dashboard-container">
@@ -32,6 +38,30 @@
                 </a>
                 <a href="contracts.html" class="nav-item" id="nav-contracts" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15)); border: 1px solid #a855f7;">
                     <span class="nav-icon">📜</span> System Contracts Hub
+                </a>
+                <a href="#pow" class="nav-item" id="nav-pow" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.15)); border: 1px solid #f59e0b;">
+                    <span class="nav-icon">⛏️</span> PoW Mining Studio
+                </a>
+                <a href="#geolibre" class="nav-item" id="nav-geolibre" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15)); border: 1px solid #10b981;">
+                    <span class="nav-icon">🗺️</span> GeoLibre GIS Map
+                </a>
+                <a href="#turbofieldfare" class="nav-item" id="nav-turbofieldfare" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid #ec4899;">
+                    <span class="nav-icon">⚡</span> Turbo-Fieldfare AI (~2GB RAM)
+                </a>
+                <a href="#agentreach" class="nav-item" id="nav-agentreach" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.15)); border: 1px solid #3b82f6;">
+                    <span class="nav-icon">👁️</span> Agent-Reach Web Oracle
+                </a>
+                <a href="#openplanter" class="nav-item" id="nav-openplanter" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.15)); border: 1px solid #22c55e;">
+                    <span class="nav-icon">🌱</span> OpenPlanter Entity Graph
+                </a>
+                <a href="#copilotkit" class="nav-item" id="nav-copilotkit" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15)); border: 1px solid #6366f1;">
+                    <span class="nav-icon">🤖</span> CopilotKit AG-UI Studio
+                </a>
+                <a href="#bsdetector" class="nav-item" id="nav-bsdetector" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(245, 158, 11, 0.15)); border: 1px solid #ef4444;">
+                    <span class="nav-icon">🛡️</span> Bullshit-Detector Oracle
+                </a>
+                <a href="#publicapis" class="nav-item" id="nav-publicapis" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(99, 102, 241, 0.15)); border: 1px solid #0ea5e9;">
+                    <span class="nav-icon">🌐</span> Public APIs Directory
                 </a>
                 <a href="#faucet" class="nav-item" id="nav-faucet">
                     <span class="nav-icon">🚰</span> Testnet Faucet
@@ -68,8 +98,14 @@
                     <span class="nav-icon">🔑</span> Legacy Recovery
                 </a>
 
+                <a href="#freqtrade" class="nav-item" id="nav-freqtrade" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.15)); border: 1px solid #10b981;">
+                    <span class="nav-icon">📈</span> Trading Bot (freqtrade)
+                </a>
+
             </nav>
+
             <div class="network-status-badge">
+
                 <span class="pulse-dot green"></span>
                 <div class="badge-info">
                     <span class="network-name">Mainnet Parlia</span>
@@ -134,9 +170,12 @@
                             <a href="wallet.html" class="btn-primary" style="text-decoration: none; padding: 12px 20px; font-weight: 700; text-align: center; background: linear-gradient(135deg, #ffd700, #b8860b); color: #000000;">
                                 👛 Wallet Studio (Mainnet)
                             </a>
-                            <a href="contracts.html" class="btn-secondary" style="text-decoration: none; padding: 10px 18px; text-align: center;">
-                                📜 System Contracts Hub
+                            <a href="#pow" class="btn-primary" style="text-decoration: none; padding: 10px 18px; text-align: center; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: 700;">
+                                ⛏️ 1-Click 24h Miner
                             </a>
+                            <button id="btn-open-ui-tutorial" onclick="window.openTutorialModal()" class="btn-secondary" style="padding: 10px 18px; text-align: center; cursor: pointer; background: rgba(6, 182, 212, 0.15); border: 1px solid var(--accent-cyan); color: #38bdf8; font-weight: 700;">
+                                📖 Interactive UI Tutorial
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -169,6 +208,106 @@
                 </div>
             </section>
 
+            <!-- 🎨 PISO CHAIN BEGINNER INFOGRAPHIC TUTORIAL & DASHBOARD GUIDE -->
+            <section class="infographics-section" style="margin-bottom: 28px;">
+                <div class="panel-card infographics-container" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 20px; padding: 24px;">
+                    <div class="infographic-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.4rem; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+                                <span>🎨</span> First-Time User Beginner Infographic Guide
+                            </h3>
+                            <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.92rem;">
+                                Easy step-by-step walkthrough to start mining, setup wallets, inspect DePIN nodes, and run AI Agent Oracles!
+                            </p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button onclick="window.openTutorialModal()" class="btn-primary" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: bold; border-radius: 10px; padding: 8px 16px; font-size: 13px;">▶️ Launch Guided Interactive Tour</button>
+                            <span class="badge-gold" style="font-size: 12px;">Beginner Friendly ⭐</span>
+                        </div>
+                    </div>
+
+                    <div class="infographic-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                        <!-- Step 1 Card -->
+                        <div class="infographic-card" style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 14px; padding: 18px; position: relative; overflow: hidden;">
+                            <div class="info-step-number" style="position: absolute; top: 10px; right: 14px; font-family: var(--font-mono); font-weight: 800; font-size: 1.8rem; color: rgba(255, 215, 0, 0.2);">01</div>
+                            <div style="font-size: 32px; margin-bottom: 10px;">👛</div>
+                            <h4 style="color: #ffd700; margin: 0 0 6px 0; font-size: 1.05rem;">1. Create Free Wallet</h4>
+                            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px;">
+                                Generate your 24-word secret recovery phrase or connect MetaMask. Uses official SLIP-0044 coin type <code>2026'</code>.
+                            </p>
+                            <div class="infographic-flow-tag" style="background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 8px; padding: 6px 10px; font-family: var(--font-mono); font-size: 11px; color: #fbbf24; text-align: center;">
+                                🔑 Mnemonic ➔ Address ➔ Active Wallet
+                            </div>
+                        </div>
+
+                        <!-- Step 2 Card -->
+                        <div class="infographic-card" style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 14px; padding: 18px; position: relative; overflow: hidden;">
+                            <div class="info-step-number" style="position: absolute; top: 10px; right: 14px; font-family: var(--font-mono); font-weight: 800; font-size: 1.8rem; color: rgba(245, 158, 11, 0.2);">02</div>
+                            <div style="font-size: 32px; margin-bottom: 10px;">⛏️</div>
+                            <h4 style="color: #fbbf24; margin: 0 0 6px 0; font-size: 1.05rem;">2. 1-Click 24h Mining</h4>
+                            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px;">
+                                Tap the gold <strong>"Start 24h Mining"</strong> button above. 24h clock accumulates PISO yields automatically!
+                            </p>
+                            <div class="infographic-flow-tag" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 6px 10px; font-family: var(--font-mono); font-size: 11px; color: #f59e0b; text-align: center;">
+                                ⚡ Tap Start ➔ 24h Yield ➔ Claim 50 PISO
+                            </div>
+                        </div>
+
+                        <!-- Step 3 Card -->
+                        <div class="infographic-card" style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 14px; padding: 18px; position: relative; overflow: hidden;">
+                            <div class="info-step-number" style="position: absolute; top: 10px; right: 14px; font-family: var(--font-mono); font-weight: 800; font-size: 1.8rem; color: rgba(16, 185, 129, 0.2);">03</div>
+                            <div style="font-size: 32px; margin-bottom: 10px;">🗺️</div>
+                            <h4 style="color: #34d399; margin: 0 0 6px 0; font-size: 1.05rem;">3. DePIN GIS Node Map</h4>
+                            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px;">
+                                View active global validator nodes on MapLibre vector map (Manila, Singapore, Tokyo, London, San Francisco).
+                            </p>
+                            <div class="infographic-flow-tag" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 6px 10px; font-family: var(--font-mono); font-size: 11px; color: #34d399; text-align: center;">
+                                📍 Lat/Lng ➔ MapLibre ➔ Verified Node
+                            </div>
+                        </div>
+
+                        <!-- Step 4 Card -->
+                        <div class="infographic-card" style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 14px; padding: 18px; position: relative; overflow: hidden;">
+                            <div class="info-step-number" style="position: absolute; top: 10px; right: 14px; font-family: var(--font-mono); font-weight: 800; font-size: 1.8rem; color: rgba(236, 72, 153, 0.2);">04</div>
+                            <div style="font-size: 32px; margin-bottom: 10px;">🤖</div>
+                            <h4 style="color: #f472b6; margin: 0 0 6px 0; font-size: 1.05rem;">4. AI Agents & Copilot</h4>
+                            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px;">
+                                Run 2GB local Gemma 4 LLM inference, search live Web data via Agent-Reach, or render Generative UI cards.
+                            </p>
+                            <div class="infographic-flow-tag" style="background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 8px; padding: 6px 10px; font-family: var(--font-mono); font-size: 11px; color: #f472b6; text-align: center;">
+                                🧠 Gemma 2GB ➔ AG-UI ➔ On-Chain Proof
+                            </div>
+                        </div>
+
+                        <!-- Step 5 Card -->
+                        <div class="infographic-card" style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 14px; padding: 18px; position: relative; overflow: hidden;">
+                            <div class="info-step-number" style="position: absolute; top: 10px; right: 14px; font-family: var(--font-mono); font-weight: 800; font-size: 1.8rem; color: rgba(239, 68, 68, 0.2);">05</div>
+                            <div style="font-size: 32px; margin-bottom: 10px;">🛡️</div>
+                            <h4 style="color: #f87171; margin: 0 0 6px 0; font-size: 1.05rem;">5. Bullshit Detector</h4>
+                            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px;">
+                                Audit any YouTube video, article, tweet, or PDF for claim accuracy and get a 0–10 hype score report.
+                            </p>
+                            <div class="infographic-flow-tag" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 6px 10px; font-family: var(--font-mono); font-size: 11px; color: #f87171; text-align: center;">
+                                🔍 Paste URL ➔ Extract Claims ➔ BS Score
+                            </div>
+                        </div>
+
+                        <!-- Step 6 Card -->
+                        <div class="infographic-card" style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 14px; padding: 18px; position: relative; overflow: hidden;">
+                            <div class="info-step-number" style="position: absolute; top: 10px; right: 14px; font-family: var(--font-mono); font-weight: 800; font-size: 1.8rem; color: rgba(59, 130, 246, 0.2);">06</div>
+                            <div style="font-size: 32px; margin-bottom: 10px;">⛽</div>
+                            <h4 style="color: #60a5fa; margin: 0 0 6px 0; font-size: 1.05rem;">6. Zero-Gas Transactions</h4>
+                            <p style="color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin-bottom: 12px;">
+                                Send 100% gasless transactions via EIP-4337 Paymaster and claim 1 free PISO coin daily from Faucet.
+                            </p>
+                            <div class="infographic-flow-tag" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 6px 10px; font-family: var(--font-mono); font-size: 11px; color: #60a5fa; text-align: center;">
+                                ⛽ Paymaster Vault ➔ 0 Gas ➔ Faucet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- 📜 System Smart Contracts Hub Quick Reference -->
             <section class="contracts-hub-banner-section" style="margin-bottom: 24px;">
                 <div class="panel-card" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(168, 85, 247, 0.1)); border: 1px solid rgba(6, 182, 212, 0.3);">
@@ -178,6 +317,506 @@
                             <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">Inspect and interact with all 11 System Smart Contracts precompiled on addresses <code>0x0000000000000000000000000000000000001000</code> to <code>100A</code>.</p>
                         </div>
                         <a href="contracts.html" class="btn-primary" style="text-decoration: none; padding: 10px 20px;">📜 Open Interactive Contract Studio</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ⛏️ Proof of Work (PoW) Mining & Verification Studio Section -->
+            <section class="pow-section" id="section-pow">
+
+                <!-- ⚡ 1-CLICK 24-HOUR AUTOMATED MINER BANNER -->
+                <div class="oneclick-miner-banner" id="oneclick-banner-container">
+                    <div class="oneclick-banner-flex">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <h3 style="margin: 0; font-size: 1.5rem; color: #ffffff; font-weight: 800;">⚡ 1-CLICK 24-HOUR PISO MINER</h3>
+                                <span class="badge-gold">Automated 24h Cycle</span>
+                                <span class="pow-timer-badge" id="oneclick-24h-timer">24:00:00</span>
+                            </div>
+                            <p style="color: var(--text-secondary); margin: 0; font-size: 0.95rem; max-width: 680px;">
+                                Tap once to initiate a 24-hour continuous mining cycle. Automatically mines PISO coins in the background, updates yield real-time, and resets every 24 hours for daily claiming.
+                            </p>
+                        </div>
+                        <div>
+                            <button id="btn-oneclick-action" class="btn-oneclick-start">
+                                ⛏️ START 24-HOUR MINING SESSION
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 24-Hour Cycle Progress Bar -->
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px; font-size: 12px; color: var(--text-secondary);">
+                        <span>24h Mining Progress: <strong id="oneclick-progress-pct" style="color: #fbbf24;">0%</strong></span>
+                        <span>Accumulated Yield: <strong id="oneclick-accumulated-piso" style="color: #10b981;">0.000000 PISO</strong></span>
+                    </div>
+                    <div class="pow-progress-container">
+                        <div class="pow-progress-bar" id="oneclick-progress-bar"></div>
+                    </div>
+                </div>
+
+                <div class="panel-card pow-miner-card" id="pow-card-container">
+                    <div class="panel-header">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h3 style="margin: 0; font-size: 1.3rem;">⛏️ Proof of Work (PoW) Mining Studio</h3>
+                            <span class="hashrate-badge" id="pow-status-badge">
+                                <span class="pulse-mining-dot" id="pow-pulse-dot" style="display: none;"></span>
+                                <span id="pow-status-text">Miner Idle</span>
+                            </span>
+                        </div>
+                        <span class="badge-tag green">PISOProofOfWork.sol (0x...1003)</span>
+                    </div>
+                    <p class="tab-desc">Run live Web3 browser CPU mining, solve Keccak-256 nonces for active network challenges, benchmark local hashrate, and submit cryptographic proofs to claim native PISO token rewards.</p>
+
+                    <!-- PoW Mining Telemetry KPI Grid -->
+                    <div class="pow-metrics-grid">
+                        <div class="pow-kpi-box">
+                            <span class="pow-kpi-title">Current Hashrate</span>
+                            <span class="pow-kpi-value" id="pow-kpi-hashrate">0.0 H/s</span>
+                            <span class="pow-kpi-sub">Web3 Browser Engine</span>
+                        </div>
+                        <div class="pow-kpi-box">
+                            <span class="pow-kpi-title">Total Hashes Mined</span>
+                            <span class="pow-kpi-value" id="pow-kpi-hashes">0</span>
+                            <span class="pow-kpi-sub">Session Iterations</span>
+                        </div>
+                        <div class="pow-kpi-box">
+                            <span class="pow-kpi-title">Target Difficulty</span>
+                            <span class="pow-kpi-value" id="pow-kpi-difficulty">8 Bits</span>
+                            <span class="pow-kpi-sub">Prefix: <code id="pow-kpi-prefix">0x00...</code></span>
+                        </div>
+                        <div class="pow-kpi-box">
+                            <span class="pow-kpi-title">Mined Rewards Pool</span>
+                            <span class="pow-kpi-value" id="pow-kpi-rewards">100.0 PISO</span>
+                            <span class="pow-kpi-sub">On-Chain Escrow Vault</span>
+                        </div>
+                    </div>
+
+                    <!-- Miner Control & Configuration Studio -->
+                    <div class="viem-grid">
+                        <div class="viem-box">
+                            <h4>1. Challenge & Miner Configuration</h4>
+                            <div class="form-group">
+                                <label>Target Challenge Hash (32-Byte Hex):</label>
+                                <input type="text" id="pow-input-challenge" value="0x1111111111111111111111111111111111111111111111111111111111111111" class="mono-input" />
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>Miner Wallet Address (0x...):</label>
+                                <input type="text" id="pow-input-miner" value="0x90F79bf6EB2c4f870365E785982E1f101E93b906" class="mono-input" />
+                            </div>
+                            <div style="display: flex; gap: 12px;" class="margin-top-sm">
+                                <div style="flex: 1;">
+                                    <label>Difficulty Bits (Zero Bits):</label>
+                                    <input type="number" id="pow-input-difficulty" value="8" min="4" max="32" class="mono-input" />
+                                </div>
+                                <div style="flex: 1;">
+                                    <label>Algorithm:</label>
+                                    <select id="pow-input-algo" class="mono-input" style="padding: 10px; background: var(--bg-dark); color: #ffffff; border: 1px solid var(--card-border); border-radius: 8px;">
+                                        <option value="keccak256">Keccak-256 (EVM Standard)</option>
+                                        <option value="sha256">SHA-256</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="viem-box" style="justify-content: space-between;">
+                            <div>
+                                <h4>2. Mining Control & On-Chain Payout</h4>
+                                <p class="tab-desc font-sm">Click <strong>Start Browser Miner</strong> to solve nonces in your browser tab. Upon finding a solution, submit it to <code>PISOProofOfWork.sol</code>.</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px;" class="margin-top">
+                                <div style="display: flex; gap: 10px;">
+                                    <button id="btn-start-pow-miner" class="btn-primary" style="flex: 1; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000000; font-weight: 800;">
+                                        ▶️ Start Browser Miner
+                                    </button>
+                                    <button id="btn-stop-pow-miner" class="btn-secondary" style="display: none; flex: 1; background: #ef4444; color: #ffffff;">
+                                        ⏸️ Stop Miner
+                                    </button>
+                                    <button id="btn-bench-pow-miner" class="btn-secondary" style="flex: 1;">
+                                        ⚡ Benchmark H/s
+                                    </button>
+                                </div>
+                                <button id="btn-submit-pow-onchain" class="btn-primary" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                    📜 Submit Proof On-Chain (PISOProofOfWork.sol)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Mining Log Output Box -->
+                    <div class="rpc-output-box margin-top" id="pow-output-result">
+                        <pre>PISOProofOfWork Studio Ready. Contract: 0x0000000000000000000000000000000000001003. Select challenge parameters and click "Start Browser Miner".</pre>
+                    </div>
+
+                    <!-- Mined Proofs Log Feed Table -->
+                    <div class="margin-top" style="overflow-x: auto;">
+                        <h4 style="margin-bottom: 8px; font-size: 13px; color: var(--text-secondary);">Mined Nonces & On-Chain Verification Feed</h4>
+                        <table class="data-table" style="font-size: 12px;">
+                            <thead>
+                                <tr>
+                                    <th>Mined Nonce</th>
+                                    <th>Challenge Hash</th>
+                                    <th>Proof Hash</th>
+                                    <th>Difficulty</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pow-feed-rows">
+                                <tr>
+                                    <td class="mono font-bold">#320</td>
+                                    <td class="mono">0x11111111...1111</td>
+                                    <td class="mono">0x008f6ec9...dd83</td>
+                                    <td>8 Bits</td>
+                                    <td>0.12s</td>
+                                    <td><span class="feed-status-badge feed-status-verified">Verified On-Chain</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🗺️ GeoLibre GIS Spatial Oracle & Validator Node Map Section -->
+            <section class="geolibre-section" id="section-geolibre">
+                <div class="panel-card" style="border: 1px solid #10b981; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(6, 182, 212, 0.05));">
+                    <div class="panel-header">
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>🗺️</span> GeoLibre GIS Spatial Oracle & Validator Node Map
+                        </h3>
+                        <span class="badge-tag green">PISOValidatorGeoLocation.sol</span>
+                    </div>
+                    <p class="tab-desc">
+                        Powered by opengeos <strong>GeoLibre GIS & MapLibre GL JS</strong>. Displays real-time DePIN proof-of-physical-location, validator node positions (Manila, Singapore, Tokyo, London, San Francisco), and satellite land registry verification.
+                    </p>
+
+                    <!-- Interactive Map Canvas Container -->
+                    <div id="geolibre-map-canvas" style="height: 380px; width: 100%; border-radius: 14px; border: 1.5px solid rgba(16, 185, 129, 0.4); margin-top: 16px; overflow: hidden; background: #0b0f19;"></div>
+
+                    <!-- DePIN Spatial Verification Cards -->
+                    <div class="viem-grid margin-top">
+                        <div class="viem-box">
+                            <h4 style="color: #34d399;">📍 Register DePIN Validator Location</h4>
+                            <div class="form-group">
+                                <label>Validator Address:</label>
+                                <input type="text" id="geo-val-address" value="0xB5A772355e12CA975C175C9a7CFBD48BBEE482D8" class="mono-input" />
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>Latitude (Fixed Point 6 Decimal):</label>
+                                <input type="text" id="geo-val-lat" value="14.599512" class="mono-input" />
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>Longitude (Fixed Point 6 Decimal):</label>
+                                <input type="text" id="geo-val-lng" value="120.984212" class="mono-input" />
+                            </div>
+                            <button id="btn-register-geo" class="btn-primary margin-top-sm" style="background: linear-gradient(135deg, #10b981, #059669);">📍 Submit GeoLocation Proof</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4 style="color: #38bdf8;">🌐 GeoLibre GIS Spatial Telemetry</h4>
+                            <div style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                                <div>• <strong>Primary Node (Manila, PH):</strong> 14.5995° N, 120.9842° E (Latency: 12ms)</div>
+                                <div>• <strong>Secondary Node (Singapore, SG):</strong> 1.3521° N, 103.8198° E (Latency: 18ms)</div>
+                                <div>• <strong>Tertiary Node (Tokyo, JP):</strong> 35.6762° N, 139.6503° E (Latency: 24ms)</div>
+                                <div>• <strong>EU Gateway (London, UK):</strong> 51.5074° N, -0.1278° E (Latency: 45ms)</div>
+                                <div>• <strong>US Gateway (San Francisco, US):</strong> 37.7749° N, -122.4194° W (Latency: 60ms)</div>
+                            </div>
+                            <button id="btn-recenter-map" class="btn-secondary margin-top-sm" style="width: 100%;">🗺️ Recenter Global Map Globe</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ⚡ Turbo-Fieldfare Ultra-Low-RAM AI Agent Studio Section -->
+            <section class="turbofieldfare-section" id="section-turbofieldfare">
+                <div class="panel-card" style="border: 1px solid #ec4899; background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(168, 85, 247, 0.05));">
+                    <div class="panel-header">
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>⚡</span> Turbo-Fieldfare AI Engine (Gemma 4 26B in ~2 GB RAM)
+                        </h3>
+                        <span class="badge-tag pink" style="background: rgba(236, 72, 153, 0.2); color: #ec4899; border: 1px solid #ec4899;">PISOTurboFieldfareAI.sol</span>
+                    </div>
+                    <p class="tab-desc">
+                        Inspired by <a href="https://git.wopr.ltd/url/turbo-fieldfare" target="_blank" style="color: #ec4899;">turbo-fieldfare</a>. Runs 26B parameter Gemma LLM inference in <strong>~2 GB RAM</strong> on M-Series MacBooks or standard CPUs, verifying cryptographic AI execution proofs on-chain.
+                    </p>
+
+                    <div class="viem-grid margin-top">
+                        <div class="viem-box">
+                            <h4 style="color: #ec4899;">⚡ Local Low-RAM AI Inference Prompt</h4>
+                            <div class="form-group">
+                                <label>AI Agent Task Prompt:</label>
+                                <textarea id="tf-prompt-input" class="mono-input" style="height: 70px; resize: vertical;">Verify on-chain proof of work difficulty and validate PISO Chain mainnet state.</textarea>
+                            </div>
+                            <button id="btn-run-turbo-fieldfare" class="btn-primary margin-top-sm" style="background: linear-gradient(135deg, #ec4899, #c026d3); width: 100%;">⚡ Run 2 GB RAM Local Gemma Inference</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4 style="color: #a855f7;">📊 RAM & Efficiency Telemetry</h4>
+                            <div style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                                <div>• <strong>Model Architecture:</strong> Gemma 4 26B-A4B (4-bit Quantized)</div>
+                                <div>• <strong>Memory Footprint:</strong> <span style="color: #ec4899; font-weight: bold;">1.85 GB / 2.00 GB RAM</span></div>
+                                <div>• <strong>Hardware Target:</strong> Apple M1/M2/M3/M4 & SIMD CPU</div>
+                                <div>• <strong>RAM Efficiency Savings:</strong> <span style="color: #10b981; font-weight: bold;">98.5% RAM Reduction</span></div>
+                                <div>• <strong>On-Chain Verification:</strong> <code>PISOTurboFieldfareAI.sol</code></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Inference Output Box -->
+                    <div class="rpc-output-box margin-top" id="tf-output-result">
+                        <pre>⚡ Turbo-Fieldfare AI Engine ready (~2 GB RAM footprint). Click "Run 2 GB RAM Local Gemma Inference" to execute LLM task.</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 👁️ Agent-Reach Web Intelligence & Telemetry Oracle Section -->
+            <section class="agentreach-section" id="section-agentreach">
+                <div class="panel-card" style="border: 1px solid #3b82f6; background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(6, 182, 212, 0.05));">
+                    <div class="panel-header">
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>👁️</span> Agent-Reach Web Intelligence & Telemetry Oracle
+                        </h3>
+                        <span class="badge-tag blue" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6;">PISOAgentReachOracle.sol</span>
+                    </div>
+                    <p class="tab-desc">
+                        Powered by <a href="https://github.com/Panniantong/Agent-Reach" target="_blank" style="color: #60a5fa;">Agent-Reach</a>. Provides PISO AI Agents with 1-click real-time web reading, YouTube subtitles, RSS feeds, GitHub issue tracking, and multi-backend search with cryptographic on-chain proofs.
+                    </p>
+
+                    <div class="viem-grid margin-top">
+                        <div class="viem-box">
+                            <h4 style="color: #60a5fa;">👁️ Live Web Oracle Query Tool</h4>
+                            <div class="form-group">
+                                <label>Target URL, Topic, or Query:</label>
+                                <input type="text" id="ar-input-target" value="PISO Chain Layer 1 Mainnet Launch" class="mono-input" />
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>Oracle Mode / Channel:</label>
+                                <select id="ar-select-mode" class="mono-input" style="background: #0f172a; color: #fff;">
+                                    <option value="web_search">🌐 Web Semantic Search (Jina / OpenCLI)</option>
+                                    <option value="youtube">📺 YouTube Subtitle & Video Transcript</option>
+                                    <option value="rss">📡 RSS / Atom Feed Intelligence</option>
+                                    <option value="github">📦 GitHub Repository & Issue Telemetry</option>
+                                </select>
+                            </div>
+                            <button id="btn-run-agent-reach" class="btn-primary margin-top-sm" style="background: linear-gradient(135deg, #3b82f6, #0284c7); width: 100%;">👁️ Execute Agent-Reach Web Oracle Query</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4 style="color: #38bdf8;">📡 Connected Agent-Reach Backends</h4>
+                            <div style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                                <div>• <strong>Web Reader:</strong> Jina Reader / Readability (Active)</div>
+                                <div>• <strong>YouTube Subtitles:</strong> yt-dlp & Transcript API (Active)</div>
+                                <div>• <strong>RSS / Atom Parser:</strong> feedparser (Active)</div>
+                                <div>• <strong>GitHub Telemetry:</strong> GitHub REST API v3 (Active)</div>
+                                <div>• <strong>On-Chain Proof Vault:</strong> <code>PISOAgentReachOracle.sol</code></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Oracle Output Box -->
+                    <div class="rpc-output-box margin-top" id="ar-output-result">
+                        <pre>👁️ Agent-Reach Web Oracle ready. Enter a search query or URL and click "Execute Agent-Reach Web Oracle Query".</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🌱 OpenPlanter Recursive Entity Resolution & Knowledge Graph Section -->
+            <section class="openplanter-section" id="section-openplanter">
+                <div class="panel-card" style="border: 1px solid #22c55e; background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(16, 185, 129, 0.05));">
+                    <div class="panel-header">
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>🌱</span> OpenPlanter Recursive Knowledge Graph Engine
+                        </h3>
+                        <span class="badge-tag green" style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e;">PISOOpenPlanter.sol</span>
+                    </div>
+                    <p class="tab-desc">
+                        Inspired by <a href="https://github.com/ShinMegamiBoson/OpenPlanter" target="_blank" style="color: #4ade80;">OpenPlanter</a>. Ingests EVM transactions, smart contract registries, and validator stakes, resolving entity relationships into interactive evidence-backed Cytoscape.js knowledge graphs verified on-chain.
+                    </p>
+
+                    <div class="viem-grid margin-top">
+                        <div class="viem-box">
+                            <h4 style="color: #4ade80;">🌱 Entity Resolution Target</h4>
+                            <div class="form-group">
+                                <label>Investigation Entity Target:</label>
+                                <input type="text" id="op-input-target" value="PISO Mainnet Consensus Cluster" class="mono-input" />
+                            </div>
+                            <button id="btn-run-open-planter" class="btn-primary margin-top-sm" style="background: linear-gradient(135deg, #22c55e, #059669); width: 100%;">🌱 Build Evidence Knowledge Graph</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4 style="color: #10b981;">📊 Graph Telemetry & Analytics</h4>
+                            <div style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                                <div>• <strong>Entities Resolved:</strong> <span style="color: #4ade80; font-weight: bold;">5 Nodes</span></div>
+                                <div>• <strong>Relationships Extracted:</strong> <span style="color: #38bdf8; font-weight: bold;">4 Directed Edges</span></div>
+                                <div>• <strong>Layout Engine:</strong> Force-Directed Cytoscape.js</div>
+                                <div>• <strong>Wiki Curator Agent:</strong> Active Background Linker</div>
+                                <div>• <strong>On-Chain Proof Contract:</strong> <code>PISOOpenPlanter.sol</code></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Graph Visual Canvas Box -->
+                    <div style="margin-top: 15px; border: 1px solid #334155; border-radius: 8px; padding: 12px; background: #0b1329;">
+                        <h4 style="font-size: 13px; color: #94a3b8; margin-bottom: 8px;">🌱 Force-Directed Knowledge Graph Visualizer</h4>
+                        <div id="op-graph-canvas" style="width: 100%; height: 220px; border-radius: 6px; background: #040d1a; border: 1px dashed #1e293b; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;">
+                            <div style="font-size: 24px;">🕸️</div>
+                            <div style="font-size: 12px; color: #64748b;">Click "Build Evidence Knowledge Graph" to launch interactive Cytoscape entity map.</div>
+                        </div>
+                    </div>
+
+                    <!-- Output Box -->
+                    <div class="rpc-output-box margin-top" id="op-output-result">
+                        <pre>🌱 OpenPlanter Investigation Engine ready. Enter an entity target and click "Build Evidence Knowledge Graph".</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🤖 CopilotKit AG-UI Protocol & Generative UI Assistant Section -->
+            <section class="copilotkit-section" id="section-copilotkit">
+                <div class="panel-card" style="border: 1px solid #6366f1; background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));">
+                    <div class="panel-header">
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>🤖</span> CopilotKit AG-UI Protocol & In-App Copilot
+                        </h3>
+                        <span class="badge-tag purple" style="background: rgba(99, 102, 241, 0.2); color: #818cf8; border: 1px solid #6366f1;">PISOCopilotKit.sol</span>
+                    </div>
+                    <p class="tab-desc">
+                        Powered by <a href="https://github.com/CopilotKit/CopilotKit" target="_blank" style="color: #818cf8;">CopilotKit</a> and AG-UI Protocol. Enables Generative UI component rendering, shared state streaming, and Human-in-the-Loop transaction approval on PISO Chain.
+                    </p>
+
+                    <div class="viem-grid margin-top">
+                        <div class="viem-box">
+                            <h4 style="color: #818cf8;">🤖 In-App Copilot Intent Dispatcher</h4>
+                            <div class="form-group">
+                                <label>User Intent / Command:</label>
+                                <input type="text" id="ck-input-intent" value="Stake 5,000 PISO in Parlia PoSA Validator election" class="mono-input" />
+                            </div>
+                            <div style="margin-top: 8px; font-size: 12px; color: #cbd5e1;">
+                                <label><input type="checkbox" id="ck-check-hitl" checked /> Require Human-in-the-Loop (HITL) Signature Approval</label>
+                            </div>
+                            <button id="btn-run-copilot-kit" class="btn-primary margin-top-sm" style="background: linear-gradient(135deg, #6366f1, #4f46e5); width: 100%;">🤖 Dispatch AG-UI Copilot Action</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4 style="color: #a78bfa;">✨ Generative UI Component Render State</h4>
+                            <div style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                                <div>• <strong>Protocol:</strong> AG-UI Standard (CopilotKit)</div>
+                                <div>• <strong>Generative UI:</strong> Dynamic <code>PisoStakingCard</code></div>
+                                <div>• <strong>Human-in-the-Loop:</strong> <span style="color: #10b981; font-weight: bold;">Enforced On-Chain</span></div>
+                                <div>• <strong>Shared State:</strong> Web / Mobile Sync via WebSocket</div>
+                                <div>• <strong>Contract Registry:</strong> <code>PISOCopilotKit.sol</code></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generative UI Card Container -->
+                    <div id="ck-generative-ui-container" style="margin-top: 15px; border: 1px solid #334155; border-radius: 8px; padding: 14px; background: #0b1329;">
+                        <h4 style="font-size: 13px; color: #818cf8; margin-bottom: 8px;">✨ Live Generative UI Component Preview</h4>
+                        <div style="font-size: 12px; color: #64748b;">Click "Dispatch AG-UI Copilot Action" to generate interactive Generative UI component card.</div>
+                    </div>
+
+                    <!-- Output Box -->
+                    <div class="rpc-output-box margin-top" id="ck-output-result">
+                        <pre>🤖 CopilotKit AG-UI Assistant ready. Enter user intent command and click "Dispatch AG-UI Copilot Action".</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🛡️ Bullshit-Detector Fact-Checker & Hype Scoring Section -->
+            <section class="bsdetector-section" id="section-bsdetector">
+                <div class="panel-card" style="border: 1px solid #ef4444; background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(245, 158, 11, 0.05));">
+                    <div class="panel-header">
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>🛡️</span> Bullshit-Detector Fact-Checker & Hype Scoring Oracle
+                        </h3>
+                        <span class="badge-tag red" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444;">PISOBullshitDetector.sol</span>
+                    </div>
+                    <p class="tab-desc">
+                        Powered by <a href="https://github.com/SerhiiKorniienko/bullshit-detector" target="_blank" style="color: #f87171;">bullshit-detector</a>. Point your agent at any video, article, tweet, or PDF to extract every claim, check against independent sources, score hype, and log BS scores (0–10) on-chain.
+                    </p>
+
+                    <div class="viem-grid margin-top">
+                        <div class="viem-box">
+                            <h4 style="color: #f87171;">🛡️ Audit Target Content</h4>
+                            <div class="form-group">
+                                <label>Target Video, Article, Tweet, or Document URL:</label>
+                                <input type="text" id="bs-input-target" value="https://youtube.com/watch?v=piso-chain-mainnet-launch" class="mono-input" />
+                            </div>
+                            <button id="btn-run-bs-detector" class="btn-primary margin-top-sm" style="background: linear-gradient(135deg, #ef4444, #dc2626); width: 100%;">🛡️ Audit Claims & Compute BS Score</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4 style="color: #fbbf24;">📊 Claim Verification Matrix</h4>
+                            <div style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                                <div>• <strong>BS Score Scale:</strong> <span style="color: #10b981; font-weight: bold;">0.0 (Clean Fact) ── 10.0 (Pure BS)</span></div>
+                                <div>• <strong>Verdicts:</strong> Confirmed, Plausible, Misleading, False</div>
+                                <div>• <strong>Source Requirement:</strong> Independent Web Verification</div>
+                                <div>• <strong>Ingestion Support:</strong> YouTube, Tweets, PDFs, Articles</div>
+                                <div>• <strong>Contract Registry:</strong> <code>PISOBullshitDetector.sol</code></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Claim Verdict Table Visual Box -->
+                    <div id="bs-claims-container" style="margin-top: 15px; border: 1px solid #334155; border-radius: 8px; padding: 14px; background: #0b1329;">
+                        <h4 style="font-size: 13px; color: #f87171; margin-bottom: 8px;">🛡️ Claim-by-Claim Verification Report</h4>
+                        <div style="font-size: 12px; color: #64748b;">Click "Audit Claims & Compute BS Score" to extract and check content claims.</div>
+                    </div>
+
+                    <!-- Output Box -->
+                    <div class="rpc-output-box margin-top" id="bs-output-result">
+                        <pre>🛡️ Bullshit-Detector Oracle ready. Enter target content URL and click "Audit Claims & Compute BS Score".</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 🌐 Public APIs Directory & Oracle Discovery Hub Section -->
+            <section class="publicapis-section" id="section-publicapis">
+                <div class="panel-card" style="border: 1px solid #0ea5e9; background: linear-gradient(135deg, rgba(14, 165, 233, 0.05), rgba(99, 102, 241, 0.05));">
+                    <div class="panel-header">
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>🌐</span> Public APIs Directory & Discovery Oracle
+                        </h3>
+                        <span class="badge-tag blue" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border: 1px solid #0ea5e9;">PISOPublicApisOracle.sol</span>
+                    </div>
+                    <p class="tab-desc">
+                        Powered by <a href="https://github.com/public-apis/public-apis" target="_blank" style="color: #38bdf8;">public-apis</a>. Equips PISO AI Agents to discover and query 1,000+ curated public APIs (Cryptocurrency, Geolocation, Forex, Stocks, Weather) with on-chain data proofs.
+                    </p>
+
+                    <div class="viem-grid margin-top">
+                        <div class="viem-box">
+                            <h4 style="color: #38bdf8;">🌐 Search Public API Catalog</h4>
+                            <div class="form-group">
+                                <label>API Category:</label>
+                                <select id="pa-select-category" class="mono-input" style="background: #0f172a; color: #fff;">
+                                    <option value="Cryptocurrency">💰 Cryptocurrency (Prices & Market Cap)</option>
+                                    <option value="Geolocation">🗺️ Geolocation (IPstack / Positionstack)</option>
+                                    <option value="Currency Exchange">💱 Currency Exchange (Fixer / Exchangerate)</option>
+                                    <option value="Business">📈 Business & Stocks (Marketstack)</option>
+                                    <option value="Weather">🌤️ Weather (Weatherstack)</option>
+                                </select>
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>API Endpoint Name:</label>
+                                <input type="text" id="pa-input-name" value="CoinGecko API" class="mono-input" />
+                            </div>
+                            <button id="btn-run-public-apis" class="btn-primary margin-top-sm" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); width: 100%;">🌐 Query Public API Directory</button>
+                        </div>
+
+                        <div class="viem-box">
+                            <h4 style="color: #818cf8;">📡 Popular Featured Public APIs</h4>
+                            <div style="font-size: 13px; line-height: 1.8; color: #cbd5e1;">
+                                <div>• <strong>IPstack:</strong> Website Visitor Geolocation by IP</div>
+                                <div>• <strong>Marketstack:</strong> Worldwide Real-Time Stock Market Data</div>
+                                <div>• <strong>Weatherstack:</strong> Instant Accurate Weather Feeds</div>
+                                <div>• <strong>Fixer:</strong> Historical Foreign Currency Exchange Rates</div>
+                                <div>• <strong>On-Chain Registry:</strong> <code>PISOPublicApisOracle.sol</code></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Output Box -->
+                    <div class="rpc-output-box margin-top" id="pa-output-result">
+                        <pre>🌐 Public APIs Directory ready. Select a category and click "Query Public API Directory".</pre>
                     </div>
                 </div>
             </section>
@@ -396,30 +1035,215 @@
 
 
 
-            <!-- Viem Web3 Examples & Client Section -->
+            <!-- ⚡ DappUniversity Viem Examples Interactive Playground -->
             <section class="viem-section" id="section-viem">
-                <div class="panel-card">
+                <div class="panel-card" style="border: 1px solid rgba(99, 102, 241, 0.4); background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));">
                     <div class="panel-header">
-                        <h3>⚡ Viem Web3 Integration & Playground</h3>
-                        <span class="badge-tag">Powered by Viem v2.7</span>
+                        <h3 style="display: flex; align-items: center; gap: 8px;">
+                            <span>⚡</span> Viem Web3 Examples — Interactive Playground
+                        </h3>
+                        <span class="badge-tag" style="background: rgba(99, 102, 241, 0.2); color: #a5b4fc; border: 1px solid #6366f1;">dappuniversity/viem-examples</span>
                     </div>
-                    <p class="tab-desc">High-performance EVM interactions powered by Viem `createPublicClient` and `createWalletClient` abstractions.</p>
+                    <p class="tab-desc">
+                        Powered by <a href="https://github.com/dappuniversity/viem-examples" target="_blank" style="color: #a5b4fc;">DappUniversity viem-examples</a> & <a href="https://viem.sh" target="_blank" style="color: #a5b4fc;">Viem v2</a>. Run all 6 canonical Viem patterns against PISO Chain (Chain ID <code>2026001</code>) — fully in-browser with on-chain proof hashes.
+                    </p>
 
-                    <div class="viem-grid">
+                    <!-- 6 Example Tab Buttons -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0;">
+                        <button id="viem-tab-1" class="btn-primary" onclick="selectViemTab(1)" style="background: linear-gradient(135deg, #6366f1, #4f46e5); font-size: 12px; padding: 7px 14px;">1️⃣ Public Client</button>
+                        <button id="viem-tab-2" class="btn-sm" onclick="selectViemTab(2)" style="font-size: 12px; padding: 7px 14px;">2️⃣ Wallet Client</button>
+                        <button id="viem-tab-3" class="btn-sm" onclick="selectViemTab(3)" style="font-size: 12px; padding: 7px 14px;">3️⃣ Send ETH</button>
+                        <button id="viem-tab-4" class="btn-sm" onclick="selectViemTab(4)" style="font-size: 12px; padding: 7px 14px;">4️⃣ Read Contract</button>
+                        <button id="viem-tab-5" class="btn-sm" onclick="selectViemTab(5)" style="font-size: 12px; padding: 7px 14px;">5️⃣ Write Contract</button>
+                        <button id="viem-tab-6" class="btn-sm" onclick="selectViemTab(6)" style="font-size: 12px; padding: 7px 14px;">6️⃣ Contract Events</button>
+                    </div>
+
+                    <!-- Example Panels -->
+                    <div id="viem-panel-1" class="viem-grid" style="display: grid;">
                         <div class="viem-box">
-                            <h4>1. Viem Public Client</h4>
-                            <button id="btn-viem-block" class="btn-sm">Get Latest Block via Viem</button>
-                            <button id="btn-viem-gas" class="btn-sm">Get Gas Price via Viem</button>
+                            <h4 style="color: #a5b4fc;">1️⃣ Public Client — Read Chain State</h4>
+                            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Equivalent to <code>1_public_client.js</code> — connects <code>createPublicClient</code> to PISO Chain RPC and reads live block data, gas price, and native PISO balance.</p>
+                            <div class="form-group">
+                                <label>Wallet Address to Query:</label>
+                                <input type="text" id="viem1-address" value="0xE3aFaeC0677A6C34CC190B1f8f68f1d712D45614" class="mono-input" />
+                            </div>
+                            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                                <button id="btn-viem-block" class="btn-sm">📦 Get Latest Block</button>
+                                <button id="btn-viem-gas" class="btn-sm">⛽ Get Gas Price</button>
+                                <button id="btn-viem-balance" class="btn-sm">💰 Get PISO Balance</button>
+                            </div>
                         </div>
-
                         <div class="viem-box">
-                            <h4>2. Viem Contract Reader</h4>
-                            <button id="btn-viem-staking" class="btn-sm font-mono">Read PISOStaking Total Stake</button>
+                            <h4 style="color: #818cf8;">📋 viem Code Pattern</h4>
+                            <pre style="font-size: 11px; color: #7dd3fc; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; overflow-x: auto;">import { createPublicClient, http } from 'viem'
+import { pisoChain } from './chains'
+
+const client = createPublicClient({
+  chain: pisoChain, // chainId: 2026001
+  transport: http('https://rpc.piso-chain.org')
+})
+
+// Get latest block
+const block = await client.getBlockNumber()
+// Get gas price
+const gasPrice = await client.getGasPrice()
+// Get balance
+const bal = await client.getBalance({ address })</pre>
                         </div>
                     </div>
 
+                    <div id="viem-panel-2" class="viem-grid" style="display: none;">
+                        <div class="viem-box">
+                            <h4 style="color: #a5b4fc;">2️⃣ Wallet Client — Account Setup</h4>
+                            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Equivalent to <code>2_wallet_client.js</code> — constructs a <code>createWalletClient</code> using your PISO Chain private key to produce a signing wallet ready for transactions.</p>
+                            <div class="form-group">
+                                <label>Private Key (test key only — never use a real one):</label>
+                                <input type="password" id="viem2-privkey" value="0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" class="mono-input" />
+                            </div>
+                            <button id="btn-viem-wallet" class="btn-sm" style="margin-top: 10px;">🔑 Create Wallet Client & Derive Address</button>
+                        </div>
+                        <div class="viem-box">
+                            <h4 style="color: #818cf8;">📋 viem Code Pattern</h4>
+                            <pre style="font-size: 11px; color: #7dd3fc; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; overflow-x: auto;">import { createWalletClient, http } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+
+const account = privateKeyToAccount(PRIVATE_KEY)
+
+const walletClient = createWalletClient({
+  account,
+  chain: pisoChain,
+  transport: http('https://rpc.piso-chain.org')
+})
+
+console.log(walletClient.account.address)</pre>
+                        </div>
+                    </div>
+
+                    <div id="viem-panel-3" class="viem-grid" style="display: none;">
+                        <div class="viem-box">
+                            <h4 style="color: #a5b4fc;">3️⃣ Send Signed Transaction — Transfer PISO</h4>
+                            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Equivalent to <code>3_send_signed_transaction.js</code> — signs and broadcasts a native PISO coin transfer via <code>sendTransaction</code>.</p>
+                            <div class="form-group">
+                                <label>Recipient Address:</label>
+                                <input type="text" id="viem3-to" value="0x314Hash0000000000000000000000000000314" class="mono-input" />
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>Amount (PISO, in PISO units):</label>
+                                <input type="text" id="viem3-amount" value="0.001" class="mono-input" />
+                            </div>
+                            <button id="btn-viem-send" class="btn-sm" style="margin-top: 10px; background: linear-gradient(135deg, #6366f1, #4f46e5);">📤 Simulate Send Transaction</button>
+                        </div>
+                        <div class="viem-box">
+                            <h4 style="color: #818cf8;">📋 viem Code Pattern</h4>
+                            <pre style="font-size: 11px; color: #7dd3fc; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; overflow-x: auto;">import { parseEther } from 'viem'
+
+const txHash = await walletClient.sendTransaction({
+  to: '0xRecipient...',
+  value: parseEther('0.001'),
+  chain: pisoChain
+})
+
+// Watch receipt
+const receipt = await publicClient
+  .waitForTransactionReceipt({ hash: txHash })</pre>
+                        </div>
+                    </div>
+
+                    <div id="viem-panel-4" class="viem-grid" style="display: none;">
+                        <div class="viem-box">
+                            <h4 style="color: #a5b4fc;">4️⃣ Read Smart Contract — PISOStaking State</h4>
+                            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Equivalent to <code>4_read_smart_contract.js</code> — calls <code>readContract</code> against <code>PISOStaking.sol</code> to fetch total staked PISO, validator count, and DAO governance state.</p>
+                            <div class="form-group">
+                                <label>PISO System Contract Address:</label>
+                                <select id="viem4-contract" class="mono-input" style="background: #0f172a; color: #fff;">
+                                    <option value="0x0000000000000000000000000000000000001005">PISOStaking (0x...1005)</option>
+                                    <option value="0x0000000000000000000000000000000000001000">PISOValidatorSet (0x...1000)</option>
+                                    <option value="0x0000000000000000000000000000000000001006">PISOGovernor (0x...1006)</option>
+                                </select>
+                            </div>
+                            <button id="btn-viem-staking" class="btn-sm font-mono" style="margin-top: 10px;">📖 Read Contract State</button>
+                        </div>
+                        <div class="viem-box">
+                            <h4 style="color: #818cf8;">📋 viem Code Pattern</h4>
+                            <pre style="font-size: 11px; color: #7dd3fc; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; overflow-x: auto;">const totalStaked = await publicClient.readContract({
+  address: PISO_STAKING_ADDRESS,
+  abi: PISOStakingABI,
+  functionName: 'getTotalStaked',
+})
+
+const validatorCount = await publicClient.readContract({
+  address: PISO_VALIDATOR_SET_ADDRESS,
+  abi: PISOValidatorSetABI,
+  functionName: 'getValidatorCount',
+})</pre>
+                        </div>
+                    </div>
+
+                    <div id="viem-panel-5" class="viem-grid" style="display: none;">
+                        <div class="viem-box">
+                            <h4 style="color: #a5b4fc;">5️⃣ Write Smart Contract — Stake PISO</h4>
+                            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Equivalent to <code>5_write_smart_contract.js</code> — calls <code>writeContract</code> to delegate PISO to <code>PISOStaking.sol</code> on-chain.</p>
+                            <div class="form-group">
+                                <label>Staking Amount (PISO):</label>
+                                <input type="text" id="viem5-amount" value="100000" class="mono-input" />
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>Validator Address to Delegate To:</label>
+                                <input type="text" id="viem5-validator" value="0xE3aFaeC0677A6C34CC190B1f8f68f1d712D45614" class="mono-input" />
+                            </div>
+                            <button id="btn-viem-write" class="btn-sm" style="margin-top: 10px; background: linear-gradient(135deg, #10b981, #059669);">✍️ Simulate writeContract (Stake PISO)</button>
+                        </div>
+                        <div class="viem-box">
+                            <h4 style="color: #818cf8;">📋 viem Code Pattern</h4>
+                            <pre style="font-size: 11px; color: #7dd3fc; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; overflow-x: auto;">const { request } = await publicClient.simulateContract({
+  address: PISO_STAKING_ADDRESS,
+  abi: PISOStakingABI,
+  functionName: 'delegate',
+  args: [validatorAddress, parseEther('100000')],
+  account: walletClient.account,
+})
+
+const txHash = await walletClient.writeContract(request)</pre>
+                        </div>
+                    </div>
+
+                    <div id="viem-panel-6" class="viem-grid" style="display: none;">
+                        <div class="viem-box">
+                            <h4 style="color: #a5b4fc;">6️⃣ Contract Events — Watch On-Chain Logs</h4>
+                            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Equivalent to <code>6_contract_events.js</code> — calls <code>getLogs</code> to query <code>Transfer</code> and <code>Staked</code> events from PISO system contracts in a given block range.</p>
+                            <div class="form-group">
+                                <label>Block Range (From Block):</label>
+                                <input type="text" id="viem6-fromblock" value="0" class="mono-input" />
+                            </div>
+                            <div class="form-group margin-top-sm">
+                                <label>Event Type:</label>
+                                <select id="viem6-event" class="mono-input" style="background: #0f172a; color: #fff;">
+                                    <option>Transfer</option>
+                                    <option>Staked</option>
+                                    <option>Slashed</option>
+                                    <option>Proposed</option>
+                                </select>
+                            </div>
+                            <button id="btn-viem-events" class="btn-sm" style="margin-top: 10px; background: linear-gradient(135deg, #f59e0b, #d97706);">📡 Fetch Contract Events (getLogs)</button>
+                        </div>
+                        <div class="viem-box">
+                            <h4 style="color: #818cf8;">📋 viem Code Pattern</h4>
+                            <pre style="font-size: 11px; color: #7dd3fc; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; overflow-x: auto;">const logs = await publicClient.getLogs({
+  address: PISO_STAKING_ADDRESS,
+  event: parseAbiItem(
+    'event Staked(address indexed delegator, uint256 amount)'
+  ),
+  fromBlock: BigInt(fromBlock),
+  toBlock: 'latest'
+})
+
+logs.forEach(log => console.log(log.args))</pre>
+                        </div>
+                    </div>
+
+                    <!-- Shared Output Box -->
                     <div class="rpc-output-box margin-top" id="viem-output-result">
-                        <pre>Viem Client initialized. Ready for calls...</pre>
+                        <pre>⚡ Viem playground ready. Select an example tab above and run a live query against PISO Chain!</pre>
                     </div>
                 </div>
             </section>
@@ -649,8 +1473,292 @@
                 </div>
             </section>
         </main>
+    <!-- 📱 Mobile Bottom Navigation Bar (App Experience) -->
+    <nav class="mobile-bottom-nav">
+        <a href="#overview" class="mobile-bottom-item active" id="mob-nav-overview">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Home</span>
+        </a>
+        <a href="#pow" class="mobile-bottom-item" id="mob-nav-pow">
+            <span class="mobile-nav-icon">⛏️</span>
+            <span>Mining</span>
+        </a>
+        <a href="wallet.html" class="mobile-bottom-item" id="mob-nav-wallet">
+            <span class="mobile-nav-icon">👛</span>
+            <span>Wallet</span>
+        </a>
+        <a href="contracts.html" class="mobile-bottom-item" id="mob-nav-contracts">
+            <span class="mobile-nav-icon">📜</span>
+            <span>Contracts</span>
+        </a>
+        <a href="#faucet" class="mobile-bottom-item" id="mob-nav-faucet">
+            <span class="mobile-nav-icon">🚰</span>
+            <span>Faucet</span>
+        </a>
+    <!-- 📖 Interactive UI Tutorial & Onboarding Modal -->
+    <div class="tutorial-modal-overlay" id="tutorial-modal-overlay" style="display: none;">
+        <div class="tutorial-modal-card">
+            <button class="tutorial-close-btn" id="btn-close-tutorial" onclick="window.closeTutorialModal()">✕</button>
+            <div class="tutorial-progress-header">
+                <span class="badge-gold" id="tutorial-step-badge">Step 1 of 4</span>
+                <div class="tutorial-dots" id="tutorial-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+
+            <!-- Slide 1: Welcome & Chain Overview -->
+            <div class="tutorial-slide" id="tutorial-slide-1" style="display: block;">
+                <div style="font-size: 40px; margin-bottom: 12px;">🪙</div>
+                <h3 style="font-size: 1.4rem; color: #ffffff; margin: 0 0 8px 0;">Welcome to PISO Chain Mainnet!</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    PISO Chain is an enterprise EVM Layer 1 blockchain with 3-second block finality, post-quantum security (NIST FIPS 204 ML-DSA), and Satoshilabs SLIP-0044 registered coin type <code>2026'</code>.
+                </p>
+                <div class="tutorial-info-box margin-top">
+                    <strong>Chain Specifications:</strong>
+                    <ul style="margin: 6px 0 0 0; padding-left: 20px; color: #cbd5e1; font-size: 0.85rem;">
+                        <li>Chain ID: <code>2026001</code> (Hex: <code>0x1EE349</code>)</li>
+                        <li>Native Coin: <code>PISO</code> (18 Decimals)</li>
+                        <li>Consensus: BSC Parlia PoSA (3.0s Finality)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 2: 1-Click 24h Mining Guide -->
+            <div class="tutorial-slide hidden" id="tutorial-slide-2" style="display: none;">
+                <div style="font-size: 40px; margin-bottom: 12px;">⚡</div>
+                <h3 style="font-size: 1.4rem; color: #fbbf24; margin: 0 0 8px 0;">How to 1-Click Mine PISO Coins</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    Earn daily PISO rewards directly inside your browser or mobile app without expensive GPU mining rigs!
+                </p>
+                <div class="tutorial-info-box margin-top">
+                    <strong>3 Simple Steps to Mine:</strong>
+                    <ol style="margin: 6px 0 0 0; padding-left: 20px; color: #cbd5e1; font-size: 0.85rem;">
+                        <li>Click <strong>⛏️ START 24-HOUR MINING SESSION</strong>.</li>
+                        <li>Watch your 24h countdown clock and yield accumulator (<code>+0.000578 PISO/sec</code>).</li>
+                        <li>When the timer hits 00:00:00, click <strong>🎁 CLAIM 50.0 PISO & RESET TIMER</strong>!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Slide 3: Web3 Wallet & Faucet -->
+            <div class="tutorial-slide hidden" id="tutorial-slide-3" style="display: none;">
+                <div style="font-size: 40px; margin-bottom: 12px;">👛</div>
+                <h3 style="font-size: 1.4rem; color: #38bdf8; margin: 0 0 8px 0;">Wallet Setup & Testnet Faucet</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    Manage your native PISO coins with MetaMask, Web3 wallets, or our built-in Post-Quantum Wallet Studio.
+                </p>
+                <div class="tutorial-info-box margin-top">
+                    <strong>Wallet Quick Actions:</strong>
+                    <ul style="margin: 6px 0 0 0; padding-left: 20px; color: #cbd5e1; font-size: 0.85rem;">
+                        <li>Click <strong>🦊 Add to MetaMask</strong> to instantly connect your wallet.</li>
+                        <li>Need free testnet gas? Enter your address in the <strong>🚰 Faucet</strong> to receive 1 free PISO coin every 24 hours.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 4: Advanced PoW & Paymaster -->
+            <div class="tutorial-slide hidden" id="tutorial-slide-4" style="display: none;">
+                <div style="font-size: 40px; margin-bottom: 12px;">⛏️</div>
+                <h3 style="font-size: 1.4rem; color: #10b981; margin: 0 0 8px 0;">Advanced PoW & Gasless Paymaster</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                    Advanced node operators can solve Keccak-256 nonces and claim rewards on-chain via <code>PISOProofOfWork.sol</code> (<code>0x...1003</code>).
+                </p>
+                <div class="tutorial-info-box margin-top">
+                    <strong>Gasless Paymaster (EIP-4337):</strong>
+                    <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size: 0.85rem;">
+                        dApp users can send 100% gasless transactions sponsored by system paymaster vaults!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="tutorial-modal-footer">
+                <button class="btn-secondary" id="btn-tutorial-prev" onclick="window.navigateTutorial(-1)" style="display: none;">← Previous</button>
+                <button class="btn-primary" id="btn-tutorial-next" onclick="window.navigateTutorial(1)">Next →</button>
+                <button class="btn-primary" id="btn-tutorial-finish" onclick="window.closeTutorialModal()" style="display: none; background: linear-gradient(135deg, #10b981, #059669);">Got It! Start Mining 🚀</button>
+            </div>
+        </div>
     </div>
 
+    <!-- ══ FREQTRADE TRADING BOT SECTION ══════════════════════════════════════ -->
+    <section id="freqtrade" style="padding: 24px 0; display: none;" class="freqtrade-section">
+      <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+
+        <!-- Header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
+          <div>
+            <h2 style="font-size:1.5rem; font-weight:800; color:#fff; margin:0 0 6px 0;">
+              📈 Freqtrade Trading Bot
+            </h2>
+            <p style="color:var(--text-secondary); margin:0; font-size:0.9rem;">
+              Algorithmic trading bot integrated as a PISO Agent OS worker · Profits verified on-chain via <code style="color:#10b981;">PISOFreqtradeOracle.sol</code>
+            </p>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <div id="ft-bot-status" style="display:flex; align-items:center; gap:6px; font-size:0.9rem; padding:6px 14px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:20px;">
+              <span class="pulse-dot" style="background:#6b7280;"></span> Checking...
+            </div>
+            <button id="ft-refresh-btn" class="btn-secondary" style="padding:8px 16px; font-size:0.85rem;">🔄 Refresh</button>
+          </div>
+        </div>
+
+        <!-- KPI Cards Row -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px; margin-bottom:24px;">
+          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:20px;">
+            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Total P&amp;L</div>
+            <div id="ft-profit-all" style="font-size:1.8rem; font-weight:800; color:#10b981;">—</div>
+            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">All closed trades</div>
+          </div>
+          <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.25); border-radius:14px; padding:20px;">
+            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Open Trades</div>
+            <div id="ft-open-count" style="font-size:1.8rem; font-weight:800; color:#60a5fa;">—</div>
+            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Currently active</div>
+          </div>
+          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:14px; padding:20px;">
+            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Winning Trades</div>
+            <div id="ft-wins" style="font-size:1.8rem; font-weight:800; color:#10b981;">—</div>
+            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Profitable closes</div>
+          </div>
+          <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:14px; padding:20px;">
+            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Losing Trades</div>
+            <div id="ft-losses" style="font-size:1.8rem; font-weight:800; color:#ef4444;">—</div>
+            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Loss closes</div>
+          </div>
+          <div style="background:rgba(168,85,247,0.08); border:1px solid rgba(168,85,247,0.25); border-radius:14px; padding:20px;">
+            <div style="color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">$PISO Rewards</div>
+            <div style="font-size:1.8rem; font-weight:800; color:#a855f7;">10 <span style="font-size:0.9rem;">/ trade</span></div>
+            <div style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Per profitable trade</div>
+          </div>
+        </div>
+
+        <!-- Open Trades Table -->
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; overflow:hidden; margin-bottom:20px;">
+          <div style="padding:16px 20px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:10px;">
+            <span style="color:#60a5fa; font-size:1rem;">📊</span>
+            <h3 style="margin:0; font-size:1rem; font-weight:700; color:#fff;">Open Trades</h3>
+            <span style="font-size:0.75rem; color:var(--text-muted); margin-left:auto;">Auto-refresh every 15s · Strategy: PISOStrategy (EMA+RSI)</span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse;">
+              <thead>
+                <tr style="background:rgba(255,255,255,0.03);">
+                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Trade ID</th>
+                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Pair</th>
+                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Strategy</th>
+                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Profit %</th>
+                  <th style="padding:12px 16px; text-align:left; color:var(--text-muted); font-size:0.78rem; font-weight:600; text-transform:uppercase;">Status</th>
+                </tr>
+              </thead>
+              <tbody id="ft-trades-body">
+                <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:28px; font-size:0.9rem;">Waiting for freqtrade bot to connect on port 8180…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- On-Chain Oracle Status + Commands -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; flex-wrap:wrap;">
+          <div style="background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.2); border-radius:14px; padding:20px;">
+            <h4 style="margin:0 0 12px 0; color:#10b981; font-size:0.95rem; font-weight:700;">🔗 PISOFreqtradeOracle.sol</h4>
+            <div id="ft-oracle-status" style="font-size:0.85rem; color:var(--text-secondary); font-family:monospace; margin-bottom:12px;">Checking oracle connection…</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">Chain ID: 2026001 · Reward: 10 PISO/trade · Min profit: 0.10%</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px;">
+            <h4 style="margin:0 0 12px 0; color:#fff; font-size:0.95rem; font-weight:700;">🚀 Quick Start Commands</h4>
+            <pre style="font-size:0.78rem; color:#a3e635; background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; overflow-x:auto; margin:0; line-height:1.6;"># Start bot (dry-run / paper trading)
+python jcode/freqtrade_agent.py --start-bot --dry-run
+
+# Start bridge daemon
+python bridge/freqtrade_bridge.py --dry-run
+
+# Docker (all-in-one)
+docker-compose up freqtrade freqtrade-bridge</pre>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <script src="app.js"></script>
+    <script>
+    // ── Freqtrade Dashboard Panel ─────────────────────────────────────────────
+    const FT_API = 'http://localhost:8180/api/v1';
+    const FT_AUTH = 'Basic ' + btoa('pisobot:changeme');
+
+    async function ftFetch(endpoint) {
+        try {
+            const r = await fetch(FT_API + endpoint, {
+                headers: { 'Authorization': FT_AUTH }
+            });
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return await r.json();
+        } catch(e) {
+            return null;
+        }
+    }
+
+    async function refreshFreqtradePanel() {
+        const statusEl  = document.getElementById('ft-bot-status');
+        const openEl    = document.getElementById('ft-open-count');
+        const profitEl  = document.getElementById('ft-profit-all');
+        const winsEl    = document.getElementById('ft-wins');
+        const lossEl    = document.getElementById('ft-losses');
+        const tableBody = document.getElementById('ft-trades-body');
+        const oracleEl  = document.getElementById('ft-oracle-status');
+
+        // Bot status
+        const ping = await ftFetch('/ping');
+        if (ping) {
+            statusEl.innerHTML = '<span class="pulse-dot green"></span> <span style="color:#10b981;font-weight:700;">ONLINE</span>';
+        } else {
+            statusEl.innerHTML = '<span class="pulse-dot" style="background:#ef4444"></span> <span style="color:#ef4444;font-weight:700;">OFFLINE</span> <small style="color:var(--text-muted);">(start freqtrade on :8180)</small>';
+        }
+
+        // Profit summary
+        const profit = await ftFetch('/profit');
+        if (profit) {
+            const pct = (profit.profit_all_percent || 0).toFixed(2);
+            profitEl.textContent = (pct >= 0 ? '+' : '') + pct + '%';
+            profitEl.style.color = pct >= 0 ? '#10b981' : '#ef4444';
+            winsEl.textContent = profit.winning_trades || 0;
+            lossEl.textContent = profit.losing_trades || 0;
+        }
+
+        // Open trades
+        const status = await ftFetch('/status');
+        if (status && Array.isArray(status)) {
+            openEl.textContent = status.length;
+            if (status.length > 0 && tableBody) {
+                tableBody.innerHTML = status.map(t => `
+                    <tr>
+                        <td style="color:var(--accent-cyan);font-family:monospace;">#${t.trade_id}</td>
+                        <td style="font-weight:600;">${t.pair}</td>
+                        <td style="color:var(--text-secondary);font-size:0.85em;">${t.strategy}</td>
+                        <td style="color:${t.profit_pct >= 0 ? '#10b981' : '#ef4444'};font-weight:700;">${t.profit_pct >= 0 ? '+' : ''}${(t.profit_pct||0).toFixed(2)}%</td>
+                        <td><span style="padding:2px 8px;border-radius:20px;background:rgba(59,130,246,0.15);color:#60a5fa;font-size:0.8em;">OPEN</span></td>
+                    </tr>`);
+            } else if (tableBody) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:20px;">No open trades</td></tr>';
+            }
+        } else if (openEl) {
+            openEl.textContent = '—';
+        }
+
+        // Oracle status (simulated)
+        if (oracleEl) {
+            oracleEl.textContent = 'PISOFreqtradeOracle.sol connected · Chain 2026001';
+        }
+    }
+
+    // Auto-refresh every 15s
+    document.addEventListener('DOMContentLoaded', () => {
+        refreshFreqtradePanel();
+        setInterval(refreshFreqtradePanel, 15000);
+        document.getElementById('ft-refresh-btn')?.addEventListener('click', refreshFreqtradePanel);
+    });
+    </script>
 </body>
 </html>

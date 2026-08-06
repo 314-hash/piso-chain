@@ -92,3 +92,45 @@ services:
     depends_on:
       - validator1
       - explorer
+
+  # 6. Freqtrade Algorithmic Trading Bot (Dry-Run by default)
+  freqtrade:
+    image: freqtradeorg/freqtrade:stable
+    container_name: piso-freqtrade
+    restart: unless-stopped
+    ports:
+      - "8180:8180"   # Freqtrade REST API
+    volumes:
+      - ./config/freqtrade:/freqtrade/user_data/config_custom:ro
+      - ./freqtrade/user_data:/freqtrade/user_data
+    command: >
+      trade
+      --config /freqtrade/user_data/config_custom/piso_config.json
+      --strategy-path /freqtrade/user_data/config_custom
+      --strategy PISOStrategy
+      --logfile /freqtrade/user_data/logs/freqtrade.log
+    environment:
+      - FREQTRADE__EXCHANGE__KEY=${EXCHANGE_KEY:-}
+      - FREQTRADE__EXCHANGE__SECRET=${EXCHANGE_SECRET:-}
+    depends_on:
+      - validator1
+
+  # 7. PISO ↔ Freqtrade Bridge (submits trade proofs to PISOFreqtradeOracle.sol)
+  freqtrade-bridge:
+    image: python:3.11-slim
+    container_name: piso-freqtrade-bridge
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: python bridge/freqtrade_bridge.py
+    environment:
+      - RPC_URL=http://validator1:8545
+      - FREQTRADE_API_URL=http://freqtrade:8180
+      - FREQTRADE_API_USER=${FREQTRADE_API_USER:-pisobot}
+      - FREQTRADE_API_PASSWORD=${FREQTRADE_API_PASSWORD:-changeme}
+      - WORKER_PRIVATE_KEY=${WORKER_PRIVATE_KEY:-}
+      - FREQTRADE_ORACLE_ADDRESS=${FREQTRADE_ORACLE_ADDRESS:-}
+    depends_on:
+      - validator1
+      - freqtrade

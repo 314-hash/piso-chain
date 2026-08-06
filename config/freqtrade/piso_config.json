@@ -1,0 +1,119 @@
+{
+  "max_open_trades": 3,
+  "stake_currency": "USDT",
+  "stake_amount": 100,
+  "tradable_balance_ratio": 0.99,
+  "fiat_display_currency": "USD",
+  "timeframe": "5m",
+  "dry_run": true,
+  "dry_run_wallet": 1000,
+  "cancel_open_orders_on_exit": false,
+
+  "trading_mode": "spot",
+  "margin_mode": "",
+
+  "unfilledtimeout": {
+    "entry": 10,
+    "exit": 30,
+    "exit_timeout_count": 0,
+    "unit": "minutes"
+  },
+
+  "entry_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1,
+    "price_last_balance": 0.0,
+    "check_depth_of_market": {
+      "enabled": false,
+      "bids_to_ask_delta": 1
+    }
+  },
+
+  "exit_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+
+  "exchange": {
+    "name": "binance",
+    "key": "",
+    "secret": "",
+    "ccxt_config": {},
+    "ccxt_async_config": {},
+    "pair_whitelist": [
+      "BTC/USDT",
+      "ETH/USDT",
+      "BNB/USDT",
+      "SOL/USDT",
+      "ADA/USDT"
+    ],
+    "pair_blacklist": [
+      "BNB/BTC"
+    ]
+  },
+
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
+
+  "telegram": {
+    "enabled": false,
+    "token": "",
+    "chat_id": "",
+    "notification_settings": {
+      "status": "silent",
+      "warning": "on",
+      "startup": "off",
+      "entry": "silent",
+      "exit": {
+        "roi": "silent",
+        "emergency_exit": "on",
+        "force_exit": "on",
+        "exit_signal": "silent",
+        "trailing_stop_loss": "on",
+        "stop_loss": "on",
+        "stoploss_on_exchange": "on",
+        "custom_exit": "silent",
+        "partial_exit": "silent"
+      },
+      "entry_cancel": "silent",
+      "exit_cancel": "on",
+      "entry_fill": "off",
+      "exit_fill": "off",
+      "protection_trigger": "off",
+      "protection_trigger_global": "on"
+    }
+  },
+
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "127.0.0.1",
+    "listen_port": 8180,
+    "verbosity": "error",
+    "enable_openapi": true,
+    "jwt_secret_key": "piso_chain_freqtrade_jwt_secret_2026",
+    "ws_token": "piso_ws_token_2026",
+    "CORS_origins": ["http://localhost:8080"],
+    "username": "pisobot",
+    "password": "changeme"
+  },
+
+  "bot_name": "PISO Chain Trading Bot",
+  "initial_state": "running",
+  "force_entry_enable": false,
+  "internals": {
+    "process_throttle_secs": 5
+  },
+
+  "_piso_chain": {
+    "rpc_url": "http://localhost:8545",
+    "chain_id": 2026001,
+    "oracle_contract": "",
+    "worker_address": "",
+    "note": "Set FREQTRADE_ORACLE_ADDRESS and WORKER_PRIVATE_KEY in .env for on-chain proof submission"
+  }
+}
