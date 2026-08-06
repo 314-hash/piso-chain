@@ -1,8 +1,10 @@
 {
   "version": 2,
   "name": "piso-blockchain",
+  "framework": null,
   "cleanUrls": true,
   "outputDirectory": "dashboard",
+
   "headers": [
     {
       "source": "/(.*)",
