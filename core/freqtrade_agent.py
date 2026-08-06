@@ -126,7 +126,8 @@ class FreqtradeAgent:
         if dry_run:
             args.append("--dry-run")
 
-        log.info(f"Starting PISO ↔ Freqtrade bridge: {' '.join(args)}")
+        log.info(f"Starting PISO -> Freqtrade bridge: {' '.join(args)}")
+
         self._bridge_process = subprocess.Popen(args)
         return self._status_response("Bridge started", pid=self._bridge_process.pid, dry_run=dry_run)
 
