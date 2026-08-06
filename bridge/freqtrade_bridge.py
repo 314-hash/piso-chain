@@ -46,7 +46,8 @@ WORKER_PRIVATE_KEY    = os.getenv("WORKER_PRIVATE_KEY", "")
 ORACLE_ADDRESS        = os.getenv("FREQTRADE_ORACLE_ADDRESS", "")
 
 POLL_INTERVAL_SECONDS = int(os.getenv("FREQTRADE_POLL_INTERVAL", "30"))
-LOG_FILE              = "bridge/freqtrade_bridge.log"
+LOG_FILE              = os.path.join(os.path.dirname(os.path.abspath(__file__)), "freqtrade_bridge.log")
+
 
 # Minimal ABI for PISOFreqtradeOracle.submitTradeProof()
 ORACLE_ABI = [
@@ -283,7 +284,8 @@ class FreqtradeBridge:
     Tracks already-submitted trade IDs in a local state file.
     """
 
-    STATE_FILE = "bridge/freqtrade_bridge_state.json"
+    STATE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "freqtrade_bridge_state.json")
+
 
     def __init__(self, freqtrade_client: FreqtradeClient, piso_client: PISOChainClient, dry_run: bool = False):
         self.ft      = freqtrade_client
