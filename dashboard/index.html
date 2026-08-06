@@ -404,12 +404,12 @@
                                 <label>Miner Wallet Address (0x...):</label>
                                 <input type="text" id="pow-input-miner" value="0x90F79bf6EB2c4f870365E785982E1f101E93b906" class="mono-input" />
                             </div>
-                            <div style="display: flex; gap: 12px;" class="margin-top-sm">
-                                <div style="flex: 1;">
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;" class="margin-top-sm">
+                                <div style="flex: 1; min-width: 140px;">
                                     <label>Difficulty Bits (Zero Bits):</label>
                                     <input type="number" id="pow-input-difficulty" value="8" min="4" max="32" class="mono-input" />
                                 </div>
-                                <div style="flex: 1;">
+                                <div style="flex: 1; min-width: 140px;">
                                     <label>Algorithm:</label>
                                     <select id="pow-input-algo" class="mono-input" style="padding: 10px; background: var(--bg-dark); color: #ffffff; border: 1px solid var(--card-border); border-radius: 8px;">
                                         <option value="keccak256">Keccak-256 (EVM Standard)</option>
@@ -425,22 +425,23 @@
                                 <p class="tab-desc font-sm">Click <strong>Start Browser Miner</strong> to solve nonces in your browser tab. Upon finding a solution, submit it to <code>PISOProofOfWork.sol</code>.</p>
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 10px;" class="margin-top">
-                                <div style="display: flex; gap: 10px;">
-                                    <button id="btn-start-pow-miner" class="btn-primary" style="flex: 1; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000000; font-weight: 800;">
+                                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button id="btn-start-pow-miner" class="btn-primary" style="flex: 1; min-width: 140px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000000; font-weight: 800;">
                                         ▶️ Start Browser Miner
                                     </button>
-                                    <button id="btn-stop-pow-miner" class="btn-secondary" style="display: none; flex: 1; background: #ef4444; color: #ffffff;">
+                                    <button id="btn-stop-pow-miner" class="btn-secondary" style="display: none; flex: 1; min-width: 140px; background: #ef4444; color: #ffffff;">
                                         ⏸️ Stop Miner
                                     </button>
-                                    <button id="btn-bench-pow-miner" class="btn-secondary" style="flex: 1;">
+                                    <button id="btn-bench-pow-miner" class="btn-secondary" style="flex: 1; min-width: 120px;">
                                         ⚡ Benchmark H/s
                                     </button>
                                 </div>
-                                <button id="btn-submit-pow-onchain" class="btn-primary" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <button id="btn-submit-pow-onchain" class="btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); width: 100%;">
                                     📜 Submit Proof On-Chain (PISOProofOfWork.sol)
                                 </button>
                             </div>
                         </div>
+
                     </div>
 
                     <!-- Live Mining Log Output Box -->
