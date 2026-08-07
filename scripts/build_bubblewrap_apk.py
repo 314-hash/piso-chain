@@ -45,8 +45,22 @@ def main():
 
     print("\n[+] Bubblewrap TWA Environment Verified successfully!")
     print("[*] To generate the Android APK via Bubblewrap CLI, run:")
-    print("    npx -y @bubblewrap/cli init --manifest=https://piso-blockchain.vercel.app/manifest.json")
-    print("    npx -y @bubblewrap/cli build")
+    print("    cmd.exe /c npx -y @bubblewrap/cli init --manifest=https://piso-blockchain.vercel.app/manifest.json")
+    print("    cmd.exe /c npx -y @bubblewrap/cli build")
+
+    if "--build" in sys.argv or "--init" in sys.argv:
+        print("\n[*] Invoking Google Chrome Labs Bubblewrap CLI...")
+        cmd = ["cmd.exe", "/c", "npx", "-y", "@bubblewrap/cli", "init", "--manifest=https://piso-blockchain.vercel.app/manifest.json", "--skipAssetLinksValidation"]
+        try:
+            res = subprocess.run(cmd, cwd=web_to_app_dir, capture_output=True, text=True)
+            print(res.stdout)
+            if res.returncode == 0:
+                print("[+] Bubblewrap init completed successfully!")
+            else:
+                print(f"[!] Note: Bubblewrap CLI returned code {res.returncode}")
+        except Exception as e:
+            print(f"[!] Exec error: {e}")
 
 if __name__ == "__main__":
     main()
+
