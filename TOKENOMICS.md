@@ -39,20 +39,18 @@ Designed with long-term economic sustainability in mind, PISO Chain combines a *
 ```
        Token Distribution Breakdown:
        ┌─────────────────────────────────────────────────────────┐
-       │ 🔒 40% Validator Staking & Network Security Rewards     │
-       │ 🚀 25% Ecosystem Growth & $10M Developer Grant Program   │
-       │ 🏛️ 15% Protocol Treasury & Liquidity Reserve (DAO)       │
-       │ 🚰 10% Community Airdrop & Incentivized Testnet Faucet   │
-       │ 👥 10% Founders, Core Engineers & Early Contributors   │
+       │ 🏛️ 60% Decentralized Mining Treasury (0x...1004)        │
+       │ 🚀 20% Ecosystem Growth & Developer Grants               │
+       │ 🛡️ 10% Protocol Reserve & DAO Governance Treasury        │
+       │ 👥 10% Core Developers & Ecosystem Foundation          │
        └─────────────────────────────────────────────────────────┘
 ```
 
 | Allocation Category | % of Supply | Token Amount | Lockup & Vesting Schedule |
 | :--- | :---: | :---: | :--- |
-| **Validator Staking Rewards** | **40%** | 40,000,000,000 $PISO | Emitted per block over a 10-year decaying curve. |
-| **Ecosystem & Developer Grants** | **25%** | 25,000,000,000 $PISO | 6-month cliff, followed by 36-month linear monthly vesting. |
-| **Protocol Treasury Reserve** | **15%** | 15,000,000,000 $PISO | Unlocked at TGE, governed exclusively by [`PISOGovernor.sol`](file:///c:/Users/janla/extropianjanus/piso-chain/contracts/PISOGovernor.sol). |
-| **Community Airdrop & Faucet** | **10%** | 10,000,000,000 $PISO | 20% unlocked at TGE, 80% distributed via testnet/faucet over 24 months. |
+| **Decentralized Mining Treasury** | **60%** | 60,000,000,000 $PISO | Locked in [`PISOMiningTreasury.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOMiningTreasury.sol) (`0x...1004`). Emitted via 5M-block halving schedule (5,000 PISO initial block reward). |
+| **Ecosystem & Developer Grants** | **20%** | 20,000,000,000 $PISO | 6-month cliff, followed by 36-month linear monthly vesting. |
+| **Protocol Governance Reserve** | **10%** | 10,000,000,000 $PISO | Governed exclusively by [`PISOGovernor.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOGovernor.sol). |
 | **Founders & Core Team** | **10%** | 10,000,000,000 $PISO | **12-month 0% cliff**, followed by 36-month linear monthly vesting. |
 
 ---

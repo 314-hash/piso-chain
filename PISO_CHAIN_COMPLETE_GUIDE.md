@@ -9,6 +9,9 @@
 
 ### Core Protocol Pillars:
 * **Consensus Engine**: BSC Parlia PoSA / BFT Multi-Signer Engine (3 to 21 Active Consensus Signers).
+* **Decentralized Native Mining Treasury (`0x...1004`)**: Fixed 100 Billion PISO max supply with 0% inflation. Pre-minted 60 Billion PISO native treasury automatically paying block rewards via consensus state transitions (`FinalizeBlock`) with a 5M-block halving schedule (~6 months @ 3s finality).
+* **RefRef Referral & Affiliate Engine (`0x...100D`)**: On-chain referral attribution, unique referral link generator (`PISO-REF-xxx`), campaign reward logic, and automated $PISO reward payouts (`amicalhq/refref`).
+* **Enterprise 8-Repo Open-Source Suite**: Integrated architectures from `K2SOsint/Legendary_OSINT`, `MervinPraison/PraisonAI`, `Gsync/jobsync`, `OWASP/AISVS`, `NoblerWorks-HQ/IRONSIGHT`, `HaxL0p4/L0p4Map`, `opendatalab/MinerU`, and `amicalhq/refref`.
 * **Proof of Work (PoW) & 1-Click Mining**: Keccak-256 target difficulty solver (`PISOProofOfWork.sol` `0x...1003`) & 1-Click 24h automated mining engine.
 * **SLIP-0044 Registered Coin Type**: Standardized HD wallet derivation path `m/44'/2026'/0'/0/0` per SatoshiLabs SLIP-0044 registry.
 * **GeoLibre GIS & DePIN Spatial Oracle**: Powered by `opengeos` GeoLibre & MapLibre GL JS (`PISOValidatorGeoLocation.sol`).
@@ -18,7 +21,7 @@
 * **CopilotKit AG-UI Assistant**: Generative UI component rendering, shared state streaming, and HITL approvals (`PISOCopilotKit.sol` & `jcode/copilot_kit.py`).
 * **Bullshit-Detector Fact-Checker**: Claim-by-claim content verification engine & 0-10 BS score logging (`PISOBullshitDetector.sol` & `jcode/bullshit_detector.py`).
 * **Agent OS Integration**: Powered by `jcode` (`https://github.com/1jehuang/jcode.git`) high-efficiency agent harness.
-* **Total Supply**: `100,000,000,000 PISO` (100 Billion Native Coins).
+* **Total Supply**: `100,000,000,000 PISO` (100 Billion Native Coins, Fixed Zero Inflation).
 * **Block Finality**: `3.0 Seconds` deterministic block production.
 * **EVM Compatibility**: Full support for Solidity `^0.8.20`, Hardhat, Foundry, Ethers.js, Viem, and Web3.py.
 * **Post-Quantum Cryptography**: On-chain PQC vault powered by NIST FIPS 204 (ML-DSA / Dilithium) and W-OTS+ signatures.

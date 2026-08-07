@@ -15,9 +15,9 @@
 
 ## 📌 Executive Summary
 
-**PISO Chain** is a high-throughput, EVM-compatible Layer 1 blockchain network engineered for enterprise finance, high-frequency Web3 applications, and sovereign infrastructure. Built upon an enhanced **BSC Parlia Proof-of-Staked-Authority (PoSA)** BFT consensus engine, PISO Chain delivers **3.0-second deterministic block finality** with sub-cent transaction fees.
+**PISO Chain** is a high-throughput, EVM-compatible Layer 1 blockchain network engineered for enterprise finance, high-frequency Web3 applications, and sovereign infrastructure. Built upon an enhanced **BSC Parlia Proof-of-Staked-Authority (PoSA)** BFT consensus engine, PISO Chain delivers **3.0-second deterministic block finality** with sub-cent transaction fees, zero inflation (100 Billion fixed max supply), and a decentralized **Native PISO Mining Treasury** (`0x...1004`).
 
-PISO Chain solves the looming existential threat of quantum computing through native **NIST FIPS 204 (ML-DSA / Dilithium)** and **Winternitz (W-OTS+) Post-Quantum Cryptography vaults**, while delivering web2-like seamless UX with native **EIP-4337 Account Abstraction**, **Zero-Knowledge Social Recovery**, and an **On-Chain AI Threat Oracle**.
+PISO Chain solves the looming existential threat of quantum computing through native **NIST FIPS 204 (ML-DSA / Dilithium)** and **Winternitz (W-OTS+) Post-Quantum Cryptography vaults**, while delivering web2-like seamless UX with native **EIP-4337 Account Abstraction**, **Zero-Knowledge Social Recovery**, the **Enterprise 8-Repo Open-Source Security Suite** (Legendary OSINT, PraisonAI, JobSync, OWASP AISVS, IRONSIGHT, L0p4Map, MinerU, RefRef), and an **On-Chain AI Threat Oracle**.
 
 ---
 

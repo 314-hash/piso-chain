@@ -69,6 +69,9 @@
                 <a href="#publicapis" class="nav-item" id="nav-publicapis" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(99, 102, 241, 0.15)); border: 1px solid #0ea5e9;">
                     <span class="nav-icon">🌐</span> Public APIs Directory
                 </a>
+                <a href="#enterprise7" class="nav-item" id="nav-enterprise7" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2)); border: 1px solid #a855f7;">
+                    <span class="nav-icon">🚀</span> Enterprise 7-Repo Suite
+                </a>
                 <a href="#faucet" class="nav-item" id="nav-faucet">
                     <span class="nav-icon">🚰</span> Testnet Faucet
                 </a>
@@ -1445,6 +1448,72 @@ logs.forEach(log => console.log(log.args))</pre>
                     </div>
                 </div>
             </section>
+
+            <!-- 🚰 Testnet Faucet & 🏛️ Native Mining Treasury (0x...1004) Section -->
+            <section class="faucet-section" id="faucet">
+                <div class="panel-card" style="border: 1px solid rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.02);">
+                    <div class="panel-header">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <span style="font-size:2rem;">🚰</span>
+                            <div>
+                                <h3 style="margin:0; color:#f59e0b;">Testnet Faucet & 🏛️ Native Mining Treasury</h3>
+                                <p style="margin:4px 0 0 0; color:var(--text-secondary); font-size:0.85rem;">System Contract Address: <code style="color:#f59e0b; font-family:var(--font-mono);">0x0000000000000000000000000000000000001004</code></p>
+                            </div>
+                        </div>
+                        <span class="badge-tag gold">60 Billion PISO Reserve (Zero Inflation)</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 16px;">
+                        <!-- Faucet Drip Interface -->
+                        <div style="background: var(--bg-dark); padding: 18px; border-radius: 10px; border: 1px solid var(--card-border);">
+                            <h4 style="color: #f59e0b; margin-top:0; margin-bottom: 8px;">🚰 Claim 1 Native PISO Testnet Coin</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px;">On-chain rate-limited dispenser powered by system treasury. Limit: 1 PISO / 24 hours per wallet.</p>
+                            
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <label style="font-size: 0.8rem; color: #cbd5e1; font-weight: 600; display:block; margin-bottom: 6px;">Recipient Wallet Address:</label>
+                                <input type="text" id="faucet-recipient-input" placeholder="0x70997970C51812dc3A010C7d01b50e0d17dc79C8" class="mono-input" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #374151; background: #0f172a; color: #fff; font-size: 0.85rem;">
+                            </div>
+                            <button onclick="claimFaucetDrip()" style="width:100%; background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                                🚰 Drip 1.0 PISO to Recipient
+                            </button>
+                            <div id="faucet-drip-output" style="margin-top: 12px; font-family: var(--font-mono); font-size: 0.8rem; background: #000; padding: 10px; border-radius: 6px; color: #fde047;">
+                                Ready to claim testnet PISO coins...
+                            </div>
+                        </div>
+
+                        <!-- Treasury Status Telemetry -->
+                        <div style="background: var(--bg-dark); padding: 18px; border-radius: 10px; border: 1px solid var(--card-border);">
+                            <h4 style="color: var(--accent-cyan); margin-top:0; margin-bottom: 8px;">🏛️ Mining Treasury Telemetry</h4>
+                            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem;">
+                                <div style="display:flex; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px;">
+                                    <span style="color: var(--text-secondary);">Treasury Precompile:</span>
+                                    <span style="font-family: var(--font-mono); color: #38bdf8;">0x...1004</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px;">
+                                    <span style="color: var(--text-secondary);">Reserve Allocation:</span>
+                                    <span style="font-weight: 700; color: #ffd700;">60,000,000,000 PISO</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px;">
+                                    <span style="color: var(--text-secondary);">Current Block Reward:</span>
+                                    <span style="font-weight: 700; color: #10b981;">5,000 PISO / block</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px;">
+                                    <span style="color: var(--text-secondary);">Halving Interval:</span>
+                                    <span>Every 5,000,000 blocks (~6 mos)</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; padding-top: 2px;">
+                                    <span style="color: var(--text-secondary);">Inflation Rate:</span>
+                                    <span style="color: #4ade80; font-weight: 700;">0.00% (Fixed Cap 100B)</span>
+                                </div>
+                            </div>
+                            <button onclick="pollTreasuryStatus()" style="width:100%; margin-top: 14px; background: rgba(6, 182, 212, 0.15); border: 1px solid var(--accent-cyan); color: #38bdf8; padding: 8px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                                🔄 Refresh Treasury Metrics
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Open-Source Blockchain Ecosystem Integration Showcase -->
             <section class="opensource-section" id="section-opensource">
                 <div class="panel-card">
@@ -1756,6 +1825,167 @@ docker-compose up freqtrade freqtrade-bridge</pre>
           </div>
         </div>
 
+    </section>
+
+    <!-- ── Enterprise 7-Repo AI & Security Suite Section ──────────────────────────────── -->
+    <section class="dashboard-section" id="enterprise7-section">
+      <div class="section-header" style="border-bottom: 2px solid #a855f7; padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:2rem;">🚀</span>
+          <div>
+            <h2 style="margin:0; background: linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Enterprise AI & Security Suite</h2>
+            <p style="margin:4px 0 0 0; color:var(--text-secondary); font-size:0.9rem;">Integrated Open-Source Stack: OSINT, PraisonAI, JobSync, OWASP AISVS, IRONSIGHT, L0p4Map, MinerU, RefRef, Nethermind</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compact Category Tab Pills -->
+      <div class="ent-tab-bar">
+        <button class="ent-tab-btn active" onclick="switchEntCategory('all', this)">🌐 All Modules (9)</button>
+        <button class="ent-tab-btn" onclick="switchEntCategory('ai', this)">🤖 AI & Agent OS (3)</button>
+        <button class="ent-tab-btn" onclick="switchEntCategory('sec', this)">🛡️ Threat & Security (4)</button>
+        <button class="ent-tab-btn" onclick="switchEntCategory('exec', this)">⚡ Client & Growth (2)</button>
+      </div>
+
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+        <!-- 1. Legendary OSINT Card -->
+        <div class="card ent-suite-card" data-category="sec" style="border: 1px solid rgba(168,85,247,0.3); background: rgba(168,85,247,0.03);">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#a855f7; margin:0;">🕵️ Legendary OSINT Engine</h3>
+            <span class="badge" style="background:#a855f7; color:#fff;">K2SOsint</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">Cryptographic Forensic Tracing, IP/Domain Recon, and Dark Web Leak Correlation.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <input type="text" id="osint-input" placeholder="Enter EVM Address or Domain (e.g. 0x7099...)" style="flex:1; padding:8px; border-radius:6px; border:1px solid #374151; background:#111827; color:#fff; font-size:0.85rem;">
+            <button onclick="runOSINTInvestigation()" style="background:#a855f7; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-weight:600; cursor:pointer;">Investigate</button>
+          </div>
+          <div id="osint-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#a7f3d0;">
+            Ready to perform OSINT forensics...
+          </div>
+        </div>
+
+        <!-- 2. PraisonAI Multi-Agent Card -->
+        <div class="card ent-suite-card" data-category="ai" style="border: 1px solid rgba(236,72,153,0.3); background: rgba(236,72,153,0.03);">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#ec4899; margin:0;">🌸 PraisonAI Multi-Agent</h3>
+            <span class="badge" style="background:#ec4899; color:#fff;">MervinPraison</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">Autonomous Agent Teams (Researcher, Auditor, Trader) with Self-Reflection Loops.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <input type="text" id="praison-prompt" placeholder="Orchestrate agent task..." style="flex:1; padding:8px; border-radius:6px; border:1px solid #374151; background:#111827; color:#fff; font-size:0.85rem;" value="Audit smart contract reentrancy & optimize strategy">
+            <button onclick="runPraisonOrchestration()" style="background:#ec4899; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-weight:600; cursor:pointer;">Orchestrate</button>
+          </div>
+          <div id="praison-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#fbcfe8;">
+            Ready for multi-agent workflow...
+          </div>
+        </div>
+
+        <!-- 3. JobSync Worker Scheduler Card -->
+        <div class="card ent-suite-card" data-category="ai" style="border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.03);">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#10b981; margin:0;">⏱️ JobSync Scheduler</h3>
+            <span class="badge" style="background:#10b981; color:#fff;">Gsync</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">Asynchronous AI Agent Task Scheduler & Node Capacity Matchmaker.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <button onclick="refreshJobSyncTasks()" style="background:#10b981; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">Fetch Active Job Tasks</button>
+          </div>
+          <div id="jobsync-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#6ee7b7;">
+            Ready to fetch background jobs...
+          </div>
+        </div>
+
+        <!-- 4. OWASP AISVS Guardrail Card -->
+        <div class="card ent-suite-card" data-category="sec" style="border: 1px solid rgba(239,68,68,0.3); background: rgba(239,68,68,0.03);">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#ef4444; margin:0;">🔒 OWASP AISVS Shield</h3>
+            <span class="badge" style="background:#ef4444; color:#fff;">OWASP</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">AI Security Verification Standard (L1-L3), Prompt Injection & Execution Budget Guardrails.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <button onclick="runAISVSAudit()" style="background:#ef4444; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">Run 14-Chapter Compliance Audit</button>
+          </div>
+          <div id="aisvs-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#fca5a5;">
+            Ready for AISVS security audit...
+          </div>
+        </div>
+
+        <!-- 5. IRONSIGHT Command Center Card -->
+        <div class="card ent-suite-card" data-category="sec" style="border: 1px solid rgba(59,130,246,0.3); background: rgba(59,130,246,0.03);">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#3b82f6; margin:0;">👁️ IRONSIGHT Command</h3>
+            <span class="badge" style="background:#3b82f6; color:#fff;">NoblerWorks</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">Real-Time Threat Intelligence & Validator Node Situational Awareness Stream.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <button onclick="fetchIRONSIGHTTelemetry()" style="background:#3b82f6; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">Poll Live Telemetry</button>
+          </div>
+          <div id="ironsight-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#93c5fd;">
+            Ready for live telemetry stream...
+          </div>
+        </div>
+
+        <!-- 6. L0p4Map Scanner Card -->
+        <div class="card ent-suite-card" data-category="sec" style="border: 1px solid rgba(245,158,11,0.3); background: rgba(245,158,11,0.03);">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#f59e0b; margin:0;">🌐 L0p4Map Topology</h3>
+            <span class="badge" style="background:#f59e0b; color:#fff;">HaxL0p4</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">P2P Validator Network Scanner, Topology Matrix & Vulners CVE Correlation.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <button onclick="runL0p4MapScan()" style="background:#f59e0b; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">Scan Network & Build Graph</button>
+          </div>
+          <div id="l0p4map-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#fde047;">
+            Ready to scan P2P validator network...
+          </div>
+        </div>
+
+        <!-- 7. MinerU Document Parser Card -->
+        <div class="card ent-suite-card" data-category="ai" style="border: 1px solid rgba(6,182,212,0.3); background: rgba(6,182,212,0.03); grid-column: span 1;">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#06b6d4; margin:0;">📄 MinerU Whitepaper Parser</h3>
+            <span class="badge" style="background:#06b6d4; color:#fff;">opendatalab</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">PDF Document Parsing, LaTeX Formula Extraction & Structured RAG Markdown Pipeline.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <button onclick="runMinerUParse()" style="background:#06b6d4; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">Parse Whitepaper PDF</button>
+          </div>
+          <div id="mineru-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#67e8f9;">
+            Ready to parse technical PDF docs...
+          </div>
+        </div>
+
+        <!-- 8. RefRef Referral & Affiliate Card -->
+        <div class="card ent-suite-card" data-category="exec" style="border: 1px solid rgba(34,197,94,0.3); background: rgba(34,197,94,0.03); grid-column: span 1;">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#22c55e; margin:0;">🤝 RefRef Referral & Affiliate</h3>
+            <span class="badge" style="background:#22c55e; color:#fff;">amicalhq</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">On-Chain Referral Attribution, Unique Referral Link Generator & $PISO Reward Payout Engine.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <button onclick="generateReferralCode()" style="background:#22c55e; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">Generate Code</button>
+            <button onclick="trackReferralConversion()" style="background:rgba(34,197,94,0.2); border:1px solid #22c55e; color:#86efac; padding:8px 12px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">Log Conversion</button>
+          </div>
+          <div id="refref-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#86efac;">
+            Ready to manage referral campaigns...
+          </div>
+        </div>
+
+        <!-- 9. Nethermind C# Execution Client Card -->
+        <div class="card ent-suite-card" data-category="exec" style="border: 1px solid rgba(14,165,233,0.3); background: rgba(14,165,233,0.03); grid-column: span 1;">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="color:#0ea5e9; margin:0;">⚡ Nethermind C# Client</h3>
+            <span class="badge" style="background:#0ea5e9; color:#fff;">NethermindEth</span>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;">High-Performance C# / .NET 8 Execution Client, Snap/Warp Sync & EVM Tracer.</p>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <button onclick="fetchNethermindStatus()" style="background:#0ea5e9; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">Node Telemetry</button>
+            <button onclick="runNethermindTrace()" style="background:rgba(14,165,233,0.2); border:1px solid #0ea5e9; color:#38bdf8; padding:8px 12px; border-radius:6px; font-weight:600; cursor:pointer; flex:1;">EVM Gas Trace</button>
+          </div>
+          <div id="nethermind-output" style="margin-top:12px; font-family:var(--font-mono); font-size:0.8rem; background:#000; padding:10px; border-radius:6px; max-height:160px; overflow-y:auto; color:#38bdf8;">
+            Ready to monitor Nethermind C# node...
+          </div>
+        </div>
       </div>
     </section>
 

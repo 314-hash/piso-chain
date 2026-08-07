@@ -67,10 +67,19 @@ indexer.db
 # Freqtrade Bot Data & Logs
 *.sqlite
 *.sqlite3
+*.sqlite-shm
+*.sqlite-wal
 config/freqtrade/logs/
 config/freqtrade/data/
 config/freqtrade/backtest_results/
 freqtrade/user_data/
+
+# Nethermind C# & Execution Node Data
+piso_data/
+nethermind-data/
+bin/
+obj/
+*.user
 
 # Logs & Temporary / OS Files
 *.log
@@ -86,4 +95,5 @@ Thumbs.db
 agent/
 PISO Chain Mainnet Studio/
 web-to-app/
+
 

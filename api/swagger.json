@@ -1,13 +1,9 @@
-"""
-OpenAPI 3.0 Specification for PISO Chain REST API.
-"""
-
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "PISO Chain REST API",
-    "description": "Standard REST API for Wallet Management, Validator Operations, and Network Diagnostics.",
-    "version": "1.0.0"
+    "title": "PISO Chain Enterprise REST API",
+    "description": "Standard & Enterprise REST API for Wallet Management, Validator Operations, Legendary OSINT, PraisonAI, JobSync, OWASP AISVS, IRONSIGHT, L0p4Map, and MinerU.",
+    "version": "1.3.0"
   },
   "paths": {
     "/api/wallet/create": {
@@ -64,35 +60,156 @@ OpenAPI 3.0 Specification for PISO Chain REST API.
         }
       }
     },
-    "/api/wallet/send": {
+    "/api/v1/osint/investigate": {
       "post": {
-        "summary": "Broadcast Raw Transaction",
+        "summary": "Legendary OSINT Investigation & Forensic Tracing",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "target": { "type": "string", "example": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8" }
+                }
+              }
+            }
+          }
+        },
         "responses": {
-          "200": { "description": "Transaction submitted" }
+          "200": { "description": "OSINT investigation report generated" }
         }
       }
     },
-    "/api/validator/create": {
+    "/api/v1/praison/orchestrate": {
       "post": {
-        "summary": "Generate Isolated Validator Key",
+        "summary": "PraisonAI Multi-Agent Workflow Execution",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": { "type": "string", "example": "Perform automated multi-agent audit and trading strategy analysis" }
+                }
+              }
+            }
+          }
+        },
         "responses": {
-          "200": { "description": "Validator key created" }
+          "200": { "description": "Multi-agent workflow execution result" }
         }
       }
     },
-    "/api/node/status": {
+    "/api/v1/jobsync/tasks": {
       "get": {
-        "summary": "Get Node Status & Health",
+        "summary": "JobSync Asynchronous Task Listing & Queue Stats",
         "responses": {
-          "200": { "description": "Node status object" }
+          "200": { "description": "List of scheduled tasks and queue statistics" }
         }
       }
     },
-    "/api/network/info": {
-      "get": {
-        "summary": "Get Network Information",
+    "/api/v1/aisvs/verify": {
+      "post": {
+        "summary": "OWASP AISVS Security Verification Standard Audit",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": { "type": "string", "example": "Check prompt injection safety" }
+                }
+              }
+            }
+          }
+        },
         "responses": {
-          "200": { "description": "Network info" }
+          "200": { "description": "OWASP AISVS security audit report" }
+        }
+      }
+    },
+    "/api/v1/ironsight/telemetry": {
+      "get": {
+        "summary": "IRONSIGHT Situational Awareness Telemetry Stream",
+        "responses": {
+          "200": { "description": "Real-time threat feeds and node operational telemetry" }
+        }
+      }
+    },
+    "/api/v1/l0p4map/scan": {
+      "post": {
+        "summary": "L0p4Map Port Scan & Topology Matrix",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "target": { "type": "string", "example": "127.0.0.1" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Port scan results and network topology" }
+        }
+      }
+    },
+    "/api/v1/mineru/parse": {
+      "post": {
+        "summary": "MinerU Technical PDF Document Parser & LaTeX OCR",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": { "type": "string", "example": "Whitepaper PDF text content" },
+                  "filename": { "type": "string", "example": "PISO_WHITEPAPER.pdf" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "RAG-ready Markdown and JSON extraction" }
+        }
+      }
+    },
+    "/api/v1/refref/stats": {
+      "get": {
+        "summary": "RefRef Referral & Affiliate Engine Statistics",
+        "responses": {
+          "200": { "description": "Referral program metrics and active codes" }
+        }
+      }
+    },
+    "/api/v1/refref/code/generate": {
+      "post": {
+        "summary": "Generate Unique Referral Code",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "referrer": { "type": "string", "example": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Referral code record created" }
+        }
+      }
+    },
+    "/api/v1/nethermind/status": {
+      "get": {
+        "summary": "Nethermind C# Execution Client Telemetry",
+        "responses": {
+          "200": { "description": "Nethermind C# node health, Snap/Warp sync metrics, and C# GC stats" }
         }
       }
     }

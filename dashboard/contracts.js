@@ -3,7 +3,8 @@
  * Provides live Read/Write contract interaction, state querying, and ABI inspection for all 11 System Contracts.
  */
 
-const RPC_ENDPOINT = "https://piso-rpc-dev.loca.lt";
+const RPC_ENDPOINT = "http://127.0.0.1:8545";
+const RPC_REMOTE_ENDPOINT = "https://piso-rpc-dev.loca.lt";
 
 const CHAIN_ID = 2026001;
 
@@ -46,8 +47,17 @@ const SYSTEM_CONTRACTS = [
         writeMethods: ["createChallenge(bytes32 challengeHash, uint256 targetDifficulty)", "submitWork(uint256 challengeId, uint256 nonce)"]
     },
     {
-        name: "PISOFaucet",
+        name: "PISOMiningTreasury",
         address: "0x0000000000000000000000000000000000001004",
+        category: "Consensus Treasury & Faucet Vault",
+        badge: "60B PISO Reserve",
+        desc: "Decentralized pre-minted native PISO mining treasury and faucet reserve holding 60 Billion PISO (60% total max supply). Zero inflation, protocol consensus payouts.",
+        readMethods: ["getTreasuryBalance()", "calculateBlockReward(uint256)", "getHalvingInfo(uint256)", "getTreasuryStats(uint256)"],
+        writeMethods: ["Consensus Block Finalization Hook (state.SubBalance)"]
+    },
+    {
+        name: "PISOFaucet",
+        address: "0x0000000000000000000000000000000000001005",
         category: "Token Dispenser",
         badge: "Testnet Faucet",
         desc: "On-chain rate-limited testnet faucet dispensing 1 PISO coin per recipient wallet every 24 hours.",
@@ -56,7 +66,7 @@ const SYSTEM_CONTRACTS = [
     },
     {
         name: "PISOStaking",
-        address: "0x0000000000000000000000000000000000001004",
+        address: "0x0000000000000000000000000000000000001006",
         category: "Liquid Delegation",
         badge: "Staking",
         desc: "Native liquid staking delegation protocol allowing PISO coin holders to delegate stake to validators and earn block fees.",
@@ -65,7 +75,7 @@ const SYSTEM_CONTRACTS = [
     },
     {
         name: "PISOGovernor",
-        address: "0x0000000000000000000000000000000000001005",
+        address: "0x0000000000000000000000000000000000001007",
         category: "DAO Governance",
         badge: "On-Chain DAO",
         desc: "On-chain DAO governance protocol for proposing, voting on, and executing network parameter upgrades and treasury disbursements.",
@@ -116,6 +126,15 @@ const SYSTEM_CONTRACTS = [
         desc: "Guardian multi-sig key rotation and smart contract account recovery engine for lost private key restoration.",
         readMethods: ["getGuardians(address)", "recoveryThreshold(address)"],
         writeMethods: ["initiateRecovery(address account, address newOwner)"]
+    },
+    {
+        name: "PISORefRefReferral",
+        address: "0x000000000000000000000000000000000000100D",
+        category: "Referral & Affiliate Engine",
+        badge: "amicalhq/refref",
+        desc: "Decentralized referral attribution, unique code generator, conversion proof logger, and automated $PISO reward dispenser.",
+        readMethods: ["referralCodes(string)", "conversionProofs(bytes32)", "totalConversionsTracked()"],
+        writeMethods: ["registerReferralCode(string code, uint256 campaignId)", "logConversion(bytes32 id, string code, address user, uint256 reward, bytes32 txHash)"]
     }
 ];
 

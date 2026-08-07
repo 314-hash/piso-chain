@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  nethermind-node:
+    image: nethermindeth/nethermind:latest
+    container_name: piso-nethermind-node
+    restart: unless-stopped
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+      - "30303:30303"
+    volumes:
+      - ../config/nethermind_piso_chainspec.json:/nethermind/chainspec/piso.json
+      - nethermind-data:/nethermind/data
+    command: >
+      --Init.ChainSpecPath=/nethermind/chainspec/piso.json
+      --Init.WebSocketsEnabled=true
+      --Network.DiscoveryPort=30303
+      --JsonRpc.Enabled=true
+      --JsonRpc.Host=0.0.0.0
+      --JsonRpc.Port=8545
+      --JsonRpc.EnabledModules=[Eth,Subscribe,Net,Web3,Trace,TxPool]
+
+volumes:
+  nethermind-data:

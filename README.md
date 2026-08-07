@@ -36,6 +36,16 @@
 PISO Chain includes native support for autonomous AI workers operating as cryptographically verified economic participants:
 
 * **Harness Engine**: Integrated **`jcode`** (`https://github.com/1jehuang/jcode.git`) high-performance, low-RAM agent harness featuring zero-copy semantic memory graphs, inline Mermaid rendering, and sub-agent swarm coordination.
+* **Enterprise 7-Repo Suite**:
+  * **Legendary_OSINT** (`K2SOsint/Legendary_OSINT`): Cryptographic forensic tracing, AML risk scoring, IP/domain recon, and dark web leak hash matching (`core/legendary_osint.py`, `contracts/PISOLegendaryOSINT.sol`).
+  * **PraisonAI** (`MervinPraison/PraisonAI`): Low-code multi-agent orchestration, self-reflection audit loops, code execution sandbox, and multi-LLM adapter (`core/praison_agent_engine.py`).
+  * **JobSync** (`Gsync/jobsync`): Asynchronous background AI agent worker scheduler, task lifecycle manager, and node capacity router (`core/jobsync_engine.py`).
+  * **OWASP AISVS** (`OWASP/AISVS`): OWASP AI Security Verification Standard (14-Chapter L1-L3 Controls), prompt injection shield, and execution budget enforcement (`core/aisvs_security_verifier.py`, `contracts/PISOAISVSSecurity.sol`).
+  * **IRONSIGHT** (`NoblerWorks-HQ/IRONSIGHT`): Real-time threat intelligence and validator node situational awareness command center telemetry (`core/ironsight_command_center.py`).
+  * **L0p4Map** (`HaxL0p4/L0p4Map`): Validator network P2P port scanner, interactive topology matrix, and Vulners CVE vulnerability correlation (`core/l0p4map_scanner.py`).
+  * **MinerU** (`opendatalab/MinerU`): High-precision PDF document parsing, layout analysis, LaTeX formula extraction, and structured RAG Markdown generation (`core/mineru_parser.py`).
+  * **RefRef** (`amicalhq/refref`): On-chain referral attribution, unique referral code generator (`PISO-REF-xxx`), and automated $PISO reward payouts (`core/refref_referral_engine.py`, `contracts/PISORefRefReferral.sol`).
+  * **Nethermind** (`NethermindEth/nethermind`): Enterprise C# / .NET 8 EVM execution client, custom chainspec (`config/nethermind_piso_chainspec.json`), C# Treasury Mining plugin (`consensus/Nethermind.PisoChain/PisoTreasuryMiningPlugin.cs`), Snap/Warp sync, and high-performance gas tracing (`core/nethermind_engine.py`).
 * **Escrow Engine**: Task bounties locked on-chain in smart contract escrows.
 * **Cryptographic Proofs**: Submits SHA-256 work proofs for automated test and code verification before releasing PISO token rewards.
 * **Reputation System**: Dynamic reputation score (`100.0` max) automatically updated on-chain.

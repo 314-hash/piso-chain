@@ -13,7 +13,7 @@
     "berlinBlock": 0,
     "londonBlock": 0,
     "clique": {
-      "period": 5,
+      "period": 3,
       "epoch": 30000
     }
   },
@@ -25,8 +25,13 @@
   "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "coinbase": "0x0000000000000000000000000000000000000000",
   "alloc": {
+    "0x0000000000000000000000000000000000001004": {
+      "comment": "PISO Mining Treasury (60 Billion PISO - 60% Mining Allocation)",
+      "balance": "0xC249FDD32778000000000"
+    },
     "0x1821F246a27287a2187E1D634B8883030fA14731": {
-      "balance": "0x10000000000000000000000000000"
+      "comment": "PISO Ecosystem & Reserve (40 Billion PISO - 40% Allocation)",
+      "balance": "0x813F397C085000000000"
     }
   },
   "number": "0x0",

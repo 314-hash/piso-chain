@@ -1,7 +1,7 @@
 # 📜 PISO Chain Whitepaper
 ### *A High-Performance, Post-Quantum Proof-of-Staked-Authority Layer 1 Blockchain with Native Account Abstraction, Zero-Knowledge Privacy, and PISO Agent OS*
 
-> **Version 1.5.0 | August 2026**  
+> **Version 1.6.0 | August 2026**  
 > **Authors**: PISO Chain Core Protocol Engineers & Advisory Board ([`314-hash/piso-chain`](https://github.com/314-hash/piso-chain))  
 > **Official Website**: [`https://piso-blockchain.vercel.app/`](https://piso-blockchain.vercel.app/) | [`http://localhost:8080`](http://localhost:8080)  
 > **Public RPC**: `https://piso-rpc-dev.loca.lt` | `http://localhost:8545`  
@@ -12,13 +12,15 @@
 
 As distributed ledger technology transitions from experimental adoption to mission-critical enterprise financial infrastructure and autonomous AI worker economies, traditional Layer 1 networks face fundamental challenges: escalating gas fees, slow transaction finality, vulnerable key management paradigms, and impending cryptographic obsolescence driven by quantum computing. 
 
-**PISO Chain** addresses these systemic limitations by introducing an enterprise-grade, EVM-compatible Layer 1 blockchain powered by **BSC Parlia Proof-of-Staked-Authority (PoSA)** consensus and the **PISO Agent OS Autonomous AI Worker Ecosystem**. Engineered for **3.0-second block finality**, near-zero transaction overhead, and **100 Billion $PISO** genesis economic capacity, PISO Chain natively integrates five core breakthroughs:
+**PISO Chain** addresses these systemic limitations by introducing an enterprise-grade, EVM-compatible Layer 1 blockchain powered by **BSC Parlia Proof-of-Staked-Authority (PoSA)** consensus and the **PISO Agent OS Autonomous AI Worker Ecosystem**. Engineered for **3.0-second block finality**, near-zero transaction overhead, and **100 Billion $PISO** genesis economic capacity, PISO Chain natively integrates seven core breakthroughs:
 
-1. **NIST FIPS 204 Post-Quantum Cryptography (PQC)**: On-chain lattice-based (ML-DSA / Dilithium) and Winternitz (W-OTS+) cryptographic key vaults ([`PISOQuantumSecurity.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOQuantumSecurity.sol) at `0x...1002`) protecting user assets against quantum decryption vectors.
-2. **Freqtrade Algorithmic Proof-of-Work Oracle & Yield Engine**: Native integration of automated trading worker nodes ([`PISOFreqtradeOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOFreqtradeOracle.sol) & [`bridge/freqtrade_bridge.py`](file:///c:/Users/janla/piso-chain/piso-chain/bridge/freqtrade_bridge.py)) submitting SHA-256 verified trade proofs to earn native $PISO token rewards.
-3. **PISO Agent OS & Autonomous AI Worker Network**: Integrated **`jcode`** (`https://github.com/1jehuang/jcode.git`) RAM-efficient AI agent harness enabling cryptographically verified, on-chain task escrows, SHA-256 work proof submissions, and dynamic agent reputation scoring.
-4. **Native EIP-4337 Account Abstraction**: On-chain Paymaster liquidity pools ([`PISOPaymaster.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPaymaster.sol)) enabling gasless user onboarding and automated transaction sponsorship.
-5. **Zero-Knowledge Privacy Social Recovery & DePIN Spatial Oracle**: Zero-Knowledge Merkle proof verification ([`PISOZKRecovery.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOZKRecovery.sol)) and GeoLibre GIS location oracle ([`PISOValidatorGeoLocation.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOValidatorGeoLocation.sol)).
+1. **Decentralized Native Mining Treasury System (`PISOMiningTreasury.sol` at `0x...1004`)**: Fixed 100 Billion PISO supply with 0% inflation. Pre-minted 60 Billion PISO native treasury automatically paying block rewards via consensus state transitions (`FinalizeBlock`) with a 5M-block halving schedule (~6 months @ 3s finality).
+2. **NIST FIPS 204 Post-Quantum Cryptography (PQC)**: On-chain lattice-based (ML-DSA / Dilithium) and Winternitz (W-OTS+) cryptographic key vaults ([`PISOQuantumSecurity.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOQuantumSecurity.sol) at `0x...1002`) protecting user assets against quantum decryption vectors.
+3. **Enterprise 8-Repo Open-Source Security & AI Suite**: Integrated architectures from `K2SOsint/Legendary_OSINT`, `MervinPraison/PraisonAI`, `Gsync/jobsync`, `OWASP/AISVS`, `NoblerWorks-HQ/IRONSIGHT`, `HaxL0p4/L0p4Map`, `opendatalab/MinerU`, and `amicalhq/refref` (`PISORefRefReferral.sol` at `0x...100D`).
+4. **Freqtrade Algorithmic Proof-of-Work Oracle & Yield Engine**: Native integration of automated trading worker nodes ([`PISOFreqtradeOracle.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOFreqtradeOracle.sol) & [`bridge/freqtrade_bridge.py`](file:///c:/Users/janla/piso-chain/piso-chain/bridge/freqtrade_bridge.py)) submitting SHA-256 verified trade proofs to earn native $PISO token rewards.
+5. **PISO Agent OS & Autonomous AI Worker Network**: Integrated **`jcode`** (`https://github.com/1jehuang/jcode.git`) RAM-efficient AI agent harness enabling cryptographically verified, on-chain task escrows, SHA-256 work proof submissions, and dynamic agent reputation scoring.
+6. **Native EIP-4337 Account Abstraction**: On-chain Paymaster liquidity pools ([`PISOPaymaster.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOPaymaster.sol)) enabling gasless user onboarding and automated transaction sponsorship.
+7. **Zero-Knowledge Privacy Social Recovery & DePIN Spatial Oracle**: Zero-Knowledge Merkle proof verification ([`PISOZKRecovery.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOZKRecovery.sol)) and GeoLibre GIS location oracle ([`PISOValidatorGeoLocation.sol`](file:///c:/Users/janla/piso-chain/piso-chain/contracts/PISOValidatorGeoLocation.sol)).
 
 
 This whitepaper details the mathematical, architectural, economic, agentic, and security foundations of the PISO Chain protocol.

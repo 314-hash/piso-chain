@@ -2137,6 +2137,126 @@ code, pre, .mono, .address-value, .pqc-key-box, .shamir-share-box, .rpc-output-b
     }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 🚀 Mainnet Responsive UI & Mobile Touch Optimization                      */
+/* ─────────────────────────────────────────────────────────────────────────── */
+button, input, select, textarea, .nav-item, .btn-primary {
+    min-height: 44px;
+    touch-action: manipulation;
+}
+
+code, pre, .terminal-output, [id$="-output"] {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
+.grid-responsive-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 12px !important;
+    }
+
+    .top-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+        padding: 12px !important;
+    }
+
+    .header-top-row {
+        display: flex !important;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .search-bar-container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .card {
+        padding: 14px !important;
+    }
+
+    .network-status-badge {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 📱 Compact Enterprise Tab Hub Styles                                      */
+/* ─────────────────────────────────────────────────────────────────────────── */
+.ent-tab-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ent-tab-bar::-webkit-scrollbar {
+    height: 4px;
+}
+
+.ent-tab-bar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.ent-tab-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ent-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.ent-tab-btn.active {
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+
+
 
 
 

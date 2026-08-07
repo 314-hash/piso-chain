@@ -2,6 +2,23 @@
 
 All notable changes to the PISO Chain Protocol are documented in this file.
 
+## [1.6.0] - Treasury Mining System, Enterprise 8-Repo Suite & RefRef Integration
+
+### Added
+- **Treasury-Based Native Coin Mining System (`contracts/PISOMiningTreasury.sol` @ `0x...1004`, `core/treasury_mining.py`, `docs/TREASURY_MINING_SPECIFICATION.md`)**: Decentralized pre-minted native PISO mining treasury and faucet reserve holding 60 Billion PISO (60% total max supply). Zero inflation, 0 additional minting, 100 Billion fixed supply forever.
+- **Protocol Consensus Payout Engine**: In-client state transition hook (`FinalizeBlock`) that atomically deducts from Treasury and transfers native PISO to `block.coinbase`. Includes 5M-block halving schedule (5,000 PISO initial block reward), atomic reorg rollback protection, and tx-fee-only transition upon treasury depletion.
+- **Production Go Client Patches**: Client state transition patches for Geth/BSC Parlia (`consensus/consensus_patch_geth_bsc.go`) and Polygon Edge (`consensus/consensus_patch_polygon_edge.go`).
+- **RefRef Referral & Affiliate Engine (`amicalhq/refref`, `core/refref_referral_engine.py`, `contracts/PISORefRefReferral.sol` @ `0x...100D`)**: On-chain referral attribution, unique referral link generator (`PISO-REF-xxx`), campaign reward logic, and automated $PISO reward payouts.
+- **Enterprise 7-Repo Open-Source Security Suite**:
+  - **Legendary_OSINT** (`K2SOsint/Legendary_OSINT`): Cryptographic forensic tracing, AML risk scoring, IP/domain recon, and dark web leak hash matching (`core/legendary_osint.py`, `contracts/PISOLegendaryOSINT.sol`).
+  - **PraisonAI** (`MervinPraison/PraisonAI`): Low-code multi-agent orchestration, self-reflection audit loops, code execution sandbox, and multi-LLM adapter (`core/praison_agent_engine.py`).
+  - **JobSync** (`Gsync/jobsync`): Asynchronous background AI agent worker scheduler, task lifecycle manager, and node capacity router (`core/jobsync_engine.py`).
+  - **OWASP AISVS** (`OWASP/AISVS`): OWASP AI Security Verification Standard (14-Chapter L1-L3 Controls), prompt injection shield, and execution budget enforcement (`core/aisvs_security_verifier.py`, `contracts/PISOAISVSSecurity.sol`).
+  - **IRONSIGHT** (`NoblerWorks-HQ/IRONSIGHT`): Real-time threat intelligence and validator node situational awareness command center telemetry (`core/ironsight_command_center.py`).
+  - **L0p4Map** (`HaxL0p4/L0p4Map`): Validator network P2P port scanner, interactive topology matrix, and Vulners CVE vulnerability correlation (`core/l0p4map_scanner.py`).
+  - **MinerU** (`opendatalab/MinerU`): High-precision PDF document parsing, layout analysis, LaTeX formula extraction, and structured RAG Markdown generation (`core/mineru_parser.py`).
+- **REST API Endpoints**: `/api/v1/treasury/status`, `/api/v1/osint/investigate`, `/api/v1/praison/orchestrate`, `/api/v1/jobsync/tasks`, `/api/v1/aisvs/compliance`, `/api/v1/ironsight/telemetry`, `/api/v1/l0p4map/topology`, `/api/v1/mineru/parse`, `/api/v1/refref/stats`, `/api/v1/refref/code/generate`, `/api/v1/refref/track/conversion`.
+
 ## [1.5.0] - Freqtrade Algorithmic Bot, Vercel Live Deployment & Responsive UX
 
 ### Added
