@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>PISO Chain — Enterprise 7-Repo Suite & Security Ecosystem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar-drawer">
+            <div class="logo-area">
+                <img src="piso_logo.jpg" alt="PISO Logo" style="height: 36px; width: 36px; border-radius: 50%; border: 1.5px solid #ffd700; margin-right: 10px; object-fit: cover;">
+                <div class="logo-text">PISO <span>CHAIN</span></div>
+                <button class="close-drawer-btn" id="close-drawer">✕</button>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span> Overview
+                </a>
+                <a href="pow.html" class="nav-item" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.15)); border: 1px solid #f59e0b;">
+                    <span class="nav-icon">⛏️</span> PoW Mining Studio
+                </a>
+                <a href="sakura.html" class="nav-item" style="background: linear-gradient(135deg, rgba(244, 114, 182, 0.15), rgba(236, 72, 153, 0.15)); border: 1px solid #f472b6;">
+                    <span class="nav-icon">🌸</span> Sakura AI Agent Layer
+                </a>
+                <a href="enterprise.html" class="nav-item active" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2)); border: 1px solid #a855f7;">
+                    <span class="nav-icon">🚀</span> Enterprise 7-Repo Suite
+                </a>
+                <a href="features.html" class="nav-item" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15)); border: 1px solid #10b981;">
+                    <span class="nav-icon">🔐</span> Security & AA Vaults
+                </a>
+                <a href="swap.html" class="nav-item" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid #3b82f6;">
+                    <span class="nav-icon">🔀</span> PISOSwap DEX
+                </a>
+                <a href="bridge.html" class="nav-item" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(16, 185, 129, 0.15)); border: 1px solid #0ea5e9;">
+                    <span class="nav-icon">🌉</span> Cross-Chain Bridge
+                </a>
+                <a href="freqtrade.html" class="nav-item" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.15)); border: 1px solid #10b981;">
+                    <span class="nav-icon">📈</span> Trading Bot (freqtrade)
+                </a>
+                <a href="wallet.html" class="nav-item" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15)); border: 1px solid var(--accent-cyan);">
+                    <span class="nav-icon">👛</span> Wallet Studio (Mainnet)
+                </a>
+                <a href="contracts.html" class="nav-item" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15)); border: 1px solid #a855f7;">
+                    <span class="nav-icon">📜</span> System Contracts Hub
+                </a>
+            </nav>
+            <div class="network-status-badge">
+                <span class="pulse-dot green"></span>
+                <div class="badge-info">
+                    <span class="network-name">Mainnet Parlia</span>
+                    <span class="chain-id">Chain ID: 2026001</span>
+                </div>
+            </div>
+        </aside>
+
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-top-row">
+                    <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                    <div class="logo-text mobile-only-logo" style="font-size: 16px; font-weight: 800; color: var(--text-primary);">⚡ PISO <span style="color: var(--accent-cyan);">CHAIN</span></div>
+                </div>
+                <div class="search-bar-container">
+                    <input type="text" id="global-search" placeholder="Search Enterprise Module or API..." />
+                    <button id="search-btn" class="btn-primary">Search</button>
+                </div>
+                <div class="header-actions">
+                    <div class="rpc-status" id="rpc-indicator">
+                        <span class="pulse-dot green"></span> Enterprise Suite Active
+                    </div>
+                    <button class="btn-connect-wallet" id="btn-connect">Connect Wallet</button>
+                </div>
+            </header>
+
+            <!-- 🚀 Enterprise 7-Repo Suite Section -->
+            <section class="dashboard-section" id="enterprise" style="margin-top: 20px; margin-bottom: 36px;">
+                <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.8rem; color: #fff; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 2rem;">🚀</span> Enterprise 7-Repo Suite & AI Tools
+                        </h2>
+                        <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
+                            Industrial-Grade Web3 Infrastructure, GIS Mapping, Security Oracles & AI Agents
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <span class="badge" style="background: rgba(168, 85, 247, 0.2); border: 1px solid #a855f7; color: #c084fc; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                            Modules: 7 Repos Integrated
+                        </span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <!-- Module 1: GeoLibre GIS -->
+                    <div class="panel-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🌍</div>
+                        <h3 style="margin: 0 0 6px 0; color: #fff; font-size: 1.1rem;">GeoLibre GIS Map Engine</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">
+                            Decentralized Spatial Data Infrastructure & On-Chain Geospatial Proof Verification.
+                        </p>
+                        <span class="badge" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; font-size: 0.75rem; padding: 4px 8px; border-radius: 6px;">READY</span>
+                    </div>
+
+                    <!-- Module 2: Turbo Fieldfare AI -->
+                    <div class="panel-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(244, 114, 182, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🦅</div>
+                        <h3 style="margin: 0 0 6px 0; color: #fff; font-size: 1.1rem;">Turbo-Fieldfare AI Engine</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">
+                            High-Performance Edge AI Inference Engine optimized for lightweight ~2GB RAM devices.
+                        </p>
+                        <span class="badge" style="background: rgba(244, 114, 182, 0.2); color: #f472b6; font-size: 0.75rem; padding: 4px 8px; border-radius: 6px;">ONLINE</span>
+                    </div>
+
+                    <!-- Module 3: Agent-Reach Oracle -->
+                    <div class="panel-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">📡</div>
+                        <h3 style="margin: 0 0 6px 0; color: #fff; font-size: 1.1rem;">Agent-Reach Web Oracle</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">
+                            Real-time Web Scraper & Context Retrieval Oracle for Autonomous On-Chain AI Decisions.
+                        </p>
+                        <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 0.75rem; padding: 4px 8px; border-radius: 6px;">ACTIVE</span>
+                    </div>
+
+                    <!-- Module 4: OpenPlanter Entity Graph -->
+                    <div class="panel-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🌱</div>
+                        <h3 style="margin: 0 0 6px 0; color: #fff; font-size: 1.1rem;">OpenPlanter Entity Graph</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">
+                            Structured Knowledge Graph & Enterprise Semantic Search Index for Blockchain Analytics.
+                        </p>
+                        <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; font-size: 0.75rem; padding: 4px 8px; border-radius: 6px;">INDEXING</span>
+                    </div>
+
+                    <!-- Module 5: Bullshit Detector Oracle -->
+                    <div class="panel-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🎯</div>
+                        <h3 style="margin: 0 0 6px 0; color: #fff; font-size: 1.1rem;">Bullshit-Detector Oracle</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">
+                            Cryptographic Truth Verification & AI Hallucination Filtering Protocol.
+                        </p>
+                        <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; font-size: 0.75rem; padding: 4px 8px; border-radius: 6px;">SHIELDED</span>
+                    </div>
+
+                    <!-- Module 6: OWASP AISVS Shield -->
+                    <div class="panel-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🛡️</div>
+                        <h3 style="margin: 0 0 6px 0; color: #fff; font-size: 1.1rem;">OWASP AISVS AI Security</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">
+                            AI Verification Standard Guidelines & Vulnerability Defense Shield.
+                        </p>
+                        <span class="badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; font-size: 0.75rem; padding: 4px 8px; border-radius: 6px;">COMPLIANT</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 📱 Mobile Bottom App Bar -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Overview</span>
+        </a>
+        <a href="enterprise.html" class="mobile-bottom-item active">
+            <span class="mobile-nav-icon">🚀</span>
+            <span>Enterprise</span>
+        </a>
+        <a href="swap.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🔀</span>
+            <span>Swap</span>
+        </a>
+        <a href="bridge.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🌉</span>
+            <span>Bridge</span>
+        </a>
+        <a href="wallet.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">👛</span>
+            <span>Wallet</span>
+        </a>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -38,6 +38,10 @@
     { "source": "/contracts", "destination": "/contracts.html" },
     { "source": "/swap", "destination": "/swap.html" },
     { "source": "/bridge", "destination": "/bridge.html" },
-    { "source": "/freqtrade", "destination": "/freqtrade.html" }
+    { "source": "/freqtrade", "destination": "/freqtrade.html" },
+    { "source": "/pow", "destination": "/pow.html" },
+    { "source": "/sakura", "destination": "/sakura.html" },
+    { "source": "/enterprise", "destination": "/enterprise.html" },
+    { "source": "/features", "destination": "/features.html" }
   ]
 }
