@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>PISO Chain — Developer Portal & Interactive RPC Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar-drawer">
+            <div class="logo-area">
+                <img src="piso_logo.jpg" alt="PISO Logo" style="height: 36px; width: 36px; border-radius: 50%; border: 1.5px solid #ffd700; margin-right: 10px; object-fit: cover;">
+                <div class="logo-text">PISO <span>CHAIN</span></div>
+                <button class="close-drawer-btn" id="close-drawer">✕</button>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span> Overview & Analytics
+                </a>
+                <a href="developers.html" class="nav-item active" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(168, 85, 247, 0.2)); border: 1px solid #3b82f6;">
+                    <span class="nav-icon">💻</span> Developer Portal
+                </a>
+                <a href="compliance.html" class="nav-item">
+                    <span class="nav-icon">🛡️</span> Compliance & Risk
+                </a>
+                <a href="dao.html" class="nav-item">
+                    <span class="nav-icon">🏛️</span> DAO Governance
+                </a>
+                <a href="validators.html" class="nav-item">
+                    <span class="nav-icon">🌐</span> Validator Telemetry
+                </a>
+                <a href="explorer.html" class="nav-item">
+                    <span class="nav-icon">🔍</span> Blockchain Explorer
+                </a>
+                <a href="pow.html" class="nav-item">
+                    <span class="nav-icon">⛏️</span> PoW Mining Studio
+                </a>
+                <a href="sakura.html" class="nav-item">
+                    <span class="nav-icon">🌸</span> Sakura AI Agent Layer
+                </a>
+                <a href="swap.html" class="nav-item">
+                    <span class="nav-icon">🔀</span> PISOSwap DEX
+                </a>
+                <a href="bridge.html" class="nav-item">
+                    <span class="nav-icon">🌉</span> Cross-Chain Bridge
+                </a>
+                <a href="wallet.html" class="nav-item">
+                    <span class="nav-icon">👛</span> Wallet Studio (Mainnet)
+                </a>
+            </nav>
+            <div class="network-status-badge">
+                <span class="pulse-dot green"></span>
+                <div class="badge-info">
+                    <span class="network-name">Mainnet Parlia</span>
+                    <span class="chain-id">Chain ID: 2026001</span>
+                </div>
+            </div>
+        </aside>
+
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-top-row">
+                    <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                    <div class="logo-text mobile-only-logo" style="font-size: 16px; font-weight: 800; color: var(--text-primary);">⚡ PISO <span style="color: var(--accent-cyan);">CHAIN</span></div>
+                </div>
+                <div class="search-bar-container">
+                    <input type="text" id="global-search" placeholder="Search RPC Methods, SDK Docs, or Endpoints..." />
+                    <button id="search-btn" class="btn-primary">Search</button>
+                </div>
+                <div class="header-actions">
+                    <div class="rpc-status" id="rpc-indicator">
+                        <span class="pulse-dot green"></span> RPC Endpoint Online
+                    </div>
+                    <button class="btn-connect-wallet" id="btn-connect">Connect Wallet</button>
+                </div>
+            </header>
+
+            <!-- 💻 Developer Portal Section -->
+            <section class="dashboard-section" style="margin-top: 20px; margin-bottom: 36px;">
+                <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.8rem; color: #fff; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 2rem;">💻</span> Developer Portal & Interactive RPC Playground
+                        </h2>
+                        <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
+                            Live JSON-RPC Tester, Viem & Ethers.js Code Snippets, WebSocket Endpoints & SDK Downloads
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bento-grid">
+                    <!-- RPC Playground Card -->
+                    <div class="bento-card bento-hero">
+                        <h3 style="margin: 0 0 14px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                            <span>⚡</span> Live JSON-RPC Method Playground
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                            <div>
+                                <label style="font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 6px;">JSON-RPC Method</label>
+                                <select id="dev-rpc-method" style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 10px; border-radius: 10px; font-weight: 700; outline: none;">
+                                    <option value="eth_blockNumber">eth_blockNumber</option>
+                                    <option value="eth_getBalance">eth_getBalance</option>
+                                    <option value="eth_chainId">eth_chainId</option>
+                                    <option value="net_version">net_version</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 6px;">RPC Endpoint</label>
+                                <input type="text" value="http://127.0.0.1:8545" readonly style="width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); color: #38bdf8; padding: 10px; border-radius: 10px; font-family: var(--font-mono); font-size: 0.85rem;">
+                            </div>
+                        </div>
+
+                        <button onclick="alert('⚡ RPC Call Executed!\nResponse: {\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x1317ba\"} (Block #1,251,258)')" class="btn-primary" style="width: 100%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; font-weight: 800; border: none; padding: 14px; border-radius: 12px; cursor: pointer;">
+                            🚀 Send JSON-RPC Query
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 📱 Mobile Bottom App Bar -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Overview</span>
+        </a>
+        <a href="developers.html" class="mobile-bottom-item active">
+            <span class="mobile-nav-icon">💻</span>
+            <span>Devs</span>
+        </a>
+        <a href="swap.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🔀</span>
+            <span>Swap</span>
+        </a>
+        <a href="bridge.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🌉</span>
+            <span>Bridge</span>
+        </a>
+        <a href="wallet.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">👛</span>
+            <span>Wallet</span>
+        </a>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
