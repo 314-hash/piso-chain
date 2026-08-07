@@ -2069,5 +2069,71 @@ docker-compose up freqtrade freqtrade-bridge</pre>
         document.getElementById('ft-refresh-btn')?.addEventListener('click', refreshFreqtradePanel);
     });
     </script>
+
+    <!-- ✅ PWA Install Button (floating) -->
+    <div id="pwa-install-bar" style="display:none; position:fixed; bottom:20px; right:20px; z-index:99999; background:linear-gradient(135deg,#a855f7,#7c3aed); color:#fff; border-radius:16px; padding:12px 20px; box-shadow:0 8px 32px rgba(168,85,247,0.4); cursor:pointer; font-family:'Inter',sans-serif; font-weight:700; font-size:15px; align-items:center; gap:10px; animation: pwaFloat 2s ease-in-out infinite;" onclick="window.pwaInstall()">
+        📲 Install PISO Chain App
+    </div>
+    <style>
+        @keyframes pwaFloat {
+            0%, 100% { transform: translateY(0px); box-shadow: 0 8px 32px rgba(168,85,247,0.4); }
+            50% { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(168,85,247,0.6); }
+        }
+    </style>
+
+    <!-- ✅ PWA Service Worker & Install Prompt Handler -->
+    <script>
+    (function() {
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('[PISO PWA] Service Worker registered:', reg.scope))
+                    .catch(err => console.warn('[PISO PWA] SW registration failed:', err));
+            });
+        }
+
+        // Capture beforeinstallprompt event
+        let deferredPrompt = null;
+        const installBar = document.getElementById('pwa-install-bar');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (installBar) {
+                installBar.style.display = 'flex';
+            }
+        });
+
+        window.pwaInstall = async function() {
+            if (!deferredPrompt) {
+                // Fallback: guide user to manual install
+                alert('To install:\n\nAndroid Chrome: Tap ⋮ menu → "Add to Home Screen"\niPhone Safari: Tap Share ⎋ → "Add to Home Screen"');
+                return;
+            }
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('[PISO PWA] Install outcome:', outcome);
+            deferredPrompt = null;
+            if (installBar) installBar.style.display = 'none';
+        };
+
+        // Hide bar after app installed
+        window.addEventListener('appinstalled', () => {
+            console.log('[PISO PWA] App installed successfully!');
+            if (installBar) installBar.style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        // Show install bar after 3s as fallback nudge
+        setTimeout(() => {
+            if (installBar && installBar.style.display === 'none') {
+                // Only show if not already installed (standalone mode = installed)
+                if (window.matchMedia('(display-mode: standalone)').matches) return;
+                installBar.style.display = 'flex';
+            }
+        }, 3000);
+    })();
+    </script>
 </body>
 </html>
