@@ -737,44 +737,96 @@ function setupEventListeners() {
         }
     }
 
-    // 1-Click Add PISO Chain to MetaMask / EVM Wallet
-    document.getElementById("btn-add-metamask")?.addEventListener("click", async () => {
-        if (window.ethereum) {
-            const success = await autoAddAndSwitchPisoNetwork();
-            if (success) {
-                alert("✓ PISO Chain Devnet automatically added and selected in your wallet!");
-            }
-        } else {
-            promptMobileWalletRedirect();
-        }
-    });
-
-    // Responsive Connect Wallet Handler with Automatic RPC & Network Credential Configuration
-    const btnConnect = document.getElementById("btn-connect");
-    btnConnect?.addEventListener("click", async () => {
+    // Universal Responsive Wallet Connection Engine
+    async function connectUserWallet() {
         if (window.ethereum) {
             try {
-                // 1. Request wallet account authorization
                 const accs = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 const account = accs[0];
-                
-                // 2. Automatically add & switch to PISO Chain RPC & Credentials
                 await autoAddAndSwitchPisoNetwork();
-
-                // 3. Update Responsive UI Button State
                 if (account) {
-                    btnConnect.innerText = "🟢 " + account.slice(0, 6) + "..." + account.slice(-4);
-                    btnConnect.style.background = "linear-gradient(135deg, #10b981, #059669)";
-                    btnConnect.title = "Connected Account: " + account;
-                    alert("✓ Wallet Connected & PISO Chain Configured!\nAccount: " + account + "\nChain ID: 2026001\nRPC: https://piso-rpc-dev.loca.lt");
+                    updateWalletUIState(account);
+                    localStorage.setItem("piso-wallet-connected", "true");
+                    localStorage.setItem("piso-connected-account", account);
                 }
             } catch (err) {
+                console.error("Wallet Connection Error:", err);
                 alert("Wallet Connection Error: " + err.message);
             }
         } else {
-            promptMobileWalletRedirect();
+            showWalletConnectModal();
         }
+    }
+
+    function updateWalletUIState(account) {
+        const shortAddr = account.slice(0, 6) + "..." + account.slice(-4);
+        document.querySelectorAll("#btn-connect, .btn-connect-wallet").forEach(btn => {
+            btn.innerHTML = "🟢 " + shortAddr;
+            btn.style.background = "linear-gradient(135deg, #10b981, #059669)";
+            btn.style.borderColor = "#34d399";
+            btn.title = "Connected Account: " + account + " (Click to view wallet)";
+        });
+    }
+
+    function showWalletConnectModal() {
+        if (document.getElementById("wallet-connect-modal-backdrop")) {
+            document.getElementById("wallet-connect-modal-backdrop").classList.add("open");
+            return;
+        }
+
+        const modalHTML = `
+        <div class="cmd-palette-backdrop open" id="wallet-connect-modal-backdrop">
+            <div class="cmd-palette-modal" style="max-width: 480px; padding: 24px; text-align: center;">
+                <h3 style="margin: 0 0 8px 0; color: #fff; font-size: 1.4rem;">🔗 Connect Web3 Wallet</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">Choose your preferred Web3 provider to interact with PISO Chain L1.</p>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button id="modal-btn-metamask" style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; color: #fbbf24; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        🦊 MetaMask / Web3 Extension
+                    </button>
+                    <button id="modal-btn-walletconnect" style="background: rgba(59, 130, 246, 0.15); border: 1px solid #3b82f6; color: #60a5fa; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        📲 WalletConnect Mobile Deep Link
+                    </button>
+                    <button id="modal-btn-demo" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        ⚡ Instant Web3 Demo Wallet (0x1821...4731)
+                    </button>
+                </div>
+                <button id="modal-btn-close" style="margin-top: 18px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem;">Cancel / Close</button>
+            </div>
+        </div>`;
+
+        document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+        document.getElementById("modal-btn-metamask")?.addEventListener("click", () => {
+            promptMobileWalletRedirect();
+        });
+
+        document.getElementById("modal-btn-walletconnect")?.addEventListener("click", () => {
+            promptMobileWalletRedirect();
+        });
+
+        document.getElementById("modal-btn-demo")?.addEventListener("click", () => {
+            const demoAccount = "0x1821F246a27287a2187E1D634B8883030fA14731";
+            updateWalletUIState(demoAccount);
+            localStorage.setItem("piso-wallet-connected", "true");
+            localStorage.setItem("piso-connected-account", demoAccount);
+            document.getElementById("wallet-connect-modal-backdrop")?.classList.remove("open");
+            alert("✓ Connected Demo Wallet!\nAccount: " + demoAccount + "\nBalance: 1,450.00 PISO");
+        });
+
+        document.getElementById("modal-btn-close")?.addEventListener("click", () => {
+            document.getElementById("wallet-connect-modal-backdrop")?.classList.remove("open");
+        });
+    }
+
+    document.querySelectorAll("#btn-connect, .btn-connect-wallet").forEach(btn => {
+        btn.addEventListener("click", connectUserWallet);
     });
+
+    // Auto reconnect on page load if previously authorized
+    if (localStorage.getItem("piso-wallet-connected") === "true") {
+        const savedAccount = localStorage.getItem("piso-connected-account") || "0x1821F246a27287a2187E1D634B8883030fA14731";
+        updateWalletUIState(savedAccount);
+    }
 
     /**
      * Mobile Deep Link Helper: Opens directly inside installed MetaMask App
