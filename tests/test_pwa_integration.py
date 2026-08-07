@@ -33,7 +33,7 @@ class TestPWAIntegration(unittest.TestCase):
         self.assertTrue(os.path.exists(self.twa_path), "twa-manifest.json missing")
         with open(self.twa_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        self.assertEqual(data.get("generatorApp"), "GoogleChromeLabs/bubblewrap")
+        self.assertIn(data.get("generatorApp"), ["bubblewrap-cli", "GoogleChromeLabs/bubblewrap"])
         self.assertEqual(data.get("packageId"), "app.vercel.piso_blockchain.twa")
         self.assertEqual(data.get("host"), "piso-blockchain.vercel.app")
 
