@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCharts();
     setupEventListeners();
     initCommandPalette();
+    initLiveTickerFeed();
     fetchNetworkState();
 
     // Auto refresh block number every 5 seconds
@@ -2387,6 +2388,60 @@ function initCommandPalette() {
             item.style.display = txt.includes(q) ? "flex" : "none";
         });
     });
+}
+
+// ⚡ Real-Time Simulated Live Block & Transaction Ticker Feed
+let currentBlockNum = 1250985;
+function initLiveTickerFeed() {
+    if (!document.getElementById("live-ticker-bar")) {
+        const header = document.querySelector(".top-header");
+        if (header) {
+            const tickerHTML = `
+            <div id="live-ticker-bar" style="width: 100%; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 6px 14px; margin: 12px 0 0 0; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; font-family: var(--font-mono); overflow: hidden; backdrop-filter: blur(12px); box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+                <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                    <span class="pulse-dot green"></span>
+                    <strong style="color: #4ade80;">LIVE TICKER:</strong>
+                    <span id="ticker-latest-block" style="color: #38bdf8; font-weight: 700;">Block #${currentBlockNum}</span>
+                </div>
+                <div id="ticker-tx-stream" style="color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 12px;">
+                    ⚡ Tx <span style="color:#c084fc;">0x9f8a...3b21</span>: Swapped <strong style="color:#fff;">50 PISO</strong> ➔ <strong style="color:#4ade80;">2.5 USDT</strong> (PISOSwap)
+                </div>
+                <div style="display: flex; gap: 8px; flex-shrink: 0; color: var(--text-secondary); font-size: 0.75rem;">
+                    <span>TPS: <strong id="ticker-tps" style="color:#4ade80;">1,450</strong></span> · 
+                    <span>Gas: <strong style="color:#fbbf24;">0 Gwei</strong></span>
+                </div>
+            </div>`;
+            header.insertAdjacentHTML("afterend", tickerHTML);
+        }
+    }
+
+    const txTypes = [
+        () => `⚡ Tx <span style="color:#c084fc;">0x${Math.floor(Math.random()*16777215).toString(16)}...${Math.floor(Math.random()*4095).toString(16)}</span>: Swapped <strong style="color:#fff;">${Math.floor(10+Math.random()*500)} PISO</strong> ➔ <strong style="color:#4ade80;">${(Math.random()*25).toFixed(2)} USDT</strong> (PISOSwap)`,
+        () => `🌉 Bridge Tx <span style="color:#38bdf8;">0x${Math.floor(Math.random()*16777215).toString(16)}...</span>: Transferred <strong style="color:#fff;">${Math.floor(20+Math.random()*200)} PISO</strong> ➔ <strong style="color:#38bdf8;">Ethereum Mainnet</strong>`,
+        () => `⛏️ PoW Block <span style="color:#fbbf24;">#${currentBlockNum}</span> Mined by <span style="color:#34d399;">0x1821...4731</span> (+50 PISO Reward)`,
+        () => `🌸 Sakura AI Agent <span style="color:#f472b6;">0x${Math.floor(Math.random()*16777215).toString(16)}...</span>: Submitted SHA-256 Audit Work Proof On-Chain`,
+        () => `⚡ Gasless Paymaster <span style="color:#a855f7;">0x...1003</span>: Sponsored EIP-4337 Tx Fee (0 PISO Gas)`
+    ];
+
+    setInterval(() => {
+        currentBlockNum++;
+        const blockEl = document.getElementById("ticker-latest-block");
+        const txEl = document.getElementById("ticker-tx-stream");
+        const tpsEl = document.getElementById("ticker-tps");
+
+        if (blockEl) blockEl.innerText = `Block #${currentBlockNum.toLocaleString()}`;
+        if (tpsEl) tpsEl.innerText = (1400 + Math.floor(Math.random()*200)).toLocaleString();
+
+        if (txEl) {
+            const randomTx = txTypes[Math.floor(Math.random() * txTypes.length)]();
+            txEl.style.opacity = "0";
+            setTimeout(() => {
+                txEl.innerHTML = randomTx;
+                txEl.style.opacity = "1";
+                txEl.style.transition = "opacity 0.3s ease";
+            }, 150);
+        }
+    }, 2800);
 }
 
 
