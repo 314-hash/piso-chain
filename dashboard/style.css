@@ -2701,3 +2701,46 @@ code, pre, .terminal-output, [id$="-output"] {
 @media (max-width: 900px) {
     .bento-hero { grid-column: span 1; }
 }
+
+/* 📱 Universal Mobile Responsiveness Engine */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 12px !important;
+        margin: 0 !important;
+    }
+    .main-content {
+        padding: 0 4px !important;
+        margin-left: 0 !important;
+    }
+    .top-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        padding: 12px !important;
+    }
+    .header-actions {
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+    }
+    .btn-connect-wallet {
+        font-size: 0.8rem !important;
+        padding: 8px 12px !important;
+    }
+    .bento-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+    .bento-hero {
+        grid-column: span 1 !important;
+    }
+    .bento-card {
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+    #live-ticker-bar {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+    }
+}
