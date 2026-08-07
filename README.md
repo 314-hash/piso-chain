@@ -7,6 +7,7 @@
 [![CI/CD Pipeline](https://github.com/314-hash/piso-chain/actions/workflows/ci.yml/badge.svg)](https://github.com/314-hash/piso-chain/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![EVM Compatibility](https://img.shields.io/badge/EVM-Compatible-emerald.svg)](https://ethereum.org)
+[![Censorship Resistance](https://img.shields.io/badge/Censorship_Resistance-Unstoppable_P2P-brightgreen.svg)](docs/CENSORSHIP_RESISTANCE_%26_REGULATORY_COMPLIANCE.md)
 [![Consensus: PoSA](https://img.shields.io/badge/Consensus-BSC_Parlia_PoSA-orange.svg)](https://github.com/bnb-chain/bsc)
 [![PISO Agent OS](https://img.shields.io/badge/Agent_OS-jcode_Harness-purple.svg)](https://github.com/1jehuang/jcode.git)
 
