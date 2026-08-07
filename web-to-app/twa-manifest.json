@@ -1,0 +1,34 @@
+{
+  "packageId": "app.vercel.piso_blockchain.twa",
+  "host": "piso-blockchain.vercel.app",
+  "name": "PISO Chain Web3 Mining & AI OS",
+  "launcherName": "PISO Chain",
+  "display": "standalone",
+  "themeColor": "#0B0F19",
+  "navigationColor": "#0B0F19",
+  "navigationColorDark": "#0B0F19",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#0B0F19",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://piso-blockchain.vercel.app/piso_logo.jpg",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android-keystore.jks",
+    "alias": "piso-key"
+  },
+  "appVersionName": "1.6.0",
+  "appVersionCode": 1060,
+  "generatorApp": "GoogleChromeLabs/bubblewrap",
+  "webManifestUrl": "https://piso-blockchain.vercel.app/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": true
+    },
+    "playBilling": {
+      "enabled": false
+    }
+  }
+}
