@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // PISO Swap & Bridge nav handlers
     document.getElementById("nav-pisoswap")?.addEventListener("click", (e) => {
         e.preventDefault();
-        const section = document.getElementById("section-pisoswap");
+        const section = document.getElementById("pisoswap");
         if (section) {
             section.scrollIntoView({ behavior: "smooth", block: "start" });
         }
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("nav-bridge")?.addEventListener("click", (e) => {
         e.preventDefault();
-        const section = document.getElementById("section-bridge");
+        const section = document.getElementById("bridge");
         if (section) {
             section.scrollIntoView({ behavior: "smooth", block: "start" });
         }
