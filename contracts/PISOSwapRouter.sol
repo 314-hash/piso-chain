@@ -111,14 +111,15 @@ contract PISOSwapRouter {
         address pair = IPISOSwapFactory(factory).getPair(tokenIn, tokenOut);
         require(pair != address(0), "PISOSwap: PAIR_NOT_FOUND");
 
-        (uint256 reserveIn, uint256 reserveOut) = getReserves(tokenIn, tokenOut);
-        amountOut = getAmountOut(amountIn, reserveIn, reserveOut);
+        {
+            (uint256 reserveIn, uint256 reserveOut) = getReserves(tokenIn, tokenOut);
+            amountOut = getAmountOut(amountIn, reserveIn, reserveOut);
+        }
         require(amountOut >= amountOutMin, "PISOSwap: INSUFFICIENT_OUTPUT_AMOUNT");
 
         IERC20(tokenIn).transferFrom(msg.sender, pair, amountIn);
 
-        address token0 = IPISOSwapPair(pair).token0();
-        (uint256 amount0Out, uint256 amount1Out) = tokenIn == token0
+        (uint256 amount0Out, uint256 amount1Out) = tokenIn == IPISOSwapPair(pair).token0()
             ? (uint256(0), amountOut)
             : (amountOut, uint256(0));
 

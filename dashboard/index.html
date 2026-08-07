@@ -39,6 +39,12 @@
                 <a href="contracts.html" class="nav-item" id="nav-contracts" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15)); border: 1px solid #a855f7;">
                     <span class="nav-icon">📜</span> System Contracts Hub
                 </a>
+                <a href="#pisoswap" class="nav-item" id="nav-pisoswap" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid #3b82f6;">
+                    <span class="nav-icon">🔀</span> PISOSwap DEX
+                </a>
+                <a href="#bridge" class="nav-item" id="nav-bridge" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(16, 185, 129, 0.15)); border: 1px solid #0ea5e9;">
+                    <span class="nav-icon">🌉</span> Cross-Chain Bridge
+                </a>
                 <a href="#pow" class="nav-item" id="nav-pow" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.15)); border: 1px solid #f59e0b;">
                     <span class="nav-icon">⛏️</span> PoW Mining Studio
                 </a>
@@ -2190,6 +2196,465 @@ docker-compose up freqtrade freqtrade-bridge</pre>
       </div>
     </section>
 
+    <!-- 🔀 PISOSwap DEX Section -->
+    <section class="dashboard-section" id="pisoswap" style="margin-top: 36px; margin-bottom: 36px;">
+        <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+            <div>
+                <h2 style="margin: 0; font-size: 1.6rem; color: #fff; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.8rem;">🔀</span> PISOSwap DEX Protocol
+                </h2>
+                <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
+                    Automated Market Maker (AMM) & Decentralized Exchange on PISO Chain L1
+                </p>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <span class="badge" style="background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: #60a5fa; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                    Router: 0x...2002
+                </span>
+                <span class="badge" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #34d399; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                    TVL: $12,450,000
+                </span>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;">
+            <!-- Left Card: Swap Panel -->
+            <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="margin: 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                        <span>⚡</span> 1-Click Token Swap
+                    </h3>
+                    <div style="display: flex; gap: 6px;" id="slippage-presets">
+                        <button class="slippage-btn active" data-slippage="0.5" style="background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 12px; cursor: pointer;">0.5%</button>
+                        <button class="slippage-btn" data-slippage="1.0" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary); padding: 4px 8px; border-radius: 6px; font-size: 12px; cursor: pointer;">1.0%</button>
+                        <button class="slippage-btn" data-slippage="2.0" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary); padding: 4px 8px; border-radius: 6px; font-size: 12px; cursor: pointer;">2.0%</button>
+                    </div>
+                </div>
+
+                <!-- Token In Input -->
+                <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 14px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px;">
+                        <span>You Pay</span>
+                        <span>Balance: <strong id="swap-balance-in" style="color: #fff;">1,000 PISO</strong></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <input type="number" id="swap-amount-in" placeholder="0.0" value="10" style="background: transparent; border: none; color: #fff; font-size: 1.5rem; font-weight: 700; width: 100%; outline: none;">
+                        <select id="swap-token-in" style="background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 8px 12px; border-radius: 10px; font-weight: 700; cursor: pointer; outline: none;">
+                            <option value="PISO">🪙 PISO</option>
+                            <option value="USDT">💵 USDT</option>
+                            <option value="WBTC">₿ WBTC</option>
+                            <option value="WETH">Ξ WETH</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Swap Direction Button -->
+                <div style="display: flex; justify-content: center; margin: -6px 0 6px 0; position: relative; z-index: 2;">
+                    <button id="btn-swap-direction-flip" style="background: #3b82f6; border: 3px solid #0f172a; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold;">
+                        ⬇️
+                    </button>
+                </div>
+
+                <!-- Token Out Input -->
+                <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 14px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px;">
+                        <span>You Receive (Estimated)</span>
+                        <span>Balance: <strong id="swap-balance-out" style="color: #fff;">0.00 USDT</strong></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <input type="number" id="swap-amount-out" placeholder="0.0" readonly style="background: transparent; border: none; color: #4ade80; font-size: 1.5rem; font-weight: 700; width: 100%; outline: none;">
+                        <select id="swap-token-out" style="background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 8px 12px; border-radius: 10px; font-weight: 700; cursor: pointer; outline: none;">
+                            <option value="USDT">💵 USDT</option>
+                            <option value="PISO">🪙 PISO</option>
+                            <option value="WBTC">₿ WBTC</option>
+                            <option value="WETH">Ξ WETH</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Rate Breakdown -->
+                <div style="background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 12px; margin-bottom: 20px; font-size: 0.85rem; color: var(--text-secondary);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <span>Exchange Rate</span>
+                        <span id="swap-rate-text" style="color: #fff; font-weight: 600;">1 PISO ≈ 0.05 USDT</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                        <span>Minimum Received</span>
+                        <span id="swap-min-out" style="color: #fff;">0.4975 USDT</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Protocol Fee (0.25%)</span>
+                        <span style="color: #4ade80;">Gasless / Sponsored</span>
+                    </div>
+                </div>
+
+                <button id="btn-execute-swap" style="width: 100%; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; border: none; padding: 16px; border-radius: 14px; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);">
+                    🔀 Execute Swap Now
+                </button>
+
+                <div id="swap-status-box" style="margin-top: 16px;"></div>
+            </div>
+
+            <!-- Right Card: Liquidity Pools & Yield -->
+            <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="margin: 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                        <span>🌊</span> Liquidity Pools & Farm APR
+                    </h3>
+                    <span class="badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; font-weight: 600; padding: 4px 10px; border-radius: 6px; font-size: 12px;">
+                        Factory: 0x...2001
+                    </span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 700; color: #fff; font-size: 1rem;">🪙 PISO / 💵 USDT</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Reserves: 10M PISO · 500K USDT</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #4ade80; font-weight: 800; font-size: 1.1rem;">48.5% APR</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 700; color: #fff; font-size: 1rem;">🪙 PISO / ₿ WBTC</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Reserves: 5M PISO · 25 WBTC</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #4ade80; font-weight: 800; font-size: 1.1rem;">36.2% APR</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 700; color: #fff; font-size: 1rem;">🪙 PISO / Ξ WETH</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">Reserves: 8M PISO · 400 WETH</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #4ade80; font-weight: 800; font-size: 1.1rem;">42.8% APR</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 14px; padding: 16px;">
+                    <h4 style="margin: 0 0 10px 0; color: #ffd700; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
+                        <span>💎</span> Deposit Pair Liquidity
+                    </h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                        <input type="number" id="liquidity-amount-a" placeholder="Amount PISO" style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; outline: none;">
+                        <input type="number" id="liquidity-amount-b" placeholder="Amount USDT" style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; outline: none;">
+                    </div>
+                    <button id="btn-add-liquidity" style="width: 100%; background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                        💧 Supply Liquidity & Earn LP Tokens
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🌉 Cross-Chain Bridge Section -->
+    <section class="dashboard-section" id="bridge" style="margin-top: 36px; margin-bottom: 36px;">
+        <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+            <div>
+                <h2 style="margin: 0; font-size: 1.6rem; color: #fff; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.8rem;">🌉</span> Sakura Cross-Chain Bridge
+                </h2>
+                <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
+                    Decentralized Telemetry & Asset Transfer between PISO Chain Mainnet and EVM Networks
+                </p>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <span class="badge" style="background: rgba(14, 165, 233, 0.2); border: 1px solid #0ea5e9; color: #38bdf8; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                    Relayer: Active (bridge/relayer.py)
+                </span>
+                <span class="badge" style="background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; color: #4ade80; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                    Fee: 0% (Gasless Sponsored)
+                </span>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;">
+            <!-- Left Card: Bridge Transfer Console -->
+            <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(14, 165, 233, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                    <span>🛰️</span> Cross-Chain Asset Transfer
+                </h3>
+
+                <!-- Source Network Selector -->
+                <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 14px; margin-bottom: 12px;">
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px;">Source Network</div>
+                    <select id="bridge-source-chain" style="width: 100%; background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; outline: none;">
+                        <option value="2026001">🪙 PISO Chain L1 (Chain ID: 2026001)</option>
+                        <option value="1">🌐 Ethereum Mainnet (Chain ID: 1)</option>
+                        <option value="11155111">🧪 Sepolia Testnet (Chain ID: 11155111)</option>
+                        <option value="137">💜 Polygon PoS (Chain ID: 137)</option>
+                        <option value="42161">💙 Arbitrum One (Chain ID: 42161)</option>
+                    </select>
+                </div>
+
+                <!-- Flip Button -->
+                <div style="display: flex; justify-content: center; margin: -6px 0 6px 0; position: relative; z-index: 2;">
+                    <button id="btn-bridge-flip-direction" style="background: #0ea5e9; border: 3px solid #0f172a; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold;">
+                        ⇅
+                    </button>
+                </div>
+
+                <!-- Destination Network Selector -->
+                <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 14px; margin-bottom: 16px;">
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px;">Destination Network</div>
+                    <select id="bridge-dest-chain" style="width: 100%; background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 10px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; outline: none;">
+                        <option value="1">🌐 Ethereum Mainnet (Chain ID: 1)</option>
+                        <option value="2026001">🪙 PISO Chain L1 (Chain ID: 2026001)</option>
+                        <option value="11155111">🧪 Sepolia Testnet (Chain ID: 11155111)</option>
+                        <option value="137">💜 Polygon PoS (Chain ID: 137)</option>
+                        <option value="42161">💙 Arbitrum One (Chain ID: 42161)</option>
+                    </select>
+                </div>
+
+                <!-- Asset Selection & Amount -->
+                <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 14px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px;">
+                        <span>Bridge Asset</span>
+                        <span>Available: <strong style="color: #fff;">100.0 PISO</strong></span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <input type="number" id="bridge-amount-input" placeholder="0.0" value="50" style="background: transparent; border: none; color: #fff; font-size: 1.4rem; font-weight: 700; width: 100%; outline: none;">
+                        <select id="bridge-token-select" style="background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 8px 12px; border-radius: 10px; font-weight: 700; cursor: pointer; outline: none;">
+                            <option value="PISO">PISO Token</option>
+                            <option value="ePISO">ePISO Wrapped</option>
+                            <option value="USDT">USDT Stablecoin</option>
+                            <option value="ETH">ETH Ether</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Fee Breakdown -->
+                <div style="background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 14px; margin-bottom: 20px; font-size: 0.85rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--text-secondary);">
+                        <span>Estimated Transfer Time</span>
+                        <span style="color: #38bdf8; font-weight: 600;">~12 Seconds (4 Blocks)</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--text-secondary);">
+                        <span>Relayer Security</span>
+                        <span style="color: #4ade80; font-weight: 600;">Threshold Schnorr Multi-Sig</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
+                        <span>Sponsor Fee</span>
+                        <span style="color: #4ade80; font-weight: 600;">0 PISO (Gasless Paymaster)</span>
+                    </div>
+                </div>
+
+                <button id="btn-execute-bridge" style="width: 100%; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; border: none; padding: 16px; border-radius: 14px; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 16px rgba(14, 165, 233, 0.4);">
+                    🚀 Initiate Cross-Chain Transfer
+                </button>
+
+                <div id="bridge-output-result" style="margin-top: 16px;"></div>
+            </div>
+
+            <!-- Right Card: Bridge Relayer Status & History -->
+            <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                <h3 style="margin: 0 0 20px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                    <span>📜</span> Bridge Infrastructure & Live Activity
+                </h3>
+
+                <!-- Relayer Node Card -->
+                <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 14px; padding: 16px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="font-weight: 700; color: #fff;">Python Cross-Chain Relayer</span>
+                        <span class="pulse-dot green" style="display: inline-block;"></span>
+                    </div>
+                    <div style="font-family: var(--font-mono); font-size: 0.8rem; color: #a7f3d0; line-height: 1.6;">
+                        Script: bridge/relayer.py<br>
+                        Status: Polling events every 5s<br>
+                        ERC20 Handler: 0x0000...0000<br>
+                        Processed Cross-Chain Messages: 1,482
+                    </div>
+                </div>
+
+                <!-- Recent Transactions Table -->
+                <h4 style="color: #cbd5e1; margin: 0 0 12px 0; font-size: 0.95rem;">Recent Bridge Transfers</h4>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary);">
+                                <th style="padding: 8px;">Tx Hash</th>
+                                <th style="padding: 8px;">From → To</th>
+                                <th style="padding: 8px;">Amount</th>
+                                <th style="padding: 8px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <td style="padding: 10px 8px; font-family: var(--font-mono); color: #38bdf8;">0x8a9f...3e21</td>
+                                <td style="padding: 10px 8px;">PISO → Sepolia</td>
+                                <td style="padding: 10px 8px; font-weight: 700; color: #fff;">100 PISO</td>
+                                <td style="padding: 10px 8px;"><span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem;">CONFIRMED</span></td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <td style="padding: 10px 8px; font-family: var(--font-mono); color: #38bdf8;">0x4b1c...90a1</td>
+                                <td style="padding: 10px 8px;">Ethereum → PISO</td>
+                                <td style="padding: 10px 8px; font-weight: 700; color: #fff;">2.5 ETH</td>
+                                <td style="padding: 10px 8px;"><span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem;">CONFIRMED</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 8px; font-family: var(--font-mono); color: #38bdf8;">0x12c9...77f4</td>
+                                <td style="padding: 10px 8px;">Polygon → PISO</td>
+                                <td style="padding: 10px 8px; font-weight: 700; color: #fff;">500 USDT</td>
+                                <td style="padding: 10px 8px;"><span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem;">CONFIRMED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📈 Trading Bot (Freqtrade) Section -->
+    <section class="dashboard-section freqtrade-section" id="freqtrade" style="margin-top: 36px; margin-bottom: 36px;">
+        <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+            <div>
+                <h2 style="margin: 0; font-size: 1.6rem; color: #fff; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.8rem;">📈</span> Freqtrade Algorithmic Trading Bot
+                </h2>
+                <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
+                    Automated crypto trading strategies & PISO Chain smart contract oracle verification bridge
+                </p>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <span id="ft-bot-status" class="badge" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #34d399; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                    <span class="pulse-dot green"></span> ONLINE (:8180)
+                </span>
+                <span class="badge" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #fbbf24; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                    Strategy: PISOStrategyV1
+                </span>
+            </div>
+        </div>
+
+        <!-- Freqtrade KPI Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+            <div class="kpi-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 20px;">
+                <div style="font-size: 0.85rem; color: var(--text-secondary);">Total Closed Profit</div>
+                <div id="ft-profit-all" style="font-size: 1.8rem; font-weight: 800; color: #10b981; margin: 4px 0;">+24.85%</div>
+                <div style="font-size: 0.8rem; color: #34d399;">+1,420.50 PISO Earned</div>
+            </div>
+
+            <div class="kpi-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 20px;">
+                <div style="font-size: 0.85rem; color: var(--text-secondary);">Win / Loss Ratio</div>
+                <div style="font-size: 1.8rem; font-weight: 800; color: #fff; margin: 4px 0;">
+                    <span id="ft-wins" style="color: #4ade80;">18</span> W / <span id="ft-losses" style="color: #f87171;">3</span> L
+                </div>
+                <div style="font-size: 0.8rem; color: #60a5fa;">85.7% Win Rate</div>
+            </div>
+
+            <div class="kpi-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 20px;">
+                <div style="font-size: 0.85rem; color: var(--text-secondary);">Active Open Trades</div>
+                <div id="ft-open-count" style="font-size: 1.8rem; font-weight: 800; color: #f59e0b; margin: 4px 0;">2 Trades</div>
+                <div style="font-size: 0.8rem; color: #fbbf24;">Pair: PISO/USDT</div>
+            </div>
+
+            <div class="kpi-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 20px;">
+                <div style="font-size: 0.85rem; color: var(--text-secondary);">Oracle Proofs On-Chain</div>
+                <div style="font-size: 1.8rem; font-weight: 800; color: #c084fc; margin: 4px 0;">21 Proofs</div>
+                <div id="ft-oracle-status" style="font-size: 0.8rem; color: #e9d5ff;">PISOFreqtradeOracle.sol</div>
+            </div>
+        </div>
+
+        <!-- Bot Control Console & Oracle Bridge Container -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-bottom: 24px;">
+            <!-- Bot Interactive Control Console -->
+            <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                    <span>🎮</span> Bot Control Console
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+                    <button id="ft-btn-start" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        ▶️ Start Bot
+                    </button>
+                    <button id="ft-btn-stop" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        ⏸️ Stop Bot
+                    </button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+                    <button id="ft-btn-buy" style="background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: #60a5fa; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                        🛒 Force Buy PISO
+                    </button>
+                    <button id="ft-btn-sell" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #fbbf24; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                        💰 Force Sell PISO
+                    </button>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button id="ft-btn-submit-proof" style="flex: 2; background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                        🔗 Submit Proof to PISO Chain
+                    </button>
+                    <button id="ft-refresh-btn" style="flex: 1; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                        🔄 Refresh
+                    </button>
+                </div>
+
+                <div id="ft-control-output" style="margin-top: 16px;"></div>
+            </div>
+
+            <!-- Freqtrade Oracle Bridge Info -->
+            <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                    <span>🔮</span> PISO Chain Oracle Bridge (bridge/freqtrade_bridge.py)
+                </h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
+                    Computes cryptographic SHA-256 work proofs for every closed trade and submits proof to <code>PISOFreqtradeOracle.sol</code> to earn PISO validator rewards.
+                </p>
+
+                <div style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 14px; font-family: var(--font-mono); font-size: 0.8rem; color: #d8b4fe; line-height: 1.6;">
+                    Freqtrade REST API: http://localhost:8180<br>
+                    Poll Interval:      30 Seconds<br>
+                    Oracle Contract:    PISOFreqtradeOracle.sol<br>
+                    Worker Wallet:      0x1821F246a...14731<br>
+                    Latest Proof Hash:  0x9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e
+                </div>
+            </div>
+        </div>
+
+        <!-- Open & Closed Trades Table -->
+        <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+            <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                <span>📋</span> Freqtrade Trade History & On-Chain Proofs
+            </h3>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary);">
+                            <th style="padding: 10px;">Trade ID</th>
+                            <th style="padding: 10px;">Pair</th>
+                            <th style="padding: 10px;">Strategy</th>
+                            <th style="padding: 10px;">Profit %</th>
+                            <th style="padding: 10px;">On-Chain Proof Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ft-trades-body">
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <td style="padding: 12px 10px; font-family: var(--font-mono); color: var(--accent-cyan);">#42</td>
+                            <td style="padding: 12px 10px; font-weight: 700; color: #fff;">PISO/USDT</td>
+                            <td style="padding: 12px 10px; color: var(--text-secondary);">PISOStrategyV1</td>
+                            <td style="padding: 12px 10px; color: #10b981; font-weight: 800;">+3.45%</td>
+                            <td style="padding: 12px 10px;"><span style="padding: 4px 10px; border-radius: 20px; background: rgba(34, 197, 94, 0.2); color: #4ade80; font-size: 0.8rem; font-weight: 600;">✓ VERIFIED ON-CHAIN</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <td style="padding: 12px 10px; font-family: var(--font-mono); color: var(--accent-cyan);">#41</td>
+                            <td style="padding: 12px 10px; font-weight: 700; color: #fff;">WBTC/USDT</td>
+                            <td style="padding: 12px 10px; color: var(--text-secondary);">PISOStrategyV1</td>
+                            <td style="padding: 12px 10px; color: #10b981; font-weight: 800;">+1.82%</td>
+                            <td style="padding: 12px 10px;"><span style="padding: 4px 10px; border-radius: 20px; background: rgba(34, 197, 94, 0.2); color: #4ade80; font-size: 0.8rem; font-weight: 600;">✓ VERIFIED ON-CHAIN</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
 
     <script src="app.js"></script>
     <script>
@@ -2338,5 +2803,29 @@ docker-compose up freqtrade freqtrade-bridge</pre>
         }, 3000);
     })();
     </script>
+
+    <!-- 📱 Native Mobile Bottom App Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+        <a href="#overview" class="mobile-bottom-item active" id="mob-nav-overview">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Overview</span>
+        </a>
+        <a href="#pisoswap" class="mobile-bottom-item" id="mob-nav-pisoswap">
+            <span class="mobile-nav-icon">🔀</span>
+            <span>Swap</span>
+        </a>
+        <a href="#bridge" class="mobile-bottom-item" id="mob-nav-bridge">
+            <span class="mobile-nav-icon">🌉</span>
+            <span>Bridge</span>
+        </a>
+        <a href="#freqtrade" class="mobile-bottom-item" id="mob-nav-freqtrade">
+            <span class="mobile-nav-icon">📈</span>
+            <span>Trading</span>
+        </a>
+        <a href="wallet.html" class="mobile-bottom-item" id="mob-nav-wallet">
+            <span class="mobile-nav-icon">👛</span>
+            <span>Wallet</span>
+        </a>
+    </nav>
 </body>
 </html>

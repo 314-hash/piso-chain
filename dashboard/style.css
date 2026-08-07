@@ -2285,6 +2285,225 @@ code, pre, .terminal-output, [id$="-output"] {
         gap: 12px !important;
     }
 
+    .tutorial-modal-card {
+        width: 94vw;
+        max-height: 88vh;
+        padding: 18px;
+        overflow-y: auto;
+    }
+}
+
+/* Small Mobile (<= 480px) */
+@media (max-width: 480px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-action-buttons {
+        flex-direction: column;
+    }
+
+    .hero-action-buttons a,
+    .hero-action-buttons button {
+        width: 100%;
+    }
+
+    .hero-header-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-header-group img {
+        width: 64px !important;
+        height: 64px !important;
+    }
+
+    .recovery-tabs {
+        padding-bottom: 6px;
+    }
+
+    .tab-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .mnemonic-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 🚀 Mainnet Responsive UI & Mobile Touch Optimization                      */
+/* ─────────────────────────────────────────────────────────────────────────── */
+button, input, select, textarea, .nav-item, .btn-primary {
+    min-height: 44px;
+    touch-action: manipulation;
+}
+
+code, pre, .terminal-output, [id$="-output"] {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
+.grid-responsive-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: -280px;
+        z-index: 9999;
+        width: 270px;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+        background: var(--card-bg);
+    }
+
+    .sidebar.open {
+        transform: translateX(280px);
+    }
+
+    .close-drawer-btn {
+        display: flex !important;
+    }
+
+    .mobile-bottom-nav {
+        display: flex !important;
+    }
+
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 12px !important;
+        padding-bottom: 80px !important;
+    }
+
+    .top-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+        padding: 12px !important;
+    }
+
+    .header-top-row {
+        display: flex !important;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .search-bar-container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .card {
+        padding: 14px !important;
+    }
+
+    .network-status-badge {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* 📱 Compact Enterprise Tab Hub Styles                                      */
+/* ─────────────────────────────────────────────────────────────────────────── */
+.ent-tab-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ent-tab-bar::-webkit-scrollbar {
+    height: 4px;
+}
+
+.ent-tab-bar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.ent-tab-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ent-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.ent-tab-btn.active {
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+/* 📱 Responsive Mobile Optimizations for PISO Swap & Features */
+@media (max-width: 640px) {
+    .pisoswap-section {
+        padding: 0 8px !important;
+        margin: 16px 0 !important;
+    }
+
+    .pisoswap-section > div {
+        padding: 16px !important;
+        border-radius: 14px !important;
+    }
+
+    .pisoswap-section div[style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .hero-banner-section .panel-card {
+        padding: 16px !important;
+    }
+
+    .hero-flex-container {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    .hero-header-group {
+        gap: 12px !important;
+    }
+
     .hero-header-group img {
         width: 64px !important;
         height: 64px !important;
@@ -2296,4 +2515,41 @@ code, pre, .terminal-output, [id$="-output"] {
         font-size: 13px !important;
         padding: 10px 16px !important;
     }
+}
+
+/* 🔀 PISOSwap, Bridge & Freqtrade Dashboard Styling */
+.slippage-btn {
+    transition: all 0.2s ease;
+}
+.slippage-btn:hover {
+    background: rgba(59, 130, 246, 0.3) !important;
+    border-color: #3b82f6 !important;
+    color: #fff !important;
+}
+.slippage-btn.active {
+    background: rgba(59, 130, 246, 0.3) !important;
+    border-color: #3b82f6 !important;
+    color: #fff !important;
+}
+
+#btn-swap-direction-flip:hover,
+#btn-bridge-flip-direction:hover {
+    transform: rotate(180deg);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.pulse-dot.green {
+    background: #10b981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulseDotGreen 1.8s infinite;
+}
+@keyframes pulseDotGreen {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
