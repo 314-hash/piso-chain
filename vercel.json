@@ -2,7 +2,6 @@
   "version": 2,
   "name": "piso-blockchain",
   "framework": null,
-  "cleanUrls": true,
   "outputDirectory": "dashboard",
   "headers": [
     {
@@ -32,16 +31,5 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
-  ],
-  "rewrites": [
-    { "source": "/wallet", "destination": "/wallet.html" },
-    { "source": "/contracts", "destination": "/contracts.html" },
-    { "source": "/swap", "destination": "/swap.html" },
-    { "source": "/bridge", "destination": "/bridge.html" },
-    { "source": "/freqtrade", "destination": "/freqtrade.html" },
-    { "source": "/pow", "destination": "/pow.html" },
-    { "source": "/sakura", "destination": "/sakura.html" },
-    { "source": "/enterprise", "destination": "/enterprise.html" },
-    { "source": "/features", "destination": "/features.html" }
   ]
 }
