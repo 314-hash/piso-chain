@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>PISO Chain - Mainnet Web3 & Post-Quantum Wallet Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar-drawer">
+            <div class="logo-area">
+                <img src="piso_logo.jpg" alt="PISO Logo" style="height: 36px; width: 36px; border-radius: 50%; border: 1.5px solid #ffd700; margin-right: 10px; object-fit: cover;">
+                <div class="logo-text">PISO <span>CHAIN</span></div>
+                <button class="close-drawer-btn" id="close-drawer">✕</button>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span> Overview
+                </a>
+                <a href="wallet.html" class="nav-item active" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2)); border: 1px solid var(--accent-cyan);">
+                    <span class="nav-icon">👛</span> Wallet Studio (Mainnet)
+                </a>
+                <a href="contracts.html" class="nav-item" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15)); border: 1px solid #a855f7;">
+                    <span class="nav-icon">📜</span> System Contracts Hub
+                </a>
+                <a href="swap.html" class="nav-item" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid #3b82f6;">
+                    <span class="nav-icon">🔀</span> PISOSwap DEX
+                </a>
+                <a href="bridge.html" class="nav-item" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(16, 185, 129, 0.15)); border: 1px solid #0ea5e9;">
+                    <span class="nav-icon">🌉</span> Cross-Chain Bridge
+                </a>
+                <a href="freqtrade.html" class="nav-item" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.15)); border: 1px solid #10b981;">
+                    <span class="nav-icon">📈</span> Trading Bot (freqtrade)
+                </a>
+                <a href="index.html#faucet" class="nav-item">
+                    <span class="nav-icon">🚰</span> Testnet Faucet
+                </a>
+                <a href="index.html#paymaster" class="nav-item">
+                    <span class="nav-icon">⛽</span> Gasless Paymaster
+                </a>
+                <a href="index.html#zkrecovery" class="nav-item">
+                    <span class="nav-icon">🔐</span> ZK Social Recovery
+                </a>
+                <a href="index.html#quantum" class="nav-item">
+                    <span class="nav-icon">⚛️</span> Quantum Vault
+                </a>
+                <a href="index.html#validators" class="nav-item">
+                    <span class="nav-icon">🛡️</span> Validators
+                </a>
+                <a href="index.html#explorer" class="nav-item">
+                    <span class="nav-icon">🔍</span> Explorer & RPC
+                </a>
+            </nav>
+            <div class="network-status-badge">
+                <span class="pulse-dot green"></span>
+                <div class="badge-info">
+                    <span class="network-name">Mainnet Parlia</span>
+                    <span class="chain-id">Chain ID: 2026001</span>
+                </div>
+            </div>
+        </aside>
+
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-top-row">
+                    <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                    <div class="logo-text mobile-only-logo" style="font-size: 16px; font-weight: 800; color: var(--text-primary);">⚡ PISO <span style="color: var(--accent-cyan);">CHAIN</span></div>
+                </div>
+                <div style="font-weight: 700; font-size: 18px; color: var(--text-primary); display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <span>👛 Mainnet Wallet Studio</span>
+                    <span class="badge-mainnet">Production Ready</span>
+                    <span class="badge-quantum">ML-DSA Post-Quantum</span>
+                </div>
+                <div class="header-actions">
+                    <div class="rpc-status" id="rpc-indicator">
+                        <span class="pulse-dot"></span> Mainnet RPC (8545)
+                    </div>
+                    <button class="btn-connect-wallet" id="btn-add-metamask" style="background: linear-gradient(135deg, #f97316, #ea580c);">🦊 Add PISO Mainnet to MetaMask</button>
+                </div>
+            </header>
+
+            <!-- Main Wizard Navigation Tabs -->
+            <div class="wallet-wizard-tabs">
+                <button class="wizard-tab-btn active" id="tab-create-btn" onclick="switchTab('create')">
+                    ➕ Create New Wallet
+                </button>
+                <button class="wizard-tab-btn" id="tab-import-btn" onclick="switchTab('import')">
+                    📥 Import Existing Wallet
+                </button>
+                <button class="wizard-tab-btn" id="tab-slip39-btn" onclick="switchTab('slip39')" style="border-color: var(--accent-cyan);">
+                    🔑 SLIP-39 Shamir Backup
+                </button>
+                <button class="wizard-tab-btn" id="tab-live-btn" onclick="switchTab('live')">
+                    ⚡ Live Wallet & Sender
+                </button>
+                <button class="wizard-tab-btn" id="tab-paper-btn" onclick="switchTab('paper')">
+                    🖨️ Cold Paper Wallet
+                </button>
+                <button class="wizard-tab-btn" id="tab-security-btn" onclick="switchTab('security')">
+                    🛡️ Mainnet Security
+                </button>
+            </div>
+
+            <!-- Tab 1: Create New Wallet -->
+            <div class="tab-content" id="tab-create">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>🔑 Create Mainnet PISO Wallet & Quantum Vault</h3>
+                        <span class="badge-tag green">BIP39 HD Key Derivation</span>
+                    </div>
+                    <p class="tab-desc">Generate a 12 or 24-word secure seed phrase with dual EVM secp256k1 key and NIST FIPS 204 Post-Quantum (ML-DSA / W-OTS+) signature keys.</p>
+
+                    <div class="form-group margin-top">
+                        <label>Mnemonic Seed Word Length:</label>
+                        <select id="select-mnemonic-length" class="mono-input" style="max-width: 240px; padding: 8px 12px; background: var(--bg-dark); color: var(--text-primary); border: 1px solid var(--card-border); border-radius: 8px;">
+                            <option value="12">12 Words (128-bit Entropy)</option>
+                            <option value="24" selected>24 Words (256-bit Mainnet Grade Entropy)</option>
+                        </select>
+                    </div>
+
+                    <div class="margin-top">
+                        <button id="btn-generate-mnemonic" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); font-weight: 700;">
+                            ✨ Generate High-Entropy Seed Phrase
+                        </button>
+                    </div>
+
+                    <div id="section-mnemonic-display" style="display: none;" class="margin-top">
+                        <div class="security-alert-box">
+                            <strong>⚠️ CRITICAL SECURITY INSTRUCTION:</strong> Write down these seed words on physical paper or stamp them in steel. Never screenshot or store them unencrypted on cloud services!
+                        </div>
+
+                        <div class="mnemonic-grid" id="mnemonic-words-container">
+                            <!-- Populated via JS -->
+                        </div>
+
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;" class="margin-top">
+                            <button id="btn-copy-mnemonic" class="btn-secondary">📋 Copy Mnemonic</button>
+                            <button id="btn-reveal-toggle" class="btn-secondary">👁️ Hide / Reveal Words</button>
+                            <button id="btn-confirm-saved" class="btn-primary" style="background: var(--accent-green);">✅ I Have Saved My Seed Phrase</button>
+                        </div>
+                    </div>
+
+                    <!-- Derived Keys Output -->
+                    <div id="section-keys-display" style="display: none;" class="margin-top">
+                        <hr style="border-color: var(--card-border); margin: 24px 0;" />
+                        <h4>🔐 Generated Mainnet Keypair & Quantum Vault</h4>
+
+                        <div class="form-group margin-top">
+                            <label>Layer 1 Mainnet Address (EVM secp256k1):</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="text" id="out-wallet-address" readonly class="mono-input" style="color: var(--accent-cyan); font-weight: 700;" />
+                                <button class="btn-secondary" onclick="copyToClipboard('out-wallet-address')">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group margin-top">
+                            <label>Private Key (EVM secp256k1):</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="password" id="out-private-key" readonly class="mono-input" style="color: #fca5a5;" />
+                                <button class="btn-secondary" onclick="togglePasswordView('out-private-key')">Show/Hide</button>
+                                <button class="btn-secondary" onclick="copyToClipboard('out-private-key')">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group margin-top">
+                            <label>⚛️ NIST FIPS 204 ML-DSA Post-Quantum Keypair:</label>
+                            <div class="pqc-key-box" id="out-pqc-key">
+                                ML-DSA-8743-PUB: 0x9f83a21... [Click Generate]
+                            </div>
+                        </div>
+
+                        <div class="margin-top" style="background: rgba(6, 182, 212, 0.05); padding: 16px; border-radius: 12px; border: 1px solid var(--card-border);">
+                            <h5 style="margin-bottom: 8px; color: var(--accent-cyan);">💾 Export Web3 Encrypted JSON Keystore (Mainnet Standard)</h5>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">Encrypt your wallet using AES-GCM & PBKDF2 key derivation for backup.</p>
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <input type="password" id="export-password" placeholder="Enter encryption password..." class="mono-input" style="max-width: 300px;" />
+                                <button id="btn-export-keystore" class="btn-primary">📥 Download Keystore JSON</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Import Existing Wallet -->
+            <div class="tab-content" id="tab-import" style="display: none;">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>📥 Import Existing Wallet</h3>
+                        <span class="badge-tag green">Mnemonic / Private Key / Web3 JSON</span>
+                    </div>
+                    <p class="tab-desc">Access your PISO Mainnet account by restoring from your seed phrase, private key, or encrypted keystore file.</p>
+
+                    <div class="form-group margin-top">
+                        <label>Import Method:</label>
+                        <select id="import-type" class="mono-input" style="max-width: 260px; padding: 8px 12px; background: var(--bg-dark); color: var(--text-primary); border: 1px solid var(--card-border); border-radius: 8px;" onchange="updateImportUI()">
+                            <option value="mnemonic">12 / 24-Word Mnemonic Seed Phrase</option>
+                            <option value="privkey">Raw Private Key (0x...)</option>
+                            <option value="keystore">Encrypted Web3 JSON Keystore File</option>
+                        </select>
+                    </div>
+
+                    <!-- Mnemonic Import UI -->
+                    <div id="import-section-mnemonic" class="margin-top">
+                        <div class="form-group">
+                            <label>Enter Seed Phrase (space-separated):</label>
+                            <textarea id="import-mnemonic-input" rows="3" class="mono-input" placeholder="apple banana cherry dragon eagle forest grape honey ice jungle kite lemon..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Private Key Import UI -->
+                    <div id="import-section-privkey" class="margin-top" style="display: none;">
+                        <div class="form-group">
+                            <label>Enter Raw Private Key (64 hex characters):</label>
+                            <input type="password" id="import-privkey-input" class="mono-input" placeholder="0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a6f36597b" />
+                        </div>
+                    </div>
+
+                    <!-- Keystore Import UI -->
+                    <div id="import-section-keystore" class="margin-top" style="display: none;">
+                        <div class="form-group">
+                            <label>Select Encrypted JSON Keystore File:</label>
+                            <input type="file" id="import-keystore-file" accept=".json" class="mono-input" />
+                        </div>
+                        <div class="form-group margin-top">
+                            <label>Keystore Password:</label>
+                            <input type="password" id="import-keystore-password" placeholder="Enter password..." class="mono-input" style="max-width: 320px;" />
+                        </div>
+                    </div>
+
+                    <div class="margin-top">
+                        <button id="btn-execute-import" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));">
+                            🔓 Unlock & Import Wallet
+                        </button>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="import-status-output" style="display: none;">
+                        <pre>Ready to import wallet.</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: SLIP-39 Shamir Secret Sharing -->
+            <div class="tab-content" id="tab-slip39" style="display: none;">
+                <div class="panel-card hero-gold-card">
+                    <div class="panel-header">
+                        <h3>🔑 SLIP-39 Shamir Secret Sharing & Threshold Recovery</h3>
+                        <span class="badge-slip39">Galois Field GF(256)</span>
+                    </div>
+                    <p class="tab-desc">Split your master seed or private key into N Shamir shares with threshold M. Reconstruct original secrets with any M shares for Validator Backup, DAO Treasury, or Wallet Recovery.</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;" class="margin-top">
+                        <!-- Split Panel -->
+                        <div style="background: var(--bg-dark); padding: 20px; border-radius: 10px; border: 1px solid var(--card-border);">
+                            <h4 style="color: var(--accent-cyan); margin-bottom: 12px;">✂️ Split Secret into Shares</h4>
+                            <div class="form-group">
+                                <label>Secret Hex or Seed Phrase:</label>
+                                <input type="text" id="slip39-secret-input" class="mono-input" placeholder="e.g. 0x0123456789abcdef... or 24-word seed" />
+                            </div>
+                            <div style="display: flex; gap: 12px;" class="margin-top">
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Threshold (M):</label>
+                                    <input type="number" id="slip39-threshold-input" value="2" min="1" max="10" class="mono-input" />
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Total Shares (N):</label>
+                                    <input type="number" id="slip39-shares-input" value="3" min="1" max="10" class="mono-input" />
+                                </div>
+                            </div>
+                            <button id="btn-split-slip39" class="btn-primary margin-top" style="width: 100%; background: linear-gradient(135deg, var(--accent-cyan), #0284c7);">
+                                ✂️ Generate SLIP-39 Shares
+                            </button>
+                            <div id="slip39-shares-result" class="margin-top" style="display: none;"></div>
+                        </div>
+
+                        <!-- Recover Panel -->
+                        <div style="background: var(--bg-dark); padding: 20px; border-radius: 10px; border: 1px solid var(--card-border);">
+                            <h4 style="color: var(--accent-green); margin-bottom: 12px;">🧩 Reconstruct Secret from Shares</h4>
+                            <div class="form-group">
+                                <label>Paste Threshold Shares (one per line):</label>
+                                <textarea id="slip39-combine-input" rows="4" class="mono-input" placeholder="01-02-a1b2c3d4...&#10;02-02-e5f6g7h8..."></textarea>
+                            </div>
+                            <button id="btn-combine-slip39" class="btn-primary margin-top" style="width: 100%; background: linear-gradient(135deg, var(--accent-green), #059669);">
+                                🧩 Reconstruct Master Secret
+                            </button>
+                            <div id="slip39-combine-result" class="rpc-output-box margin-top" style="display: none;">
+                                <pre>Reconstruction result will appear here.</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Live Wallet & Sender -->
+            <div class="tab-content" id="tab-live" style="display: none;">
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-title">Wallet Address</div>
+                        <div class="kpi-value" id="live-wallet-addr" style="font-size: 14px; font-family: var(--font-mono); color: var(--accent-cyan);">Not Connected</div>
+                        <div class="kpi-subtext">Mainnet L1 Parlia Engine</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-title">Native PISO Balance</div>
+                        <div class="kpi-value" id="live-piso-balance">0.00 PISO</div>
+                        <div class="kpi-subtext">Layer 1 Native Coin</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-title">Pending Nonce</div>
+                        <div class="kpi-value" id="live-nonce-val">0</div>
+                        <div class="kpi-subtext">Account Tx Counter</div>
+                    </div>
+                </div>
+
+                <div class="panel-card margin-top">
+                    <div class="panel-header">
+                        <h3>⚡ Send Native PISO Coin (Mainnet Transaction Builder)</h3>
+                        <span class="badge-tag green">eth_sendRawTransaction</span>
+                    </div>
+
+                    <div class="form-group margin-top">
+                        <label>Recipient Address (0x...):</label>
+                        <input type="text" id="send-recipient-addr" placeholder="0x1821F246a27287a2187E1D634B8883030fA14731" class="mono-input" />
+                    </div>
+
+                    <div class="form-group margin-top">
+                        <label>Amount in PISO:</label>
+                        <input type="number" id="send-amount-piso" step="0.001" placeholder="1.5" class="mono-input" style="max-width: 300px;" />
+                    </div>
+
+                    <div class="form-group margin-top">
+                        <label>Gas Limit:</label>
+                        <input type="number" id="send-gas-limit" value="21000" class="mono-input" style="max-width: 200px;" />
+                    </div>
+
+                    <div class="margin-top" style="display: flex; gap: 12px;">
+                        <button id="btn-refresh-balance" class="btn-secondary">🔄 Refresh Balance</button>
+                        <button id="btn-broadcast-tx" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-green), #059669);">
+                            🚀 Sign & Broadcast Mainnet Tx
+                        </button>
+                    </div>
+
+                    <div class="rpc-output-box margin-top" id="send-tx-output">
+                        <pre>Transaction log ready. Connect or generate wallet to broadcast transactions.</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Cold Paper Wallet -->
+            <div class="tab-content" id="tab-paper" style="display: none;">
+                <div class="paper-wallet-card">
+                    <div class="paper-wallet-header">
+                        <div>
+                            <h2 style="color: var(--accent-cyan); font-weight: 800;">⚡ PISO CHAIN COLD STORAGE VAULT</h2>
+                            <p style="font-size: 12px; color: var(--text-secondary);">Layer 1 Mainnet & NIST FIPS 204 Post-Quantum Paper Backup</p>
+                        </div>
+                        <div class="badge-mainnet">Chain ID: 2026001</div>
+                    </div>
+
+                    <div class="paper-qr-container">
+                        <div class="qr-box">
+                            <div id="paper-qr-address"></div>
+                            <div class="qr-label">Public Address QR</div>
+                        </div>
+
+                        <div class="qr-box">
+                            <div id="paper-qr-privkey"></div>
+                            <div class="qr-label" style="color: #dc2626;">Private Key QR (Secret)</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 16px;">
+                        <div class="form-group">
+                            <label style="color: var(--accent-cyan);">Mainnet Address:</label>
+                            <div id="paper-text-address" class="mono-input" style="font-size: 13px; font-weight: 700; background: rgba(0,0,0,0.4);">0x0000000000000000000000000000000000000000</div>
+                        </div>
+
+                        <div class="form-group margin-top">
+                            <label style="color: var(--accent-cyan);">⚛️ NIST FIPS 204 ML-DSA Quantum Key:</label>
+                            <div id="paper-text-pqc" class="pqc-key-box" style="font-size: 11px;">ML-DSA-8743-PUB: Uninitialized</div>
+                        </div>
+                    </div>
+
+                    <div class="margin-top" style="display: flex; justify-content: flex-end; gap: 12px;">
+                        <button onclick="window.print()" class="btn-primary" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+                            🖨️ Print Hardware Cold Storage Card
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 5: Security Checklist -->
+            <div class="tab-content" id="tab-security" style="display: none;">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3>🛡️ PISO Chain Mainnet Key Security Best Practices</h3>
+                        <span class="badge-tag green">Production Security Standard</span>
+                    </div>
+
+                    <div style="line-height: 1.8; color: var(--text-primary);" class="margin-top">
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 8px;">1. Never Store Unencrypted Seed Phrases</h4>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">
+                            Hardware cold storage is recommended for mainnet funds exceeding 10,000 PISO. Always keep seed phrases in offline steel cards or fireproof safe vaults.
+                        </p>
+
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 8px;">2. Post-Quantum Quantum Vault Protection</h4>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">
+                            PISO Chain implements **NIST FIPS 204 ML-DSA** and Winternitz W-OTS+ post-quantum signatures via <a href="index.html#quantum" style="color: var(--accent-cyan);">PISOQuantumSecurity.sol</a>. Make sure your quantum key is bound to your account for quantum attack immunity.
+                        </p>
+
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 8px;">3. ZK Social Account Recovery</h4>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">
+                            If you lose access to your primary private key, configure 3 trusted guardian addresses using <a href="index.html#zkrecovery" style="color: var(--accent-cyan);">PISOZKRecovery.sol</a> for Zero-Knowledge Social Recovery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    <!-- 📱 Mobile Bottom Navigation Bar (App Experience) -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Overview</span>
+        </a>
+        <a href="swap.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🔀</span>
+            <span>Swap</span>
+        </a>
+        <a href="bridge.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🌉</span>
+            <span>Bridge</span>
+        </a>
+        <a href="freqtrade.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📈</span>
+            <span>Trading</span>
+        </a>
+        <a href="wallet.html" class="mobile-bottom-item active">
+            <span class="mobile-nav-icon">👛</span>
+            <span>Wallet</span>
+        </a>
+    </nav>
+
+    <script src="wallet.js"></script>
+</body>
+</html>

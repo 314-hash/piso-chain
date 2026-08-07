@@ -1,35 +1,35 @@
 {
   "version": 2,
   "name": "piso-blockchain",
-  "framework": null,
-  "outputDirectory": "dashboard",
-  "headers": [
-    {
-      "source": "/.well-known/assetlinks.json",
-      "headers": [
-        { "key": "Content-Type", "value": "application/json" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Cache-Control", "value": "no-cache" }
-      ]
-    },
-    {
-      "source": "/(.*).apk",
-      "headers": [
-        { "key": "Content-Type", "value": "application/vnd.android.package-archive" },
-        { "key": "Content-Disposition", "value": "attachment; filename=\"PISO_Chain_v1.6.0.apk\"" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-Requested-With, Content-Type, Accept, Authorization" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-      ]
-    }
+  "builds": [
+    { "src": "dashboard/**", "use": "@vercel/static" },
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "*.css", "use": "@vercel/static" },
+    { "src": "*.js", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/.well-known/(.*)", "dest": "/dashboard/.well-known/$1" },
+    { "src": "/(.*).apk", "dest": "/dashboard/$1.apk" },
+    { "src": "/pow.html", "dest": "/dashboard/pow.html" },
+    { "src": "/pow", "dest": "/dashboard/pow.html" },
+    { "src": "/sakura.html", "dest": "/dashboard/sakura.html" },
+    { "src": "/sakura", "dest": "/dashboard/sakura.html" },
+    { "src": "/enterprise.html", "dest": "/dashboard/enterprise.html" },
+    { "src": "/enterprise", "dest": "/dashboard/enterprise.html" },
+    { "src": "/features.html", "dest": "/dashboard/features.html" },
+    { "src": "/features", "dest": "/dashboard/features.html" },
+    { "src": "/swap.html", "dest": "/dashboard/swap.html" },
+    { "src": "/swap", "dest": "/dashboard/swap.html" },
+    { "src": "/bridge.html", "dest": "/dashboard/bridge.html" },
+    { "src": "/bridge", "dest": "/dashboard/bridge.html" },
+    { "src": "/freqtrade.html", "dest": "/dashboard/freqtrade.html" },
+    { "src": "/freqtrade", "dest": "/dashboard/freqtrade.html" },
+    { "src": "/wallet.html", "dest": "/dashboard/wallet.html" },
+    { "src": "/wallet", "dest": "/dashboard/wallet.html" },
+    { "src": "/contracts.html", "dest": "/dashboard/contracts.html" },
+    { "src": "/contracts", "dest": "/dashboard/contracts.html" },
+    { "src": "/index.html", "dest": "/dashboard/index.html" },
+    { "src": "/", "dest": "/dashboard/index.html" },
+    { "src": "/(.*)", "dest": "/dashboard/$1" }
   ]
 }

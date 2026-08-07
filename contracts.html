@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>PISO Chain - System Smart Contracts Hub & Interaction Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contracts-header-banner {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .contracts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+        }
+
+        .contract-card {
+            background: var(--bg-card, #131b2e);
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+
+        .contract-card:hover {
+            border-color: var(--accent-cyan, #06b6d4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.2);
+        }
+
+        .contract-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .contract-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contract-num {
+            color: var(--accent-cyan, #06b6d4);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .contract-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .contract-desc {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .address-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .address-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .address-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon:hover {
+            background: var(--accent-cyan, #06b6d4);
+            color: #000;
+        }
+
+        .methods-section {
+            margin-bottom: 12px;
+        }
+
+        .methods-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .methods-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .method-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .method-chip.read {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .method-chip.write {
+            background: rgba(234, 179, 8, 0.15);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .contract-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .btn-primary-sm {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            color: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary-sm:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary-sm {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary-sm:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .query-output {
+            margin-top: 14px;
+            background: #090d16;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #e2e8f0;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .badge-cyan {
+            background: rgba(6, 182, 212, 0.15);
+            color: #22d3ee;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar-drawer">
+            <div class="logo-area">
+                <img src="piso_logo.jpg" alt="PISO Logo" style="height: 36px; width: 36px; border-radius: 50%; border: 1.5px solid #ffd700; margin-right: 10px; object-fit: cover;">
+                <div class="logo-text">PISO <span>CHAIN</span></div>
+                <button class="close-drawer-btn" id="close-drawer">✕</button>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span> Overview
+                </a>
+                <a href="wallet.html" class="nav-item">
+                    <span class="nav-icon">👛</span> Wallet Studio (Mainnet)
+                </a>
+                <a href="contracts.html" class="nav-item active" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2)); border: 1px solid var(--accent-cyan);">
+                    <span class="nav-icon">📜</span> System Smart Contracts
+                </a>
+                <a href="swap.html" class="nav-item">
+                    <span class="nav-icon">🔀</span> PISOSwap DEX
+                </a>
+                <a href="bridge.html" class="nav-item">
+                    <span class="nav-icon">🌉</span> Cross-Chain Bridge
+                </a>
+                <a href="freqtrade.html" class="nav-item">
+                    <span class="nav-icon">📈</span> Trading Bot (freqtrade)
+                </a>
+                <a href="index.html#faucet" class="nav-item">
+                    <span class="nav-icon">🚰</span> Testnet Faucet
+                </a>
+                <a href="index.html#paymaster" class="nav-item">
+                    <span class="nav-icon">⛽</span> Gasless Paymaster
+                </a>
+                <a href="index.html#zkrecovery" class="nav-item">
+                    <span class="nav-icon">🔐</span> ZK Social Recovery
+                </a>
+                <a href="index.html#quantum" class="nav-item">
+                    <span class="nav-icon">⚛️</span> Quantum Vault
+                </a>
+            </nav>
+            <div class="network-status-badge">
+                <span class="pulse-dot green"></span>
+                <div class="badge-info">
+                    <span class="network-name">Mainnet Parlia</span>
+                    <span class="chain-id">Chain ID: 2026001</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Sidebar Mobile Overlay -->
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Bar with Mobile Hamburger -->
+            <header class="top-header">
+                <div class="header-top-row">
+                    <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                    <div class="logo-text mobile-only-logo" style="font-size: 16px; font-weight: 800; color: var(--text-primary);">⚡ PISO <span style="color: var(--accent-cyan);">CHAIN</span></div>
+                </div>
+                <div class="header-title">
+                    <h1 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin: 0;">System Smart Contracts Hub</h1>
+                    <p class="subtitle" style="font-size: 0.85rem; color: var(--text-secondary); margin: 4px 0 0 0;">Complete Master Address Registry & Web3 Read/Write Studio</p>
+                </div>
+                <div class="network-badge" id="connection-status">
+                    <span class="badge badge-success">● Connected to Mainnet (Chain 2026001)</span>
+                </div>
+            </header>
+
+            <!-- Banner Card -->
+            <section class="contracts-header-banner">
+                <div>
+                    <h2>📜 PISO Chain Precompiled & System Smart Contracts Suite</h2>
+                    <p>All 11 System Smart Contracts are precompiled onto PISO Chain kernel addresses (<code>0x0000000000000000000000000000000000001000</code> to <code>100A</code>). Click any contract card below to inspect ABI specifications, copy addresses, or run live on-chain queries.</p>
+                </div>
+                <a href="https://piso-blockchain.vercel.app/" target="_blank" class="btn-primary-sm" style="text-decoration:none; padding:12px 20px;">🌐 Open Production Web Dashboard</a>
+            </section>
+
+            <!-- Contracts Grid -->
+            <section class="contracts-grid" id="contracts-grid">
+                <!-- Dynamically Rendered by contracts.js -->
+            </section>
+        </main>
+    <!-- 📱 Mobile Bottom Navigation Bar (App Experience) -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Overview</span>
+        </a>
+        <a href="swap.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🔀</span>
+            <span>Swap</span>
+        </a>
+        <a href="bridge.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🌉</span>
+            <span>Bridge</span>
+        </a>
+        <a href="freqtrade.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📈</span>
+            <span>Trading</span>
+        </a>
+        <a href="contracts.html" class="mobile-bottom-item active">
+            <span class="mobile-nav-icon">📜</span>
+            <span>Contracts</span>
+        </a>
+    </nav>
+
+    <script src="contracts.js"></script>
+</body>
+</html>

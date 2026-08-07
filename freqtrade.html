@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>PISO Chain — Freqtrade Algorithmic Trading Bot & Oracle Bridge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar-drawer">
+            <div class="logo-area">
+                <img src="piso_logo.jpg" alt="PISO Logo" style="height: 36px; width: 36px; border-radius: 50%; border: 1.5px solid #ffd700; margin-right: 10px; object-fit: cover;">
+                <div class="logo-text">PISO <span>CHAIN</span></div>
+                <button class="close-drawer-btn" id="close-drawer">✕</button>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span> Overview
+                </a>
+                <a href="wallet.html" class="nav-item" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15)); border: 1px solid var(--accent-cyan);">
+                    <span class="nav-icon">👛</span> Wallet Studio (Mainnet)
+                </a>
+                <a href="contracts.html" class="nav-item" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15)); border: 1px solid #a855f7;">
+                    <span class="nav-icon">📜</span> System Contracts Hub
+                </a>
+                <a href="swap.html" class="nav-item" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid #3b82f6;">
+                    <span class="nav-icon">🔀</span> PISOSwap DEX
+                </a>
+                <a href="bridge.html" class="nav-item" style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(16, 185, 129, 0.15)); border: 1px solid #0ea5e9;">
+                    <span class="nav-icon">🌉</span> Cross-Chain Bridge
+                </a>
+                <a href="freqtrade.html" class="nav-item active" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(245, 158, 11, 0.2)); border: 1px solid #10b981;">
+                    <span class="nav-icon">📈</span> Trading Bot (freqtrade)
+                </a>
+            </nav>
+            <div class="network-status-badge">
+                <span class="pulse-dot green"></span>
+                <div class="badge-info">
+                    <span class="network-name">Mainnet Parlia</span>
+                    <span class="chain-id">Chain ID: 2026001</span>
+                </div>
+            </div>
+        </aside>
+
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-top-row">
+                    <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                    <div class="logo-text mobile-only-logo" style="font-size: 16px; font-weight: 800; color: var(--text-primary);">⚡ PISO <span style="color: var(--accent-cyan);">CHAIN</span></div>
+                </div>
+                <div class="search-bar-container">
+                    <input type="text" id="global-search" placeholder="Search Bot Strategy or Trade Proof Hash..." />
+                    <button id="search-btn" class="btn-primary">Search</button>
+                </div>
+                <div class="header-actions">
+                    <div class="rpc-status" id="rpc-indicator">
+                        <span class="pulse-dot green"></span> Freqtrade Bot API (:8180)
+                    </div>
+                    <button class="btn-connect-wallet" id="btn-connect">Connect Wallet</button>
+                </div>
+            </header>
+
+            <!-- 📈 Trading Bot (Freqtrade) Section -->
+            <section class="dashboard-section freqtrade-section" id="freqtrade" style="margin-top: 20px; margin-bottom: 36px;">
+                <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.8rem; color: #fff; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 2rem;">📈</span> Freqtrade Algorithmic Trading Bot
+                        </h2>
+                        <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
+                            Automated crypto trading strategies & PISO Chain smart contract oracle verification bridge
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <span id="ft-bot-status" class="badge" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #34d399; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                            <span class="pulse-dot green"></span> ONLINE (:8180)
+                        </span>
+                        <span class="badge" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #fbbf24; font-weight: 600; padding: 6px 12px; border-radius: 8px;">
+                            Strategy: PISOStrategyV1
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Freqtrade KPI Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                    <div class="kpi-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Total Closed Profit</div>
+                        <div id="ft-profit-all" style="font-size: 1.8rem; font-weight: 800; color: #10b981; margin: 4px 0;">+24.85%</div>
+                        <div style="font-size: 0.8rem; color: #34d399;">+1,420.50 PISO Earned</div>
+                    </div>
+
+                    <div class="kpi-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Win / Loss Ratio</div>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #fff; margin: 4px 0;">
+                            <span id="ft-wins" style="color: #4ade80;">18</span> W / <span id="ft-losses" style="color: #f87171;">3</span> L
+                        </div>
+                        <div style="font-size: 0.8rem; color: #60a5fa;">85.7% Win Rate</div>
+                    </div>
+
+                    <div class="kpi-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Active Open Trades</div>
+                        <div id="ft-open-count" style="font-size: 1.8rem; font-weight: 800; color: #f59e0b; margin: 4px 0;">2 Trades</div>
+                        <div style="font-size: 0.8rem; color: #fbbf24;">Pair: PISO/USDT</div>
+                    </div>
+
+                    <div class="kpi-card" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 16px; padding: 20px;">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">Oracle Proofs On-Chain</div>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #c084fc; margin: 4px 0;">21 Proofs</div>
+                        <div id="ft-oracle-status" style="font-size: 0.8rem; color: #e9d5ff;">PISOFreqtradeOracle.sol</div>
+                    </div>
+                </div>
+
+                <!-- Bot Control Console & Oracle Bridge Container -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-bottom: 24px;">
+                    <!-- Bot Interactive Control Console -->
+                    <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                        <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                            <span>🎮</span> Bot Control Console
+                        </h3>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+                            <button id="ft-btn-start" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                ▶️ Start Bot
+                            </button>
+                            <button id="ft-btn-stop" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                ⏸️ Stop Bot
+                            </button>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+                            <button id="ft-btn-buy" style="background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: #60a5fa; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                                🛒 Force Buy PISO
+                            </button>
+                            <button id="ft-btn-sell" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #fbbf24; padding: 10px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                                💰 Force Sell PISO
+                            </button>
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button id="ft-btn-submit-proof" style="flex: 2; background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                                🔗 Submit Proof to PISO Chain
+                            </button>
+                            <button id="ft-refresh-btn" style="flex: 1; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+                                🔄 Refresh
+                            </button>
+                        </div>
+
+                        <div id="ft-control-output" style="margin-top: 16px;"></div>
+                    </div>
+
+                    <!-- Freqtrade Oracle Bridge Info -->
+                    <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                        <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                            <span>🔮</span> PISO Chain Oracle Bridge (bridge/freqtrade_bridge.py)
+                        </h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 16px;">
+                            Computes cryptographic SHA-256 work proofs for every closed trade and submits proof to <code>PISOFreqtradeOracle.sol</code> to earn PISO validator rewards.
+                        </p>
+
+                        <div style="background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 14px; font-family: var(--font-mono); font-size: 0.8rem; color: #d8b4fe; line-height: 1.6;">
+                            Freqtrade REST API: http://localhost:8180<br>
+                            Poll Interval:      30 Seconds<br>
+                            Oracle Contract:    PISOFreqtradeOracle.sol<br>
+                            Worker Wallet:      0x1821F246a...14731<br>
+                            Latest Proof Hash:  0x9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Open & Closed Trades Table -->
+                <div class="panel-card" style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 24px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);">
+                    <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                        <span>📋</span> Freqtrade Trade History & On-Chain Proofs
+                    </h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary);">
+                                    <th style="padding: 10px;">Trade ID</th>
+                                    <th style="padding: 10px;">Pair</th>
+                                    <th style="padding: 10px;">Strategy</th>
+                                    <th style="padding: 10px;">Profit %</th>
+                                    <th style="padding: 10px;">On-Chain Proof Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ft-trades-body">
+                                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                    <td style="padding: 12px 10px; font-family: var(--font-mono); color: var(--accent-cyan);">#42</td>
+                                    <td style="padding: 12px 10px; font-weight: 700; color: #fff;">PISO/USDT</td>
+                                    <td style="padding: 12px 10px; color: var(--text-secondary);">PISOStrategyV1</td>
+                                    <td style="padding: 12px 10px; color: #10b981; font-weight: 800;">+3.45%</td>
+                                    <td style="padding: 12px 10px;"><span style="padding: 4px 10px; border-radius: 20px; background: rgba(34, 197, 94, 0.2); color: #4ade80; font-size: 0.8rem; font-weight: 600;">✓ VERIFIED ON-CHAIN</span></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                    <td style="padding: 12px 10px; font-family: var(--font-mono); color: var(--accent-cyan);">#41</td>
+                                    <td style="padding: 12px 10px; font-weight: 700; color: #fff;">WBTC/USDT</td>
+                                    <td style="padding: 12px 10px; color: var(--text-secondary);">PISOStrategyV1</td>
+                                    <td style="padding: 12px 10px; color: #10b981; font-weight: 800;">+1.82%</td>
+                                    <td style="padding: 12px 10px;"><span style="padding: 4px 10px; border-radius: 20px; background: rgba(34, 197, 94, 0.2); color: #4ade80; font-size: 0.8rem; font-weight: 600;">✓ VERIFIED ON-CHAIN</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 📱 Mobile Bottom App Bar -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Overview</span>
+        </a>
+        <a href="swap.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🔀</span>
+            <span>Swap</span>
+        </a>
+        <a href="bridge.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🌉</span>
+            <span>Bridge</span>
+        </a>
+        <a href="freqtrade.html" class="mobile-bottom-item active">
+            <span class="mobile-nav-icon">📈</span>
+            <span>Trading</span>
+        </a>
+        <a href="wallet.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">👛</span>
+            <span>Wallet</span>
+        </a>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
