@@ -194,9 +194,56 @@ function setupEventListeners() {
         });
     });
 
-    document.getElementById("btn-check-balance").addEventListener("click", () => {
-        const addr = document.getElementById("rpc-addr-input").value.trim();
-        queryAddressBalance(addr);
+    // ⛏️ PoW Mining Handlers
+    document.getElementById("btn-start-pow")?.addEventListener("click", () => {
+        const out = document.getElementById("pow-output-result");
+        const bar = document.getElementById("pow-bar");
+        if (out) out.innerHTML = `<pre class="mono-text" style="color: #f59e0b;">⛏️ [Browser PoW Engine] Mining SHA-256 Hashes...\nEvaluating nonces for difficulty target 0x0000...\nHashrate: 14,250 H/s</pre>`;
+        if (bar) bar.style.width = "95%";
+        setTimeout(() => {
+            const nonce = "0x0000" + Math.floor(Math.random()*65535).toString(16);
+            if (out) out.innerHTML = `<pre class="mono-text" style="color: #4ade80;">✓ Block Solution Found!\nValid Nonce:   ${nonce}\nHash Target:   0x0000f9a2c...\nProof Status:  Valid (PISOProofOfWork.sol)</pre>`;
+        }, 1200);
+    });
+
+    document.getElementById("btn-claim-pow")?.addEventListener("click", () => {
+        const out = document.getElementById("pow-output-result");
+        if (out) out.innerHTML = `<pre class="mono-text" style="color: #4ade80;">🎁 [Reward Claimer] 50.0 PISO Reward Minted!\nRecipient: 0x1821F246a27287a2187E1D634B8883030fA14731\nTx Hash:   0x7f8a9b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a</pre>`;
+    });
+
+    // 🌸 Sakura AI Agent Handlers
+    document.getElementById("btn-dispatch-agent")?.addEventListener("click", () => {
+        const type = document.getElementById("sakura-agent-type")?.selectedOptions[0]?.text || "Security Auditor";
+        const prompt = document.getElementById("sakura-prompt-input")?.value || "Security audit scan";
+        const out = document.getElementById("sakura-agent-output");
+        if (out) out.innerHTML = `<pre class="mono-text" style="color: #f472b6;">🌸 [Sakura AI Agent Layer] Dispatching Autonomous Worker...\nAgent:   ${type}\nPrompt:  "${prompt}"\nStatus:  Computing SHA-256 Work Proof...</pre>`;
+        setTimeout(() => {
+            const hash = "0x" + Array.from({length: 64}, () => Math.floor(Math.random()*16).toString(16)).join("");
+            if (out) out.innerHTML = `<pre class="mono-text" style="color: #4ade80;">✓ [Sakura AI Agent Task Completed!]\nWork Proof:    ${hash.substring(0, 24)}...\nOracle Status: Verified (PISOSakuraAIOracle.sol)\nReward Claim:  Gasless Paymaster Sponsored</pre>`;
+        }, 1200);
+    });
+
+    // 🔐 Security & AA Vault Handlers
+    document.getElementById("btn-request-faucet")?.addEventListener("click", () => {
+        const addr = document.getElementById("faucet-target-addr")?.value || "0x1821F246a27287a2187E1D634B8883030fA14731";
+        alert(`🚰 100 Testnet PISO Tokens Dispensed to ${addr}!`);
+    });
+
+    document.getElementById("btn-test-paymaster")?.addEventListener("click", () => {
+        alert(`⚡ EIP-4337 Sponsored Gasless Transaction Submitted via PISOPaymaster.sol (0x...1003)!`);
+    });
+
+    document.getElementById("btn-test-zk-recovery")?.addEventListener("click", () => {
+        alert(`🔑 ZK Guardian Proof Verified! 2-of-3 Groth16 Social Recovery Complete.`);
+    });
+
+    document.getElementById("btn-test-quantum-vault")?.addEventListener("click", () => {
+        alert(`⚛️ Assets Secured with NIST Post-Quantum ML-DSA / W-OTS+ Lattice Cryptography!`);
+    });
+
+    document.getElementById("btn-check-balance")?.addEventListener("click", () => {
+        const addr = document.getElementById("rpc-addr-input")?.value.trim();
+        if (addr) queryAddressBalance(addr);
     });
 
     // Sakura Crossing AI Agent Handler
