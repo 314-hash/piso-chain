@@ -1908,7 +1908,18 @@ let minedYieldPISO = parseFloat(localStorage.getItem('piso_mined_yield') || '0.0
 
 document.addEventListener('DOMContentLoaded', () => {
     initPoWMiningStudio();
+    registerPWAServiceWorker();
 });
+
+function registerPWAServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+            console.log('[PWA] Service Worker registered successfully:', reg.scope);
+        }).catch((err) => {
+            console.warn('[PWA] Service Worker registration failed:', err);
+        });
+    }
+}
 
 function initPoWMiningStudio() {
     const btnOneClick = document.getElementById('btn-oneclick-action');
