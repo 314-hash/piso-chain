@@ -810,13 +810,15 @@ function setupEventListeners() {
     }
 
     function showWalletConnectModal() {
-        if (document.getElementById("wallet-connect-modal-backdrop")) {
-            document.getElementById("wallet-connect-modal-backdrop").classList.add("open");
+        let backdrop = document.getElementById("wallet-connect-modal-backdrop");
+        if (backdrop) {
+            backdrop.style.display = "flex";
+            backdrop.classList.add("open");
             return;
         }
 
         const modalHTML = `
-        <div class="cmd-palette-backdrop open" id="wallet-connect-modal-backdrop">
+        <div class="cmd-palette-backdrop open" id="wallet-connect-modal-backdrop" style="display: flex;">
             <div class="cmd-palette-modal" style="max-width: 480px; padding: 24px; text-align: center;">
                 <h3 style="margin: 0 0 8px 0; color: #fff; font-size: 1.4rem;">🔗 Connect Web3 Wallet</h3>
                 <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px;">Choose your preferred Web3 provider to interact with PISO Chain L1.</p>
@@ -836,6 +838,14 @@ function setupEventListeners() {
         </div>`;
 
         document.body.insertAdjacentHTML("beforeend", modalHTML);
+        backdrop = document.getElementById("wallet-connect-modal-backdrop");
+
+        backdrop.addEventListener("click", (e) => {
+            if (e.target === backdrop) {
+                backdrop.style.display = "none";
+                backdrop.classList.remove("open");
+            }
+        });
 
         document.getElementById("modal-btn-metamask")?.addEventListener("click", () => {
             promptMobileWalletRedirect();
@@ -850,17 +860,28 @@ function setupEventListeners() {
             updateWalletUIState(demoAccount);
             localStorage.setItem("piso-wallet-connected", "true");
             localStorage.setItem("piso-connected-account", demoAccount);
-            document.getElementById("wallet-connect-modal-backdrop")?.classList.remove("open");
+            if (backdrop) {
+                backdrop.style.display = "none";
+                backdrop.classList.remove("open");
+            }
             alert("✓ Connected Demo Wallet!\nAccount: " + demoAccount + "\nBalance: 1,450.00 PISO");
         });
 
         document.getElementById("modal-btn-close")?.addEventListener("click", () => {
-            document.getElementById("wallet-connect-modal-backdrop")?.classList.remove("open");
+            if (backdrop) {
+                backdrop.style.display = "none";
+                backdrop.classList.remove("open");
+            }
         });
     }
 
-    document.querySelectorAll("#btn-connect, .btn-connect-wallet").forEach(btn => {
-        btn.addEventListener("click", connectUserWallet);
+    // Global Event Delegation for all Connect Wallet buttons
+    document.addEventListener("click", (e) => {
+        const target = e.target.closest("#btn-connect, .btn-connect-wallet");
+        if (target) {
+            e.preventDefault();
+            connectUserWallet();
+        }
     });
 
     // Auto reconnect on page load if previously authorized
