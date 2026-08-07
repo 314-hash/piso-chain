@@ -2553,3 +2553,26 @@ code, pre, .terminal-output, [id$="-output"] {
     70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
+
+/* 📈 Freqtrade Responsive Navbar & Console Styling */
+@media (max-width: 640px) {
+    .freqtrade-section {
+        padding: 0 4px !important;
+        margin: 16px 0 !important;
+    }
+
+    .freqtrade-section .section-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .freqtrade-section div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .freqtrade-section .kpi-card {
+        padding: 14px !important;
+    }
+}
