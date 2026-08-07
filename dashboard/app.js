@@ -13,6 +13,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // Auto refresh block number every 5 seconds
     setInterval(fetchNetworkState, 5000);
 
+    // PISO Swap & Bridge nav handlers
+    document.getElementById("nav-pisoswap")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        const section = document.getElementById("section-pisoswap");
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+        document.getElementById("nav-pisoswap")?.classList.add("active");
+    });
+
+    document.getElementById("nav-bridge")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        const section = document.getElementById("section-bridge");
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+        document.getElementById("nav-bridge")?.classList.add("active");
+    });
+
     // Freqtrade nav handler
     document.getElementById("nav-freqtrade")?.addEventListener("click", (e) => {
         e.preventDefault();
