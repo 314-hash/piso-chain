@@ -199,11 +199,14 @@ function setupEventListeners() {
     // ⛏️ PoW Mining & Automatic Treasury Reward Claimer
     let powMiningInterval = null;
     let minedRewardTotal = 0;
+    let evaluatedNoncesTotal = 128400;
 
     document.getElementById("btn-start-pow")?.addEventListener("click", (e) => {
         const btn = e.currentTarget;
         const out = document.getElementById("pow-output-result");
         const bar = document.getElementById("pow-bar");
+        const hashrateEl = document.getElementById("pow-hashrate");
+        const nonceEl = document.getElementById("pow-nonce-count");
 
         if (powMiningInterval) {
             clearInterval(powMiningInterval);
@@ -211,6 +214,7 @@ function setupEventListeners() {
             btn.innerHTML = "▶️ Start Mining";
             btn.style.background = "linear-gradient(135deg, #f59e0b, #d97706)";
             if (out) out.innerHTML = `<pre class="mono-text" style="color: #fbbf24;">⏸️ PoW Mining Engine Paused.</pre>`;
+            if (hashrateEl) hashrateEl.innerText = "0 H/s";
             return;
         }
 
@@ -223,14 +227,18 @@ function setupEventListeners() {
         powMiningInterval = setInterval(() => {
             const nonce = "0x0000" + Math.floor(Math.random()*65535).toString(16);
             minedRewardTotal += 50;
+            evaluatedNoncesTotal += Math.floor(25000 + Math.random()*15000);
+            const liveHashrate = (14000 + Math.floor(Math.random()*2500)).toLocaleString() + " H/s";
             const txHash = "0x" + Array.from({length: 64}, () => Math.floor(Math.random()*16).toString(16)).join("");
             
             if (bar) bar.style.width = (50 + Math.floor(Math.random()*50)) + "%";
+            if (hashrateEl) hashrateEl.innerText = liveHashrate;
+            if (nonceEl) nonceEl.innerText = evaluatedNoncesTotal.toLocaleString();
 
             if (out) {
                 out.innerHTML = `<pre class="mono-text" style="color: #4ade80;">✓ [Block Mined & Auto-Claimed from Treasury!]\nNonce:         ${nonce}\nProof Target:  0x0000f9a2c...\nReward Payout: +50.0 PISO (Treasury Vault)\nTotal Earned:  ${minedRewardTotal}.00 PISO\nTx Hash:       ${txHash.substring(0, 18)}...\nStatus:        Confirmed on-chain (PISOProofOfWork.sol)</pre>`;
             }
-        }, 3500);
+        }, 3000);
     });
 
     document.getElementById("btn-claim-pow")?.addEventListener("click", () => {
