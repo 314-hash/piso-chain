@@ -875,10 +875,23 @@ function setupEventListeners() {
         });
     }
 
-    // Global Event Delegation for all Connect Wallet buttons
+    // Global Event Delegation for Connect Wallet buttons (excluding #btn-add-metamask)
     document.addEventListener("click", (e) => {
-        const target = e.target.closest("#btn-connect, .btn-connect-wallet");
-        if (target) {
+        const addMetaBtn = e.target.closest("#btn-add-metamask");
+        if (addMetaBtn) {
+            e.preventDefault();
+            if (window.ethereum) {
+                autoAddAndSwitchPisoNetwork().then(ok => {
+                    if (ok) alert("✓ PISO Chain L1 RPC (Chain ID 2026001) added to your MetaMask!");
+                });
+            } else {
+                promptMobileWalletRedirect();
+            }
+            return;
+        }
+
+        const walletBtn = e.target.closest("#btn-connect, .btn-connect-wallet");
+        if (walletBtn) {
             e.preventDefault();
             connectUserWallet();
         }
