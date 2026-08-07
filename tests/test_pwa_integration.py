@@ -26,7 +26,7 @@ class TestPWAIntegration(unittest.TestCase):
         self.assertTrue(os.path.exists(self.sw_path), "sw.js missing")
         with open(self.sw_path, "r", encoding="utf-8") as f:
             content = f.read()
-        self.assertIn("piso-chain-pwa", content)
+        self.assertTrue(any(ver in content for ver in ["piso-chain-pwa", "piso-chain-pwa-v1", "piso-chain-pwa-v2"]), "PWA cache version not found in sw.js")
         self.assertIn("addEventListener('fetch'", content)
 
     def test_bubblewrap_twa_manifest_valid(self):

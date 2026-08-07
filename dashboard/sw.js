@@ -3,6 +3,7 @@
  * Caches static assets for offline access and handles 24h mining notifications.
  */
 
+// Version: piso-chain-pwa-v1 (Upgraded to piso-chain-pwa-v2)
 const CACHE_NAME = 'piso-chain-pwa-v2';
 const ASSETS_TO_CACHE = [
     './',
