@@ -2,11 +2,13 @@
   <img src="assets/piso_logo.jpg" alt="PISO Chain Native Coin Logo" width="220" />
 </p>
 
-# 🚀 PISO Chain — Investor & Ecosystem Pitch Deck
+# 🚀 PISO Chain — 100% Fair-Launch & User-Driven Protocol Deck
 
-> **The World's First Enterprise-Grade, Post-Quantum Secure, AI-Protected Layer 1 Blockchain**
+> **The World's First 100% Community-Owned, User-Driven, Post-Quantum Secure Layer 1 Blockchain**  
+> *Zero VCs. Zero Pre-mines for Insiders. 100% Owned by Real Users & Miners.*
 
 [![EVM Compatible](https://img.shields.io/badge/EVM-Compatible-emerald.svg)](https://ethereum.org)
+[![Fair Launch: 0% VC](https://img.shields.io/badge/Fair_Launch-100%25_User_Owned-purple.svg)](docs/USER_TUTORIAL_MANUAL.md)
 [![Consensus: PoSA](https://img.shields.io/badge/Consensus-BSC_Parlia_PoSA-orange.svg)](https://github.com/bnb-chain/bsc)
 [![Security: FIPS 204 PQC](https://img.shields.io/badge/Security-NIST_FIPS_204_ML--DSA-blue.svg)](docs/QUANTUM_RESISTANCE.md)
 [![Status: Mainnet Ready](https://img.shields.io/badge/Mainnet-100%25_Ready-brightgreen.svg)](docs/MAINNET_LAUNCH_CHECKLIST.md)
@@ -15,7 +17,9 @@
 
 ## 📌 Executive Summary
 
-**PISO Chain** is a high-throughput, EVM-compatible Layer 1 blockchain network engineered for enterprise finance, high-frequency Web3 applications, and sovereign infrastructure. Built upon an enhanced **BSC Parlia Proof-of-Staked-Authority (PoSA)** BFT consensus engine, PISO Chain delivers **3.0-second deterministic block finality** with sub-cent transaction fees, zero inflation (100 Billion fixed max supply), and a decentralized **Native PISO Mining Treasury** (`0x...1004`).
+**PISO Chain** is a 100% fair-launch, user-driven Layer 1 EVM blockchain network built for real users, miners, and open-source developers — **with ZERO VC allocation and ZERO insider token dumps**. 
+
+Built upon an enhanced **BSC Parlia Proof-of-Staked-Authority (PoSA)** BFT consensus engine, PISO Chain delivers **3.0-second deterministic block finality** with sub-cent transaction fees, zero inflation (100 Billion fixed max supply), and a decentralized **Native PISO Mining Treasury** (`0x...1004`) containing **60 Billion PISO** reserved exclusively for user block mining rewards, community grants, and user referral payouts.
 
 PISO Chain solves the looming existential threat of quantum computing through native **NIST FIPS 204 (ML-DSA / Dilithium)** and **Winternitz (W-OTS+) Post-Quantum Cryptography vaults**, while delivering web2-like seamless UX with native **EIP-4337 Account Abstraction**, **Zero-Knowledge Social Recovery**, the **Enterprise 8-Repo Open-Source Security Suite** (Legendary OSINT, PraisonAI, JobSync, OWASP AISVS, IRONSIGHT, L0p4Map, MinerU, RefRef), and an **On-Chain AI Threat Oracle**.
 
