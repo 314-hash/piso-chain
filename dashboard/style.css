@@ -2255,14 +2255,45 @@ code, pre, .terminal-output, [id$="-output"] {
     box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
 }
 
+/* 📱 Responsive Mobile Optimizations for PISO Swap & Features */
+@media (max-width: 640px) {
+    .pisoswap-section {
+        padding: 0 8px !important;
+        margin: 16px 0 !important;
+    }
 
+    .pisoswap-section > div {
+        padding: 16px !important;
+        border-radius: 14px !important;
+    }
 
+    .pisoswap-section div[style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
 
+    .hero-banner-section .panel-card {
+        padding: 16px !important;
+    }
 
+    .hero-flex-container {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
 
+    .hero-header-group {
+        gap: 12px !important;
+    }
 
+    .hero-header-group img {
+        width: 64px !important;
+        height: 64px !important;
+    }
 
-
-
-
-
+    #pwa-install-bar {
+        bottom: 12px !important;
+        right: 12px !important;
+        font-size: 13px !important;
+        padding: 10px 16px !important;
+    }
+}
