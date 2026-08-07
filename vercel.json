@@ -1,24 +1,4 @@
 {
-  "version": 2,
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/pow", "destination": "/pow.html" },
-    { "source": "/sakura", "destination": "/sakura.html" },
-    { "source": "/enterprise", "destination": "/enterprise.html" },
-    { "source": "/features", "destination": "/features.html" },
-    { "source": "/explorer", "destination": "/explorer.html" },
-    { "source": "/dao", "destination": "/dao.html" },
-    { "source": "/compliance", "destination": "/compliance.html" },
-    { "source": "/developers", "destination": "/developers.html" },
-    { "source": "/validators", "destination": "/validators.html" },
-    { "source": "/swap", "destination": "/swap.html" },
-    { "source": "/bridge", "destination": "/bridge.html" },
-    { "source": "/freqtrade", "destination": "/freqtrade.html" },
-    { "source": "/wallet", "destination": "/wallet.html" },
-    { "source": "/contracts", "destination": "/contracts.html" }
-  ],
   "headers": [
     {
       "source": "/.well-known/assetlinks.json",
