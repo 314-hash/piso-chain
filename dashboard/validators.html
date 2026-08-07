@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
@@ -131,6 +133,20 @@
                             </tbody>
                         </table>
                     </div>
+                    <!-- Interactive 3D Node Globe Card -->
+                    <div class="bento-card bento-hero">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 style="margin: 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                                <span>🗺️</span> Global Validator Node Distribution Map
+                            </h3>
+                            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-weight: 600; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;">
+                                21 Active Global Regions
+                            </span>
+                        </div>
+                        <div id="validator-globe-container" style="height: 380px; width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); position: relative; background: #070b14;">
+                            <div id="validator-globe-map" style="width: 100%; height: 100%;"></div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -161,5 +177,42 @@
     </nav>
 
     <script src="app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof maplibregl !== "undefined" && document.getElementById("validator-globe-map")) {
+                const map = new maplibregl.Map({
+                    container: 'validator-globe-map',
+                    style: 'https://demotiles.maplibre.org/style.json',
+                    center: [139.6917, 35.6895],
+                    zoom: 1.2,
+                    pitch: 25
+                });
+
+                const nodes = [
+                    { name: 'Tokyo Primary Parlia Validator (0xB5A7...82D8)', coords: [139.6917, 35.6895] },
+                    { name: 'Singapore Cross-Chain Relayer (0x4F19...9A10)', coords: [103.8198, 1.3521] },
+                    { name: 'Frankfurt Core Validator Node', coords: [8.6821, 50.1109] },
+                    { name: 'London PoSA Validator Node', coords: [-0.1276, 51.5074] },
+                    { name: 'New York Oracle Bridge Node', coords: [-74.0060, 40.7128] },
+                    { name: 'San Francisco Sakura Agent Node', coords: [-122.4194, 37.7749] },
+                    { name: 'Sydney Mining Pool Node', coords: [151.2093, -33.8688] },
+                    { name: 'Sao Paulo Validator Node', coords: [-46.6333, -23.5505] }
+                ];
+
+                nodes.forEach(node => {
+                    const el = document.createElement('div');
+                    el.className = 'pulse-dot green';
+                    el.style.width = '14px';
+                    el.style.height = '14px';
+                    el.style.cursor = 'pointer';
+
+                    new maplibregl.Marker(el)
+                        .setLngLat(node.coords)
+                        .setPopup(new maplibregl.Popup({ offset: 25 }).setHTML(`<div style="color:#000; font-family:sans-serif; font-size:12px;"><strong>${node.name}</strong><br><span style="color:#10b981;">✓ Status: ONLINE (100% Uptime)</span></div>`))
+                        .addTo(map);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
