@@ -8,6 +8,7 @@ const DEFAULT_VALIDATOR = "0xB5A772355e12CA975C175C9a7CFBD48BBEE482D8";
 document.addEventListener("DOMContentLoaded", () => {
     initCharts();
     setupEventListeners();
+    initCommandPalette();
     fetchNetworkState();
 
     // Auto refresh block number every 5 seconds
@@ -2310,6 +2311,81 @@ function switchEntCategory(category, btnElement) {
         } else {
             card.style.display = 'none';
         }
+    });
+}
+
+// ⌨️ Command Palette Modal & Theme Engine Initialization
+function initCommandPalette() {
+    if (document.getElementById("cmd-palette-backdrop")) return;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("piso-theme") || "dark";
+    document.body.setAttribute("data-theme", savedTheme);
+
+    const modalHTML = `
+    <div class="cmd-palette-backdrop" id="cmd-palette-backdrop">
+        <div class="cmd-palette-modal">
+            <div class="cmd-header">
+                <span style="font-size: 1.2rem;">🔍</span>
+                <input type="text" class="cmd-input" id="cmd-search-input" placeholder="Type a command, page, or search query (Press Esc to close)..." />
+                <span class="badge" style="background: rgba(255,255,255,0.1); color: var(--text-secondary); font-size: 0.75rem;">ESC</span>
+            </div>
+            <div class="cmd-list" id="cmd-list">
+                <a href="index.html" class="cmd-item"><span>📊 Enterprise Homepage & Bento Grid</span><span style="color: var(--accent-blue);">/</span></a>
+                <a href="pow.html" class="cmd-item"><span>⛏️ PoW Mining Studio</span><span style="color: var(--accent-amber);">/pow.html</span></a>
+                <a href="sakura.html" class="cmd-item"><span>🌸 Sakura AI Agent Layer</span><span style="color: var(--accent-purple);">/sakura.html</span></a>
+                <a href="enterprise.html" class="cmd-item"><span>🚀 Enterprise 7-Repo Suite</span><span style="color: var(--accent-emerald);">/enterprise.html</span></a>
+                <a href="features.html" class="cmd-item"><span>🔐 Security & Account Abstraction Vaults</span><span style="color: var(--accent-cyan);">/features.html</span></a>
+                <a href="swap.html" class="cmd-item"><span>🔀 PISOSwap DEX Protocol</span><span style="color: var(--accent-blue);">/swap.html</span></a>
+                <a href="bridge.html" class="cmd-item"><span>🌉 Sakura Cross-Chain Bridge</span><span style="color: var(--accent-cyan);">/bridge.html</span></a>
+                <a href="freqtrade.html" class="cmd-item"><span>📈 Freqtrade Algorithmic Trading Bot</span><span style="color: var(--accent-emerald);">/freqtrade.html</span></a>
+                <a href="wallet.html" class="cmd-item"><span>👛 Mainnet Wallet Studio</span><span style="color: var(--accent-purple);">/wallet.html</span></a>
+                <a href="contracts.html" class="cmd-item"><span>📜 System Smart Contracts Hub</span><span style="color: var(--accent-amber);">/contracts.html</span></a>
+                <div class="cmd-item" id="cmd-toggle-theme"><span>🌓 Toggle Light / Dark Theme Mode</span><span style="color: #4ade80;">Theme</span></div>
+            </div>
+        </div>
+    </div>`;
+
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+    const backdrop = document.getElementById("cmd-palette-backdrop");
+    const input = document.getElementById("cmd-search-input");
+
+    function openCmd() {
+        backdrop?.classList.add("open");
+        input?.focus();
+    }
+    function closeCmd() {
+        backdrop?.classList.remove("open");
+    }
+
+    document.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+            e.preventDefault();
+            if (backdrop?.classList.contains("open")) closeCmd();
+            else openCmd();
+        }
+        if (e.key === "Escape") closeCmd();
+    });
+
+    backdrop?.addEventListener("click", (e) => {
+        if (e.target === backdrop) closeCmd();
+    });
+
+    document.getElementById("cmd-toggle-theme")?.addEventListener("click", () => {
+        const current = document.body.getAttribute("data-theme") || "dark";
+        const next = current === "dark" ? "light" : "dark";
+        document.body.setAttribute("data-theme", next);
+        localStorage.setItem("piso-theme", next);
+        closeCmd();
+    });
+
+    input?.addEventListener("input", (e) => {
+        const q = e.target.value.toLowerCase();
+        document.querySelectorAll("#cmd-list .cmd-item").forEach(item => {
+            const txt = item.textContent.toLowerCase();
+            item.style.display = txt.includes(q) ? "flex" : "none";
+        });
     });
 }
 

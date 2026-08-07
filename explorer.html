@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>PISO Chain — Enterprise Blockchain Explorer & Search Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar-drawer">
+            <div class="logo-area">
+                <img src="piso_logo.jpg" alt="PISO Logo" style="height: 36px; width: 36px; border-radius: 50%; border: 1.5px solid #ffd700; margin-right: 10px; object-fit: cover;">
+                <div class="logo-text">PISO <span>CHAIN</span></div>
+                <button class="close-drawer-btn" id="close-drawer">✕</button>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item">
+                    <span class="nav-icon">📊</span> Overview & Analytics
+                </a>
+                <a href="explorer.html" class="nav-item active" style="background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2)); border: 1px solid var(--accent-cyan);">
+                    <span class="nav-icon">🔍</span> Blockchain Explorer
+                </a>
+                <a href="pow.html" class="nav-item">
+                    <span class="nav-icon">⛏️</span> PoW Mining Studio
+                </a>
+                <a href="sakura.html" class="nav-item">
+                    <span class="nav-icon">🌸</span> Sakura AI Agent Layer
+                </a>
+                <a href="enterprise.html" class="nav-item">
+                    <span class="nav-icon">🚀</span> Enterprise 7-Repo Suite
+                </a>
+                <a href="features.html" class="nav-item">
+                    <span class="nav-icon">🔐</span> Security & AA Vaults
+                </a>
+                <a href="swap.html" class="nav-item">
+                    <span class="nav-icon">🔀</span> PISOSwap DEX
+                </a>
+                <a href="bridge.html" class="nav-item">
+                    <span class="nav-icon">🌉</span> Cross-Chain Bridge
+                </a>
+                <a href="wallet.html" class="nav-item">
+                    <span class="nav-icon">👛</span> Wallet Studio (Mainnet)
+                </a>
+            </nav>
+            <div class="network-status-badge">
+                <span class="pulse-dot green"></span>
+                <div class="badge-info">
+                    <span class="network-name">Mainnet Parlia</span>
+                    <span class="chain-id">Chain ID: 2026001</span>
+                </div>
+            </div>
+        </aside>
+
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-top-row">
+                    <button class="mobile-hamburger" id="hamburger-btn">☰</button>
+                    <div class="logo-text mobile-only-logo" style="font-size: 16px; font-weight: 800; color: var(--text-primary);">⚡ PISO <span style="color: var(--accent-cyan);">CHAIN</span></div>
+                </div>
+                <div class="search-bar-container">
+                    <input type="text" id="global-search" placeholder="Search Address, Block, Tx Hash, Token, or ENS (Press Ctrl+K for Command Palette)..." />
+                    <button id="search-btn" class="btn-primary">Search</button>
+                </div>
+                <div class="header-actions">
+                    <div class="rpc-status" id="rpc-indicator">
+                        <span class="pulse-dot green"></span> Explorer Indexer Syncing
+                    </div>
+                    <button class="btn-connect-wallet" id="btn-connect">Connect Wallet</button>
+                </div>
+            </header>
+
+            <!-- 🔍 Explorer Search & Transactions Hub -->
+            <section class="dashboard-section" style="margin-top: 20px; margin-bottom: 36px;">
+                <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.8rem; color: #fff; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 2rem;">🔍</span> PISO Chain Block Explorer
+                        </h2>
+                        <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.95rem;">
+                            Real-time Block Inspector, Transaction Decoder & Decoded Event Logs
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Latest Blocks & Transactions Table Grid -->
+                <div class="bento-grid">
+                    <div class="bento-card bento-hero">
+                        <h3 style="margin: 0 0 16px 0; color: #fff; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                            <span>📦</span> Latest Mainnet Blocks
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary);">
+                                    <th style="padding: 10px;">Block Height</th>
+                                    <th style="padding: 10px;">Validator</th>
+                                    <th style="padding: 10px;">Tx Count</th>
+                                    <th style="padding: 10px;">Reward</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                    <td style="padding: 12px 10px; font-family: var(--font-mono); color: #38bdf8;">#1,250,984</td>
+                                    <td style="padding: 12px 10px; font-family: var(--font-mono); color: #cbd5e1;">0xB5A7...82D8</td>
+                                    <td style="padding: 12px 10px; color: #fff; font-weight: 700;">142 Txs</td>
+                                    <td style="padding: 12px 10px; color: #4ade80; font-weight: 800;">2.5 PISO</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                    <td style="padding: 12px 10px; font-family: var(--font-mono); color: #38bdf8;">#1,250,983</td>
+                                    <td style="padding: 12px 10px; font-family: var(--font-mono); color: #cbd5e1;">0x4F19...9A10</td>
+                                    <td style="padding: 12px 10px; color: #fff; font-weight: 700;">98 Txs</td>
+                                    <td style="padding: 12px 10px; color: #4ade80; font-weight: 800;">2.5 PISO</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 📱 Mobile Bottom App Bar -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">📊</span>
+            <span>Overview</span>
+        </a>
+        <a href="explorer.html" class="mobile-bottom-item active">
+            <span class="mobile-nav-icon">🔍</span>
+            <span>Explorer</span>
+        </a>
+        <a href="swap.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🔀</span>
+            <span>Swap</span>
+        </a>
+        <a href="bridge.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">🌉</span>
+            <span>Bridge</span>
+        </a>
+        <a href="wallet.html" class="mobile-bottom-item">
+            <span class="mobile-nav-icon">👛</span>
+            <span>Wallet</span>
+        </a>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
