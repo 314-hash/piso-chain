@@ -36,8 +36,8 @@
   "rewrites": [
     { "source": "/wallet", "destination": "/wallet.html" },
     { "source": "/contracts", "destination": "/contracts.html" },
-    { "source": "/swap", "destination": "/index.html#pisoswap" },
-    { "source": "/bridge", "destination": "/index.html#bridge" },
-    { "source": "/freqtrade", "destination": "/index.html#freqtrade" }
+    { "source": "/swap", "destination": "/swap.html" },
+    { "source": "/bridge", "destination": "/bridge.html" },
+    { "source": "/freqtrade", "destination": "/freqtrade.html" }
   ]
 }

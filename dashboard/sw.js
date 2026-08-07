@@ -10,8 +10,13 @@ const ASSETS_TO_CACHE = [
     './index.html',
     './style.css',
     './app.js',
+    './swap.js',
+    './swap.html',
+    './bridge.html',
+    './freqtrade.html',
     './contracts.js',
     './contracts.html',
+    './wallet.html',
     './piso_logo.jpg',
     './manifest.json'
 ];
