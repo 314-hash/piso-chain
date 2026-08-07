@@ -4,7 +4,6 @@
   "description": "PISO Chain - Layer 1 Blockchain Smart Contracts and Tooling",
   "main": "hardhat.config.js",
   "scripts": {
-    "build": "echo 'Static dashboard ready for Vercel deployment'",
     "compile": "hardhat compile",
     "test": "hardhat test"
   },

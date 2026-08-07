@@ -1,4 +1,8 @@
 {
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "framework": null,
   "headers": [
     {
       "source": "/.well-known/assetlinks.json",
