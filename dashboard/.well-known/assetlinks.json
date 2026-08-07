@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.vercel.piso_blockchain.twa",
+    "sha256_cert_fingerprints": [
+      "79:4B:AB:F0:F6:76:A3:79:E6:5A:F7:77:C0:93:77:D1:BD:78:76:60:29:D7:97:F8:67:82:7A:F7:5A:F3:7B:06"
+    ]
+  }
+}]
