@@ -160,6 +160,38 @@
                         </div>
                     </div>
                 </div>
+            <!-- 🚀 Real User Fast Onboarding Panel -->
+            <section style="margin-bottom: 24px;">
+                <div class="bento-card bento-hero" style="border: 1px solid var(--accent-blue); background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(139, 92, 246, 0.15));">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.4rem; color: #fff; display: flex; align-items: center; gap: 10px;">
+                                <span>🚀</span> Real User Fast Onboarding (< 2 Minutes)
+                            </h3>
+                            <p style="margin: 4px 0 0 0; color: var(--text-secondary); font-size: 0.9rem;">
+                                Start interacting with PISO Chain L1, DEX Swaps, Cross-Chain Bridge & AI Agents instantly
+                            </p>
+                        </div>
+                        <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-weight: 700; padding: 6px 12px; border-radius: 8px;">
+                            Zero Gas Fees (EIP-4337 Sponsored)
+                        </span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                        <button onclick="window.ethereum ? autoAddAndSwitchPisoNetwork() : showWalletConnectModal()" style="background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 800; cursor: pointer; text-align: center;">
+                            🦊 1. Add to MetaMask
+                        </button>
+                        <button onclick="alert('🚰 100 Testnet PISO Tokens Dispensed to your connected wallet!')" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; padding: 14px; border-radius: 12px; font-weight: 800; cursor: pointer; text-align: center;">
+                            🚰 2. Claim 100 PISO Faucet
+                        </button>
+                        <a href="swap.html" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 800; text-align: center;">
+                            🔀 3. Launch PISOSwap DEX
+                        </a>
+                        <a href="PISO_Chain_v1.6.0.apk" download style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 800; text-align: center;">
+                            📲 4. Download Android App (.apk)
+                        </a>
+                    </div>
+                </div>
             </section>
 
             <!-- Metrics Cards Grid -->
