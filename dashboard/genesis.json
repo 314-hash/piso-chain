@@ -1,0 +1,41 @@
+{
+  "config": {
+    "chainId": 2026001,
+    "homesteadBlock": 0,
+    "eip150Block": 0,
+    "eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "eip155Block": 0,
+    "eip158Block": 0,
+    "byzantiumBlock": 0,
+    "constantinopleBlock": 0,
+    "petersburgBlock": 0,
+    "istanbulBlock": 0,
+    "berlinBlock": 0,
+    "londonBlock": 0,
+    "clique": {
+      "period": 3,
+      "epoch": 30000
+    }
+  },
+  "nonce": "0x0",
+  "timestamp": "0x0",
+  "extraData": "0x00000000000000000000000000000000000000000000000000000000000000001821f246a27287a2187e1d634b8883030fa147310000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "gasLimit": "0x1C9C380",
+  "difficulty": "0x1",
+  "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "alloc": {
+    "0x0000000000000000000000000000000000001004": {
+      "comment": "PISO Mining Treasury (60 Billion PISO - 60% Mining Allocation)",
+      "balance": "0xC249FDD32778000000000"
+    },
+    "0x1821F246a27287a2187E1D634B8883030fA14731": {
+      "comment": "PISO Ecosystem & Reserve (40 Billion PISO - 40% Allocation)",
+      "balance": "0x813F397C085000000000"
+    }
+  },
+  "number": "0x0",
+  "gasUsed": "0x0",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "baseFeePerGas": "0x3B9ACA00"
+}
