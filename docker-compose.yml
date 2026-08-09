@@ -134,3 +134,23 @@ services:
     depends_on:
       - validator1
       - freqtrade
+
+  # 8. Mysterium Network dVPN Node (DePIN Integration)
+  mysterium-node:
+    image: mysteriumnetwork/myst:latest
+    container_name: piso-mysterium-node
+    restart: unless-stopped
+    ports:
+      - "4050:4050"       # TequilAPI endpoint
+      - "1194:1194/udp"   # WireGuard VPN server port
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - myst-data:/var/lib/mysterium-node
+    command: >
+      service
+      --agreed-terms-and-conditions
+
+volumes:
+  myst-data:
+
