@@ -12,6 +12,8 @@ import SakuraPage from './pages/SakuraPage'
 import MysteriumPage from './pages/MysteriumPage'
 import ContractsPage from './pages/ContractsPage'
 import EnterprisePage from './pages/EnterprisePage'
+import BridgePage from './pages/BridgePage'
+import FreqtradePage from './pages/FreqtradePage'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -38,6 +40,8 @@ export default function App() {
                 <Route path="/mysterium" element={<MysteriumPage />} />
                 <Route path="/contracts" element={<ContractsPage />} />
                 <Route path="/enterprise" element={<EnterprisePage />} />
+                <Route path="/bridge" element={<BridgePage />} />
+                <Route path="/freqtrade" element={<FreqtradePage />} />
               </Routes>
             </div>
           </main>

@@ -25,8 +25,16 @@ const navItems = [
     style: { background: 'rgba(6,182,212,0.12)', borderColor: '#06b6d4' },
   },
   {
-    to: '/swap', label: 'PISOSwap DEX & Bridge', icon: '🔀',
+    to: '/swap', label: 'PISOSwap DEX', icon: '🔀',
     style: { background: 'rgba(59,130,246,0.12)', borderColor: '#3b82f6' },
+  },
+  {
+    to: '/bridge', label: 'Cross-Chain Bridge', icon: '🌉',
+    style: { background: 'rgba(14,165,233,0.12)', borderColor: '#0ea5e9' },
+  },
+  {
+    to: '/freqtrade', label: 'Trading Bot (Freqtrade)', icon: '📈',
+    style: { background: 'rgba(16,185,129,0.12)', borderColor: '#10b981' },
   },
   {
     to: '/contracts', label: 'System Contracts Hub', icon: '📜',
