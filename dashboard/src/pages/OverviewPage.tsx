@@ -7,8 +7,6 @@ import KpiCard from '../components/ui/KpiCard'
 import BentoCard from '../components/ui/BentoCard'
 import InfographicStep from '../components/ui/InfographicStep'
 import OnboardingStrip from '../components/ui/OnboardingStrip'
-import PowMiningStudio from '../components/ui/PowMiningStudio'
-import SakuraAgentStudio from '../components/ui/SakuraAgentStudio'
 
 // ── Fake live block data generator ──────────────────────────────────────────
 function generateChartData(points = 24) {
@@ -259,12 +257,6 @@ export default function OverviewPage() {
           </a>
         </div>
       </BentoCard>
-
-      {/* ── PoW Mining Studio (inline) ────────────────────────────────────── */}
-      <PowMiningStudio />
-
-      {/* ── Sakura AI Agent Layer (inline) ───────────────────────────────── */}
-      <SakuraAgentStudio />
 
       {/* ── Turbo-Fieldfare AI ───────────────────────────────────────────── */}
       <TurboFieldfareSection />
