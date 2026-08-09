@@ -17,8 +17,8 @@ export default defineConfig({
       '/tequilapi': {
         target: 'http://localhost:4050',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/tequilapi/, ''),
-        configure: (proxy) => {
+        rewrite: (p: string) => p.replace(/^\/tequilapi/, ''),
+        configure: (proxy: any) => {
           proxy.on('error', () => { /* silently handle if Mysterium node is offline */ })
         },
       },
