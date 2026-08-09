@@ -10,6 +10,8 @@ import ExplorerPage from './pages/ExplorerPage'
 import PowPage from './pages/PowPage'
 import SakuraPage from './pages/SakuraPage'
 import MysteriumPage from './pages/MysteriumPage'
+import ContractsPage from './pages/ContractsPage'
+import EnterprisePage from './pages/EnterprisePage'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -34,6 +36,8 @@ export default function App() {
                 <Route path="/pow" element={<PowPage />} />
                 <Route path="/sakura" element={<SakuraPage />} />
                 <Route path="/mysterium" element={<MysteriumPage />} />
+                <Route path="/contracts" element={<ContractsPage />} />
+                <Route path="/enterprise" element={<EnterprisePage />} />
               </Routes>
             </div>
           </main>

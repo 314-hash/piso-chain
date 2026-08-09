@@ -250,7 +250,7 @@ export default function OverviewPage() {
             </div>
           </div>
           <a
-            href="../contracts.html"
+            href="/contracts"
             className="btn btn-primary-blue text-sm self-start sm:self-center flex-shrink-0"
           >
             📜 Open Contract Studio

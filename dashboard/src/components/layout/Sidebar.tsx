@@ -25,20 +25,21 @@ const navItems = [
     style: { background: 'rgba(6,182,212,0.12)', borderColor: '#06b6d4' },
   },
   {
-    to: '/swap', label: 'PISOSwap DEX', icon: '🔀',
+    to: '/swap', label: 'PISOSwap DEX & Bridge', icon: '🔀',
     style: { background: 'rgba(59,130,246,0.12)', borderColor: '#3b82f6' },
+  },
+  {
+    to: '/contracts', label: 'System Contracts Hub', icon: '📜',
+    style: { background: 'rgba(16,185,129,0.12)', borderColor: '#10b981' },
+  },
+  {
+    to: '/enterprise', label: 'Enterprise Suite', icon: '🚀',
+    style: { background: 'rgba(168,85,247,0.12)', borderColor: '#a855f7' },
   },
   {
     to: '/explorer', label: 'Explorer & RPC', icon: '🔍',
     style: {},
   },
-]
-
-const externalLinks = [
-  { href: '../swap.html', label: 'Cross-Chain Bridge', icon: '🌉' },
-  { href: '../contracts.html', label: 'System Contracts Hub', icon: '📜' },
-  { href: '../enterprise.html', label: 'Enterprise Suite', icon: '🚀' },
-  { href: '../freqtrade.html', label: 'Trading Bot', icon: '📈' },
 ]
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
@@ -92,22 +93,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <span className="text-lg leading-none flex-shrink-0">{item.icon}</span>
             <span className="truncate">{item.label}</span>
           </NavLink>
-        ))}
-
-        <div className="pt-3 pb-1">
-          <p className="px-3 text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">External</p>
-        </div>
-
-        {externalLinks.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            onClick={onClose}
-            className="sidebar-nav-item"
-          >
-            <span className="text-lg leading-none flex-shrink-0">{item.icon}</span>
-            <span className="truncate">{item.label}</span>
-          </a>
         ))}
       </nav>
 
