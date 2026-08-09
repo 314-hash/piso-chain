@@ -102,6 +102,9 @@ tradesv3.dryrun.sqlite*
 # Docker & WSL Volumes
 DockerDesktopWSL/
 
+# GitHub Actions Workflows override
+.github/workflows/deploy-vercel.yml
+
 # Logs & Temporary / OS Files
 *.log
 bridge_state.json
