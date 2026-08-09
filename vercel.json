@@ -4,7 +4,7 @@
   "outputDirectory": "dashboard/dist",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!assets/|piso_logo.jpg|.*\\.apk|.*\\.png|.*\\.jpg|.*\\.ico).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
