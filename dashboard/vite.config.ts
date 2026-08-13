@@ -11,16 +11,34 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    host: true,
     open: true,
     proxy: {
-      // Proxy /tequilapi/* → Mysterium node TequilAPI on localhost:4050
+      // Proxy /tequilapi/* → Mysterium node TequilAPI on 127.0.0.1:4050
       '/tequilapi': {
-        target: 'http://localhost:4050',
+        target: 'http://127.0.0.1:4050',
         changeOrigin: true,
         rewrite: (p: string) => p.replace(/^\/tequilapi/, ''),
         configure: (proxy: any) => {
-          proxy.on('error', () => { /* silently handle if Mysterium node is offline */ })
+          proxy.on('error', (_err: any, _req: any, res: any) => {
+            // Silently return empty json if Mysterium node is offline locally
+            if (res && !res.headersSent) {
+              res.writeHead(503, { 'Content-Type': 'application/json' })
+              res.end(JSON.stringify({ error: 'Mysterium node offline' }))
+            }
+          })
         },
+      },
+      // Proxy /api/* → Python REST API server on 127.0.0.1:8081
+      '/api': {
+        target: 'http://127.0.0.1:8081',
+        changeOrigin: true,
+      },
+      // Proxy /rpc/* → PISO Chain JSON-RPC on 127.0.0.1:8545
+      '/rpc': {
+        target: 'http://127.0.0.1:8545',
+        changeOrigin: true,
+        rewrite: (p: string) => p.replace(/^\/rpc/, ''),
       },
     },
   },

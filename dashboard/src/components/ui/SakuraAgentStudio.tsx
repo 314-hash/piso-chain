@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useWallet } from '../../services/web3'
 
 const AGENTS = [
   { id: 'governance', name: 'Governance Auditor', icon: '🏛️', color: '#8b5cf6' },
@@ -24,6 +25,7 @@ const AGENTS = [
 ]
 
 export default function SakuraAgentStudio() {
+  const { wallet } = useWallet()
   const [selectedAgent, setSelectedAgent] = useState(AGENTS[0])
   const [prompt, setPrompt] = useState('Verify on-chain proof of work difficulty and validate PISO Chain mainnet state.')
   const [output, setOutput] = useState('⚡ Sakura AI Agent Studio ready. Select an agent and enter a task prompt.')
@@ -31,7 +33,8 @@ export default function SakuraAgentStudio() {
 
   const runAgent = async () => {
     setLoading(true)
-    setOutput(`🌸 [${selectedAgent.name}] Initializing agent task...\n📋 Prompt: "${prompt}"\n\n`)
+    const userAddr = wallet?.address || '0x90F79bf6EB2c4f870365E785982E1f101E93b906'
+    setOutput(`🌸 [${selectedAgent.name}] Initializing agent task...\n📋 Prompt: "${prompt}"\n🔑 Identity Wallet Address: ${userAddr}\n\n`)
     await new Promise((r) => setTimeout(r, 600))
     setOutput((o) => o + `🔗 Connecting to PISO Chain RPC...\n`)
     await new Promise((r) => setTimeout(r, 400))

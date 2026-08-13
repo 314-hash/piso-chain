@@ -1,17 +1,20 @@
 import { Menu, Search, Wallet } from 'lucide-react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface TopHeaderProps {
   onHamburger: () => void
 }
 
 export default function TopHeader({ onHamburger }: TopHeaderProps) {
+  const navigate = useNavigate()
   const [connected, setConnected] = useState(false)
   const [searchValue, setSearchValue] = useState('')
 
   const handleSearch = () => {
     if (searchValue.trim()) {
-      alert(`Searching: ${searchValue}`)
+      navigate(`/explorer?q=${encodeURIComponent(searchValue.trim())}`)
+      setSearchValue('')
     }
   }
 

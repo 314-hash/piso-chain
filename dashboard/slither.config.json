@@ -1,7 +1,0 @@
-{
-  "detectors_to_run": "reentrancy-eth,reentrancy-no-eth,uninitialized-state,arbitrary-send-eth,suicidal,controlled-delegatecall",
-  "exclude_low": false,
-  "exclude_informational": true,
-  "filter_paths": "node_modules",
-  "solc_args": "--optimize --optimize-runs 200"
-}

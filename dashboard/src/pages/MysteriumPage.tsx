@@ -1,4 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useWallet } from '../services/web3'
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer,
@@ -48,43 +50,130 @@ type NodeSummary = {
 }
 
 export default function MysteriumPage() {
+  const { wallet } = useWallet()
   const [data, setData] = useState<NodeSummary | null>(null)
-  const [loading, setLoading] = useState(true)
   const [serviceLoading, setServiceLoading] = useState(false)
   const [earningsHistory] = useState(generateEarningsHistory)
   const [copyDone, setCopyDone] = useState(false)
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date())
+  const [simulatedMode, setSimulatedMode] = useState(false)
 
-  const refresh = useCallback(async () => {
-    setLoading(true)
-    try {
-      const summary = await TequilAPI.summary()
-      setData(summary)
-    } catch {
-      setData({ health: null, identity: null, services: [], sessions: [], nat: null, online: false })
-    } finally {
-      setLoading(false)
-      setLastRefresh(new Date())
-    }
-  }, [])
+  const { data: queryData, isLoading: loading, refetch } = useQuery({
+    queryKey: ['mysteriumSummary', wallet?.address],
+    queryFn: async () => {
+      try {
+        const summary = await TequilAPI.summary()
+        return { ...summary, simulatedMode: false }
+      } catch {
+        return {
+          health: {
+            version: '1.5.0-devnet',
+            uptime: '1h 14m 20s',
+            buildInfo: { commit: 'piso-d6a5f78b' }
+          } as any,
+          identity: {
+            id: wallet?.address || '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
+            registrationStatus: 'Registered',
+            balance: Number(245000000000000000000n),
+            earningsTotal: Number(1242000000000000000000n)
+          } as any,
+          services: [{
+            id: 'wireguard-sim',
+            type: 'wireguard',
+            status: 'Running' as const,
+            providerId: wallet?.address || '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
+            proposal: {} as any,
+            options: {} as any
+          }],
+          sessions: [
+            {
+              id: 'sess-1',
+              direction: 'Provided' as const,
+              consumerCountry: 'US',
+              consumerID: '0x1111111111111111111111111111111111111111',
+              providerID: wallet?.address || '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
+              serviceType: 'wireguard',
+              status: 'EstablishedProvider' as const,
+              startedAt: '2026-08-13T00:00:00Z',
+              duration: 3600,
+              bytesReceived: 1024 * 1024 * 1420,
+              bytesSent: 1024 * 1024 * 3820,
+              tokens: Number(2500000000000000000n)
+            },
+            {
+              id: 'sess-2',
+              direction: 'Provided' as const,
+              consumerCountry: 'PH',
+              consumerID: '0x2222222222222222222222222222222222222222',
+              providerID: wallet?.address || '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
+              serviceType: 'wireguard',
+              status: 'EstablishedProvider' as const,
+              startedAt: '2026-08-13T00:30:00Z',
+              duration: 1800,
+              bytesReceived: 1024 * 1024 * 850,
+              bytesSent: 1024 * 1024 * 1940,
+              tokens: Number(1200000000000000000n)
+            }
+          ],
+          nat: { status: 'successful' },
+          online: true,
+          simulatedMode: true
+        }
+      }
+    },
+    refetchInterval: 15000
+  })
+
+  const refresh = () => { refetch() }
 
   useEffect(() => {
-    refresh()
-    const interval = setInterval(refresh, 15_000) // auto-refresh every 15s
-    return () => clearInterval(interval)
-  }, [refresh])
+    if (queryData) {
+      setData((prev) => {
+        if (simulatedMode && prev) {
+          return {
+            ...queryData,
+            services: prev.services
+          }
+        }
+        setSimulatedMode(queryData.simulatedMode)
+        return queryData
+      })
+      setLastRefresh(new Date())
+    }
+  }, [queryData, simulatedMode])
 
   const toggleService = async () => {
     if (!data?.identity) return
     setServiceLoading(true)
     try {
-      const running = data.services.find((s) => s.status === 'Running')
-      if (running) {
-        await TequilAPI.stopService(running.id)
+      if (simulatedMode) {
+        await new Promise((r) => setTimeout(r, 600))
+        setData((prev) => {
+          if (!prev) return null
+          const isRunning = prev.services.some((s) => s.status === 'Running')
+          return {
+            ...prev,
+            services: isRunning
+              ? []
+              : [{
+                  id: 'wireguard-sim',
+                  type: 'wireguard',
+                  status: 'Running' as const,
+                  providerId: wallet?.address || '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
+                  proposal: {} as any,
+                  options: {} as any
+                }]
+          }
+        })
       } else {
-        await TequilAPI.startService(data.identity.id)
+        const running = data.services.find((s) => s.status === 'Running')
+        if (running) {
+          await TequilAPI.stopService(running.id)
+        } else {
+          await TequilAPI.startService(data.identity.id)
+        }
+        await refresh()
       }
-      await refresh()
     } catch (e: any) {
       alert('Service error: ' + e.message)
     } finally {
@@ -192,6 +281,21 @@ export default function MysteriumPage() {
           </button>
         </div>
       </div>
+
+      {simulatedMode && (
+        <div className="p-3.5 rounded-xl bg-cyan-950/40 border border-cyan-800/30 flex items-center justify-between text-xs text-cyan-300 font-semibold gap-3">
+          <span className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse flex-shrink-0" />
+            ⚠️ Mysterium daemon is offline. Running in Simulated Web3 Node Mode linked to PISO Wallet.
+          </span>
+          <button
+            onClick={() => { setSimulatedMode(false); refresh(); }}
+            className="px-2.5 py-1 rounded bg-cyan-900/60 hover:bg-cyan-800 border border-cyan-700/50 transition-all text-[11px]"
+          >
+            Retry Local Daemon
+          </button>
+        </div>
+      )}
 
       {/* KPI row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
